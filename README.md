@@ -1,7 +1,7 @@
 Realizaremos un juego de carreras en el que varios usuarios compitan en tiempo real al estilo gravity guy:
 
-Los jugadores van a poder cambiar el sentido de la gravedad, aumentar o disminuir la velocidad, saltar, agacharse y además interactuar entre sí dejándose trampas o disparando. También interactúan con los objetos del mapa, las plataformas o trampas, podría tomar y dejar objetos. Cada mapa puede contar con diferentes desafíos, como áreas sin suelo, escalones, plataformas móviles y otros obstáculos que dificulten la carrera. 
-La cámara se centra en el que va primero , cuando un jugador deja de estar en foco pierde un punto e inicia desde la posición del primero, cuando uno pierde N veces, es descalificado; 
+Los jugadores van a poder cambiar el sentido de la gravedad, aumentar o disminuir la velocidad, saltar, agacharse y ademï¿½s interactuar entre sï¿½ dejï¿½ndose trampas o disparando. Tambiï¿½n interactï¿½an con los objetos del mapa, las plataformas o trampas, podrï¿½a tomar y dejar objetos. Cada mapa puede contar con diferentes desafï¿½os, como ï¿½reas sin suelo, escalones, plataformas mï¿½viles y otros obstï¿½culos que dificulten la carrera. 
+La cï¿½mara se centra en el que va primero , cuando un jugador deja de estar en foco pierde un punto e inicia desde la posiciï¿½n del primero, cuando uno pierde N veces, es descalificado; 
 
 
-/* MAIN */
+/* DESARROLLO */
