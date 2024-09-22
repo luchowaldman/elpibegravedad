@@ -38,43 +38,12 @@ export class Juego {
                 update: this.update.bind(this)
             }
         };
-        this.cargarImagenes();
         this.game = new Phaser.Game(config);
         this.scene = this.game.scene.scenes[0];
 
     }
 
     
-    
-    
-     // Función para cargar las imágenes y animaciones en los vectores correspondientes
-  cargarImagenes() {
-    // Añadir imágenes al vector 'imagenes'
-    this.imagenes.push(new Imagen('sky', 'https://labs.phaser.io/assets/skies/space3.png'));
-    this.imagenes.push(new Imagen('ground', '/img/piso_02.png'));
-    this.imagenes.push(new Imagen('star', 'https://labs.phaser.io/assets/sprites/star.png'));
-
-    // Añadir animaciones al vector 'animaciones'
-    this.animaciones.push(new Animacion('dude', 'https://labs.phaser.io/assets/sprites/dude.png', 32, 48));
-
-
-
-    var ent = new EntidadGrafica("pared1", "ground", 200, 200)
-    ent.escala = 1.4;
-    this.entidades.push(ent);
-    this.entidades.push(new EntidadGrafica("parte2", "ground", 430, 200));
-    this.entidades.push(new EntidadGrafica("parte3", "ground", 630, 200));
-
-    
-    var ent2 = new EntidadGrafica("pared1", "dude", 200, 140)
-    ent2.numero_frame = 5;
-    ent2.velocidadX = 40;
-    this.entidades.push(ent2);
-
-
-  }
-
-  // Función de preload que recorre los vectores y carga las imágenes/animaciones
   preload() {
     // Cargar imágenes
     
