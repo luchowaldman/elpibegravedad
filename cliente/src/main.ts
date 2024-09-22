@@ -1,4 +1,5 @@
 import './assets/main.css'
+import { AccionGrafica, AccionGraficaAnimar, AccionGraficaCambiarVelovidad } from './modelo/AccionGrafica';
 import { graficoJuego }  from './modelo/graficoJuego';
 import { JuegoFactory }  from './modelo/juegoFactory';
 
@@ -19,12 +20,12 @@ document.addEventListener('DOMContentLoaded', () => {
     if (btnMover) {
         btnMover.addEventListener('click', () => {
 
-            graficos.agenda?.iniciar();
+            
+            const player = graficos.GetEntidad("tipo");
+            graficos.agenda.agregarAccionGrafica(1, new AccionGraficaCambiarVelovidad(player, 40, 0) );
+            graficos.agenda.agregarAccionGrafica(1, new AccionGraficaAnimar(player, "animacion") );
 
-            const tipo = graficos.GetEntidad("tipo");
-            tipo?.setVelocity(40, 0);
-            tipo?.setAnimacion("animacion");
-
+            graficos.agenda.iniciar();
         });
     }
 

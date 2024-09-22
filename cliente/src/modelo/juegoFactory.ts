@@ -42,20 +42,6 @@ export class JuegoFactory {
         juego.entidades.push(ent2);
 
 
-        
-        const agenda: AgendaAccionesGrafica = new AgendaAccionesGrafica(60);
-        agenda.agregarAccionGrafica(1, new AccionGraficaCambiarVelovidad())
-        agenda.agregarAccionGrafica(61, new AccionGrafica())
-        agenda.agregarAccionGrafica(121, new AccionGraficaCambiarVelovidad())
-        agenda.agregarAccionGrafica(181, new AccionGrafica())
-        agenda.agregarAccionGrafica(241, new AccionGraficaCambiarVelovidad())
-        agenda.agregarAccionGrafica(301, new AccionGrafica())
-        agenda.agregarAccionGrafica(361, new AccionGraficaCambiarVelovidad())
-
-        juego.agenda = agenda;
-
-
-
         return juego;
 
         };

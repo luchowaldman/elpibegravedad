@@ -11,7 +11,7 @@ export class graficoJuego {
     
     private game: Phaser.Game;
     private scene: Phaser.Scene;
-    public agenda: AgendaAccionesGrafica | null;
+    public agenda: AgendaAccionesGrafica;
 
     sonidos: Sonido[] = [];
     imagenes: Imagen[] = [];
@@ -20,12 +20,13 @@ export class graficoJuego {
     
     entidades: EntidadGrafica[] = [];
     
-    GetEntidad(id: string): EntidadGrafica | undefined {
+    GetEntidad(id: string): EntidadGrafica {
         return this.entidades.find(entidad => entidad.id === id);
     }
     
     constructor() {
         //super('Juego');
+        this.agenda = new AgendaAccionesGrafica(60);
     }
 
     init() {
