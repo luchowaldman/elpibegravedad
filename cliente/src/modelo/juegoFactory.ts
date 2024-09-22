@@ -35,7 +35,7 @@ export class JuegoFactory {
         juego.entidades.push(new EntidadGrafica("ent_piso4", "piso3", 430, 500));
 
         
-        const ent2 = new EntidadGrafica("tipo", "dude", 200, 140);
+        const ent2 = new EntidadGrafica("tipo", "dude", 130, 445);
         juego.entidades.push(ent2);
         return juego;
 
