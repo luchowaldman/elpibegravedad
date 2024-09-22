@@ -19,9 +19,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const btnMover = document.getElementById('btnMover') as HTMLInputElement;
     if (btnMover) {
-        btnMover.addEventListener('click', (event) => {
+        btnMover.addEventListener('click', () => {
             const tipo = juego.GetEntidad("tipo");
-            tipo.setVelocity(40, 0);
+            tipo?.setVelocity(40, 0);
             tipo?.setAnimacion("animacion");
         });
     }
