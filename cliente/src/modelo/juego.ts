@@ -2,6 +2,7 @@
 import Phaser from 'phaser';
 import { Imagen } from './imagen';
 import { Animacion } from './animacion';
+import { EntidadGrafica } from './entidadgrafica';
 
 export class Juego {
     private player!: Phaser.Physics.Arcade.Sprite;
@@ -14,6 +15,8 @@ export class Juego {
 
     imagenes: Imagen[] = [];
     animaciones: Animacion[] = [];
+    entidades: EntidadGrafica[] = [];
+    
  
     
     constructor() {
@@ -29,7 +32,7 @@ export class Juego {
             physics: {
                 default: 'arcade',
                 arcade: {
-                    gravity: { y: 129 , x: 0},
+                    gravity: { y: 0 , x: 0},
                     debug: false
                 }
             },
@@ -57,6 +60,22 @@ export class Juego {
 
     // Añadir animaciones al vector 'animaciones'
     this.animaciones.push(new Animacion('dude', 'https://labs.phaser.io/assets/sprites/dude.png', 32, 48));
+
+
+
+    var ent = new EntidadGrafica("pared1", "ground", 200, 200)
+    ent.escala = 1.4;
+    this.entidades.push(ent);
+    this.entidades.push(new EntidadGrafica("parte2", "ground", 430, 200));
+    this.entidades.push(new EntidadGrafica("parte3", "ground", 630, 200));
+
+    
+    var ent2 = new EntidadGrafica("pared1", "dude", 200, 140)
+    ent2.numero_frame = 5;
+    ent2.velocidadX = 40;
+    this.entidades.push(ent2);
+
+
   }
 
   // Función de preload que recorre los vectores y carga las imágenes/animaciones
@@ -81,81 +100,14 @@ export class Juego {
         // Añadir fondo
         this.scene.add.image(400, 300, 'sky').setScrollFactor(0);
 
+        this.entidades.forEach(entidad => {
+            entidad.agregar(this.scene)
+        });
         
-        // Crear grupo de plataformas
-        this.platforms = this.scene.physics.add.staticGroup();
-
-        // Crear plataformas
-        this.platforms.create(200, 400, 'ground').setScale(1.4).refreshBody();
-        this.platforms.create(400, 390, 'ground');
-        this.platforms.create(600, 400, 'ground');
-
-        // Crear jugador
-        this.player = this.scene.physics.add.sprite(100, 450, 'dude');
-        this.player.setBounce(0.2);
-        this.player.setCollideWorldBounds(true);
-
-        // Añadir animaciones para el jugador
-        this.anims.create({
-            key: 'left',
-            frames: this.anims.generateFrameNumbers('dude', { start: 0, end: 3 }),
-            frameRate: 10,
-            repeat: -1
-        });
-
-        this.anims.create({
-            key: 'turn',
-            frames: [{ key: 'dude', frame: 4 }],
-            frameRate: 20
-        });
-
-        this.anims.create({
-            key: 'right',
-            frames: this.anims.generateFrameNumbers('dude', { start: 5, end: 8 }),
-            frameRate: 10,
-            repeat: -1
-        });
-
-        // Habilitar colisiones entre el jugador y las plataformas
-        this.physics.add.collider(this.player, this.platforms);
-
-        /*
-        // Configurar controles
-        this.cursors = this.input.keyboard.createCursorKeys();
-
-        // Expander el tamaño del mundo
-        this.physics.world.setBounds(0, 0, 3000, 600);
-
-        // Hacer que la cámara siga al jugador
-        this.cameras.main.setBounds(0, 0, 3000, 600);
-        // this.cameras.main.startFollow(this.player);
-        */
     }
 
     update() {
-        // Comprobar si otros jugadores están añadidos
-       // if (Object.keys(this.otherPlayers).length === 0) {
-            // Ejemplo para añadir jugadores si no están presentes
-       // }
-
-        // Controles de movimiento
-        /*
-        if (this.cursors.left.isDown) {
-            this.player.setVelocityX(-160);
-            this.player.anims.play('left', true);
-        } else if (this.cursors.right.isDown) {
-            this.player.setVelocityX(160);
-            this.player.anims.play('right', true);
-        } else {
-            this.player.setVelocityX(0);
-            this.player.anims.play('turn');
-        }
-
-        // Saltar si está en el suelo
-        if (this.cursors.up.isDown && this.player.body.touching.down) {
-            this.player.setVelocityY(-330);
-        }
-        */
+        
     }
 }
 
