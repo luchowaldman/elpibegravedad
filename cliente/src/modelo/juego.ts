@@ -3,12 +3,14 @@ import Phaser from 'phaser';
 import { Imagen } from './imagen';
 import { Animacion } from './animacion';
 import { EntidadGrafica } from './entidadgrafica';
+import { Sonido } from './sonido';
 
 export class Juego {
     
     private game: Phaser.Game;
     private scene: Phaser.Scene;
 
+    sonidos: Sonido[] = [];
     imagenes: Imagen[] = [];
     animaciones: Animacion[] = [];
     entidades: EntidadGrafica[] = [];
@@ -48,15 +50,20 @@ export class Juego {
     // Cargar imágenes
     
     this.scene = this.game.scene.scenes[0];
-    if (this.imagenes)
     this.imagenes.forEach(imagen => {
         this.scene.load.image(imagen.nombre, imagen.url);
     });
 
     // Cargar animaciones (spritesheets)
-    if (this.animaciones )
     this.animaciones.forEach(animacion => {
         this.scene.load.spritesheet(animacion.nombre, animacion.url, { frameWidth: animacion.largoCuadro, frameHeight: animacion.anchoCuadro });
+    });
+
+    
+        
+    this.sonidos.forEach(sonido => {
+        this.scene.load.audio( sonido.nombre , sonido.url);
+
     });
   }
 
@@ -69,6 +76,11 @@ export class Juego {
 
         this.entidades.forEach(entidad => {
             entidad.agregar(this.scene)
+        });
+
+        
+        this.sonidos.forEach(sonido => {
+            sonido.agregar(this.scene)
         });
         
   }

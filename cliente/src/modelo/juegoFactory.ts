@@ -2,10 +2,15 @@ import { Juego } from './juego';
 import { Imagen } from './imagen';
 import { Animacion } from './animacion';
 import { EntidadGrafica } from './entidadgrafica';
+import { Sonido } from './sonido';
 
 export class JuegoFactory {
     juego_ejemplo1(): Juego {
         var juego = new Juego();
+
+        
+        juego.sonidos.push(new Sonido('cancion', '/audio/musica_juego.mp3'));
+
 
         juego.imagenes.push(new Imagen('sky', 'https://labs.phaser.io/assets/skies/space3.png'));
         juego.imagenes.push(new Imagen('ground', '/img/piso_02.png'));
