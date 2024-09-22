@@ -3,6 +3,7 @@ import Phaser from 'phaser';
 import { Imagen } from './imagen';
 import { Animacion } from './animacion';
 import { EntidadGrafica } from './entidadgrafica';
+import { AgendaAccionesGrafica }  from './AgendaAccionesGrafica';
 import { AnimacionEntidadGrafica } from './animacionentidadgrafica';
 import { Sonido } from './sonido';
 
@@ -10,6 +11,7 @@ export class graficoJuego {
     
     private game: Phaser.Game;
     private scene: Phaser.Scene;
+    public agenda: AgendaAccionesGrafica | null;
 
     sonidos: Sonido[] = [];
     imagenes: Imagen[] = [];
@@ -103,11 +105,11 @@ export class graficoJuego {
         this.sonidos.forEach(sonido => {
             sonido.agregar(this.scene)
         });
-        
-  }
+    }
+
 
   update() {
-        
+    this.agenda?.actualizar()
   }
 
   setPosicionCamara(posicion: number) {
