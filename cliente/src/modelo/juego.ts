@@ -3,6 +3,7 @@ import Phaser from 'phaser';
 import { Imagen } from './imagen';
 import { Animacion } from './animacion';
 import { EntidadGrafica } from './entidadgrafica';
+import { AnimacionEntidadGrafica } from './animacionentidadgrafica';
 import { Sonido } from './sonido';
 
 export class Juego {
@@ -13,9 +14,13 @@ export class Juego {
     sonidos: Sonido[] = [];
     imagenes: Imagen[] = [];
     animaciones: Animacion[] = [];
+    animacionesendadgrafica :AnimacionEntidadGrafica[] = [];
+    
     entidades: EntidadGrafica[] = [];
     
- 
+    GetEntidad(id: string): EntidadGrafica | undefined {
+        return this.entidades.find(entidad => entidad.id === id);
+    }
     
     constructor() {
         //super('Juego');
@@ -57,18 +62,34 @@ export class Juego {
     // Cargar animaciones (spritesheets)
     this.animaciones.forEach(animacion => {
         this.scene.load.spritesheet(animacion.nombre, animacion.url, { frameWidth: animacion.largoCuadro, frameHeight: animacion.anchoCuadro });
-    });
+    });   
 
-    
-        
+
+
     this.sonidos.forEach(sonido => {
         this.scene.load.audio( sonido.nombre , sonido.url);
-
     });
+
+
+
   }
 
 
   create() {
+
+        
+        this.animacionesendadgrafica.forEach(animacion => {
+            this.scene.anims.create({
+                key: animacion.key,
+                frames: this.scene.anims.generateFrameNumbers(animacion.nombreImagen, { start: animacion.startFrame, end: animacion.endFrame }),
+                frameRate: animacion.frameRate,
+                repeat: animacion.repeat
+            });
+        });
+
+        
+
+        
         // Añadir fondo
         this.scene.add.image(400, 300, 'sky').setScrollFactor(0);
         //this.scene.physics.world.setBounds(0, 0, 3000, 600);
