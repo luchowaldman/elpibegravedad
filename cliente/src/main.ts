@@ -1,18 +1,17 @@
 import './assets/main.css'
+import { AccionGrafica, AccionGraficaAnimar, AccionGraficaCambiarVelovidad } from './modelo/AccionGrafica';
 import { graficoJuego }  from './modelo/graficoJuego';
 import { JuegoFactory }  from './modelo/juegoFactory';
 
-const juego: graficoJuego = (new JuegoFactory()).juego_ejemplo1();
-juego.init();
-
-
+const graficos: graficoJuego = (new JuegoFactory()).juego_ejemplo1();
+graficos.init();
 
 document.addEventListener('DOMContentLoaded', () => {
     const rangeInput = document.getElementById('camarainput') as HTMLInputElement;
     if (rangeInput) {
         rangeInput.addEventListener('input', (event) => {
             const target = event.target as HTMLInputElement;
-            juego.setPosicionCamara(parseInt(target.value));
+            graficos.setPosicionCamara(parseInt(target.value));
             //console.log(`Nuevo valor: ${target.value}`);
         });
     }
@@ -20,9 +19,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnMover = document.getElementById('btnMover') as HTMLInputElement;
     if (btnMover) {
         btnMover.addEventListener('click', () => {
-            const tipo = juego.GetEntidad("tipo");
-            tipo?.setVelocity(40, 0);
-            tipo?.setAnimacion("animacion");
+
+            
+            const player = graficos.GetEntidad("tipo");
+            graficos.agenda.agregarAccionGrafica(1, new AccionGraficaCambiarVelovidad(player, 40, 0) );
+            graficos.agenda.agregarAccionGrafica(1, new AccionGraficaAnimar(player, "animacion") );
+
+            graficos.agenda.iniciar();
         });
     }
 

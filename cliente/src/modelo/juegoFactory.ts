@@ -4,6 +4,9 @@ import { Animacion } from './animacion';
 import { EntidadGrafica } from './entidadgrafica';
 import { Sonido } from './sonido';
 import { AnimacionEntidadGrafica } from './animacionentidadgrafica';
+import { AgendaAccionesGrafica }  from './AgendaAccionesGrafica';
+import { AccionGrafica, AccionGraficaCambiarVelovidad }  from './AccionGrafica';
+
 
 export class JuegoFactory {
     juego_ejemplo1(): graficoJuego {
@@ -37,6 +40,8 @@ export class JuegoFactory {
         
         const ent2 = new EntidadGrafica("tipo", "dude", 130, 445);
         juego.entidades.push(ent2);
+
+
         return juego;
 
         };

@@ -35,6 +35,13 @@ export class EntidadGrafica {
     }
 
     
+    
+    setPosicion(x: number, y: number) {
+        this.imagenenescena.setX(x);
+        this.imagenenescena.setY(y);
+    }
+
+
     setAnimacion(animacion: string) {
         this.imagenenescena.play(animacion);
     }

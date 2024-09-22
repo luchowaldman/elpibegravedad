@@ -3,6 +3,7 @@ import Phaser from 'phaser';
 import { Imagen } from './imagen';
 import { Animacion } from './animacion';
 import { EntidadGrafica } from './entidadgrafica';
+import { AgendaAccionesGrafica }  from './AgendaAccionesGrafica';
 import { AnimacionEntidadGrafica } from './animacionentidadgrafica';
 import { Sonido } from './sonido';
 
@@ -10,6 +11,7 @@ export class graficoJuego {
     
     private game: Phaser.Game;
     private scene: Phaser.Scene;
+    public agenda: AgendaAccionesGrafica;
 
     sonidos: Sonido[] = [];
     imagenes: Imagen[] = [];
@@ -18,12 +20,13 @@ export class graficoJuego {
     
     entidades: EntidadGrafica[] = [];
     
-    GetEntidad(id: string): EntidadGrafica | undefined {
+    GetEntidad(id: string): EntidadGrafica {
         return this.entidades.find(entidad => entidad.id === id);
     }
     
     constructor() {
         //super('Juego');
+        this.agenda = new AgendaAccionesGrafica(60);
     }
 
     init() {
@@ -103,11 +106,11 @@ export class graficoJuego {
         this.sonidos.forEach(sonido => {
             sonido.agregar(this.scene)
         });
-        
-  }
+    }
+
 
   update() {
-        
+    this.agenda?.actualizar()
   }
 
   setPosicionCamara(posicion: number) {
