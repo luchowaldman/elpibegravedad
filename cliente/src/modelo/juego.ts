@@ -5,12 +5,8 @@ import { Animacion } from './animacion';
 import { EntidadGrafica } from './entidadgrafica';
 
 export class Juego {
-    private player!: Phaser.Physics.Arcade.Sprite;
-    private platforms!: Phaser.Physics.Arcade.StaticGroup;
-    private cursors!: Phaser.Types.Input.Keyboard.CursorKeys;
-    private otherPlayers: { [key: string]: any } = {};
+    
     private game: Phaser.Game;
-
     private scene: Phaser.Scene;
 
     imagenes: Imagen[] = [];
@@ -96,19 +92,25 @@ export class Juego {
   }
 
 
-    create() {
+  create() {
         // Añadir fondo
         this.scene.add.image(400, 300, 'sky').setScrollFactor(0);
+        //this.scene.physics.world.setBounds(0, 0, 3000, 600);
+        this.scene.cameras.main.setBounds(0, 0, 3000, 600);
 
         this.entidades.forEach(entidad => {
             entidad.agregar(this.scene)
         });
         
-    }
+  }
 
-    update() {
+  update() {
         
-    }
+  }
+
+  setPosicionCamara(posicion: number) {
+    this.scene.cameras.main.scrollX  = posicion;
+  }
 }
 
 
