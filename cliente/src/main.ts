@@ -1,8 +1,8 @@
 import './assets/main.css'
-import { Juego }  from './modelo/juego';
+import { graficoJuego }  from './modelo/graficoJuego';
 import { JuegoFactory }  from './modelo/juegoFactory';
 
-const juego: Juego = (new JuegoFactory()).juego_ejemplo1();
+const juego: graficoJuego = (new JuegoFactory()).juego_ejemplo1();
 juego.init();
 
 

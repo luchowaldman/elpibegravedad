@@ -1,4 +1,4 @@
-import { Juego } from './juego';
+import { graficoJuego } from './graficoJuego';
 import { Imagen } from './imagen';
 import { Animacion } from './animacion';
 import { EntidadGrafica } from './entidadgrafica';
@@ -6,8 +6,8 @@ import { Sonido } from './sonido';
 import { AnimacionEntidadGrafica } from './animacionentidadgrafica';
 
 export class JuegoFactory {
-    juego_ejemplo1(): Juego {
-        const juego = new Juego();
+    juego_ejemplo1(): graficoJuego {
+        const juego = new graficoJuego();
 
         
         juego.sonidos.push(new Sonido('cancion', '/audio/musica_juego.mp3'));

@@ -6,7 +6,7 @@ import { EntidadGrafica } from './entidadgrafica';
 import { AnimacionEntidadGrafica } from './animacionentidadgrafica';
 import { Sonido } from './sonido';
 
-export class Juego {
+export class graficoJuego {
     
     private game: Phaser.Game;
     private scene: Phaser.Scene;
