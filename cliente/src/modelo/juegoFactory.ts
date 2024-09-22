@@ -6,7 +6,7 @@ import { Sonido } from './sonido';
 
 export class JuegoFactory {
     juego_ejemplo1(): Juego {
-        var juego = new Juego();
+        const juego = new Juego();
 
         
         juego.sonidos.push(new Sonido('cancion', '/audio/musica_juego.mp3'));
@@ -19,7 +19,7 @@ export class JuegoFactory {
         // Añadir animaciones al vector 'animaciones'
         juego.animaciones.push(new Animacion('dude', 'https://labs.phaser.io/assets/sprites/dude.png', 32, 48));
 
-        var ent = new EntidadGrafica("pared1", "ground", 200, 200);
+        const ent = new EntidadGrafica("pared1", "ground", 200, 200);
         ent.escala = 1.4;
         juego.entidades.push(ent);
 
@@ -28,7 +28,7 @@ export class JuegoFactory {
         juego.entidades.push(new EntidadGrafica("parte3", "ground", 630, 200));
 
         
-        var ent2 = new EntidadGrafica("tipo", "dude", 200, 140);
+        const ent2 = new EntidadGrafica("tipo", "dude", 200, 140);
         ent2.numero_frame = 5;
         ent2.velocidadX = 40;
         juego.entidades.push(ent2);

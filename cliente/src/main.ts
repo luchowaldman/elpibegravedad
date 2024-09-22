@@ -2,7 +2,7 @@ import './assets/main.css'
 import { Juego }  from './modelo/juego';
 import { JuegoFactory }  from './modelo/juegoFactory';
 
-var juego: Juego = (new JuegoFactory()).juego_ejemplo1();
+const juego: Juego = (new JuegoFactory()).juego_ejemplo1();
 juego.init();
 
 

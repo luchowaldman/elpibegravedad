@@ -22,7 +22,7 @@ export class Juego {
     }
 
     init() {
-        let config: Phaser.Types.Core.GameConfig = {
+        const config: Phaser.Types.Core.GameConfig = {
             type: Phaser.AUTO,
             width: 800,
             height: 600,
