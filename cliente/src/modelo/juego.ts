@@ -1,20 +1,29 @@
 ﻿// src/GameScene.ts
 import Phaser from 'phaser';
+import { Imagen } from './imagen';
+import { Animacion } from './animacion';
 
-export class Juego extends Phaser.Scene {
+export class Juego {
     private player!: Phaser.Physics.Arcade.Sprite;
     private platforms!: Phaser.Physics.Arcade.StaticGroup;
     private cursors!: Phaser.Types.Input.Keyboard.CursorKeys;
     private otherPlayers: { [key: string]: any } = {};
+    private game: Phaser.Game;
 
+    private scene: Phaser.Scene;
+
+    imagenes: Imagen[] = [];
+    animaciones: Animacion[] = [];
+ 
+    
     constructor() {
-        super('Juego');
+        //super('Juego');
     }
 
     init() {
         let config: Phaser.Types.Core.GameConfig = {
             type: Phaser.AUTO,
-            width: 1800,
+            width: 800,
             height: 600,
             parent: 'juego-container',
             physics: {
@@ -25,28 +34,56 @@ export class Juego extends Phaser.Scene {
                 }
             },
             scene: {
-                preload: this.preload,
-                create: this.create,
-                update: this.update
+                preload: this.preload.bind(this),
+                create: this.create.bind(this),
+                update: this.update.bind(this)
             }
         };
-        const game = new Phaser.Game(config);
+        this.cargarImagenes();
+        this.game = new Phaser.Game(config);
+        this.scene = this.game.scene.scenes[0];
 
     }
 
-    preload() {
-       // this.load.image('sky', 'https://labs.phaser.io/assets/skies/space3.png');
-        this.load.image('ground', '/img/piso_02.png');
-        this.load.image('star', 'https://labs.phaser.io/assets/sprites/star.png');
-        this.load.spritesheet('dude', 'https://labs.phaser.io/assets/sprites/dude.png', { frameWidth: 32, frameHeight: 48 });
-    }
+    
+    
+    
+     // Función para cargar las imágenes y animaciones en los vectores correspondientes
+  cargarImagenes() {
+    // Añadir imágenes al vector 'imagenes'
+    this.imagenes.push(new Imagen('sky', 'https://labs.phaser.io/assets/skies/space3.png'));
+    this.imagenes.push(new Imagen('ground', '/img/piso_02.png'));
+    this.imagenes.push(new Imagen('star', 'https://labs.phaser.io/assets/sprites/star.png'));
+
+    // Añadir animaciones al vector 'animaciones'
+    this.animaciones.push(new Animacion('dude', 'https://labs.phaser.io/assets/sprites/dude.png', 32, 48));
+  }
+
+  // Función de preload que recorre los vectores y carga las imágenes/animaciones
+  preload() {
+    // Cargar imágenes
+    
+    this.scene = this.game.scene.scenes[0];
+    if (this.imagenes)
+    this.imagenes.forEach(imagen => {
+        this.scene.load.image(imagen.nombre, imagen.url);
+    });
+
+    // Cargar animaciones (spritesheets)
+    if (this.animaciones )
+    this.animaciones.forEach(animacion => {
+        this.scene.load.spritesheet(animacion.nombre, animacion.url, { frameWidth: animacion.largoCuadro, frameHeight: animacion.anchoCuadro });
+    });
+  }
+
 
     create() {
         // Añadir fondo
-        this.add.image(400, 300, 'sky').setScrollFactor(0);
+        this.scene.add.image(400, 300, 'sky').setScrollFactor(0);
 
+        
         // Crear grupo de plataformas
-        this.platforms = this.physics.add.staticGroup();
+        this.platforms = this.scene.physics.add.staticGroup();
 
         // Crear plataformas
         this.platforms.create(200, 400, 'ground').setScale(1.4).refreshBody();
@@ -54,7 +91,7 @@ export class Juego extends Phaser.Scene {
         this.platforms.create(600, 400, 'ground');
 
         // Crear jugador
-        this.player = this.physics.add.sprite(100, 450, 'dude');
+        this.player = this.scene.physics.add.sprite(100, 450, 'dude');
         this.player.setBounce(0.2);
         this.player.setCollideWorldBounds(true);
 
@@ -82,6 +119,7 @@ export class Juego extends Phaser.Scene {
         // Habilitar colisiones entre el jugador y las plataformas
         this.physics.add.collider(this.player, this.platforms);
 
+        /*
         // Configurar controles
         this.cursors = this.input.keyboard.createCursorKeys();
 
@@ -91,6 +129,7 @@ export class Juego extends Phaser.Scene {
         // Hacer que la cámara siga al jugador
         this.cameras.main.setBounds(0, 0, 3000, 600);
         // this.cameras.main.startFollow(this.player);
+        */
     }
 
     update() {
@@ -100,6 +139,7 @@ export class Juego extends Phaser.Scene {
        // }
 
         // Controles de movimiento
+        /*
         if (this.cursors.left.isDown) {
             this.player.setVelocityX(-160);
             this.player.anims.play('left', true);
@@ -115,6 +155,7 @@ export class Juego extends Phaser.Scene {
         if (this.cursors.up.isDown && this.player.body.touching.down) {
             this.player.setVelocityY(-330);
         }
+        */
     }
 }
 
