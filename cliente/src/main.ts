@@ -1,10 +1,13 @@
 import './assets/main.css'
 import { AccionGrafica, AccionGraficaAnimar, AccionGraficaCambiarVelovidad } from './modelo/AccionGrafica';
-import { graficoJuego }  from './modelo/graficoJuego';
-import { JuegoFactory }  from './modelo/juegoFactory';
+import { graficoJuego } from './modelo/graficoJuego';
+import { JuegoFactory } from './modelo/juegoFactory';
+import { Client } from './modelo/client_socketio';
 
 const graficos: graficoJuego = (new JuegoFactory()).juego_ejemplo1();
 graficos.init();
+
+var client = new Client(graficos);
 
 document.addEventListener('DOMContentLoaded', () => {
     const rangeInput = document.getElementById('camarainput') as HTMLInputElement;
@@ -19,17 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnMover = document.getElementById('btnMover') as HTMLInputElement;
     if (btnMover) {
         btnMover.addEventListener('click', () => {
-
-            
-            const player = graficos.GetEntidad("tipo");
-            graficos.agenda.agregarAccionGrafica(1, new AccionGraficaCambiarVelovidad(player, 40, 0) );
-            graficos.agenda.agregarAccionGrafica(1, new AccionGraficaAnimar(player, "animacion") );
-
-            graficos.agenda.iniciar();
+            client.sendChangeGravity();
         });
     }
-
-
-
-    
 });

@@ -36,16 +36,16 @@ export class AccionGraficaSetPosicion extends AccionGrafica {
     }
 
     ejecutar(): void {
-        this.entidad.setPosicion(40, 0);
+        this.entidad.setPosicion(this.x, this.y);
     }
 }
 
 
 export class AccionGraficaAnimar extends AccionGrafica {
     entidad: EntidadGrafica;
-    key_animacion:string;
+    key_animacion: string;
 
-    constructor(entidad: EntidadGrafica, key_animacion:string) {
+    constructor(entidad: EntidadGrafica, key_animacion: string) {
         super(); // Llama al constructor de la clase base si es necesario
         this.entidad = entidad;
         this.key_animacion = key_animacion;
