@@ -1,4 +1,5 @@
 import { EntidadGrafica } from "./entidadgrafica";
+import { graficoJuego } from "./graficoJuego";
 import { Sonido } from "./sonido";
 
 export class AccionGrafica {
@@ -74,8 +75,6 @@ export class AccionGraficaAnimar extends AccionGrafica {
     }
 }
 
-
-
 export class AccionGraficaEjecutarSonido extends AccionGrafica {
     sonido: Sonido;
 
@@ -86,5 +85,33 @@ export class AccionGraficaEjecutarSonido extends AccionGrafica {
 
     ejecutar(): void {
         this.sonido.tocar();
+    }
+}
+
+
+export class AccionGraficaAgregarEntidad extends AccionGrafica {
+    
+    public id: string;
+    public nombreImagen: string;
+    public x: number;
+    public y: number;
+    private grafico: graficoJuego;
+
+    constructor(grafico: graficoJuego, id: string, nombreImagen: string, x: number, y: number)
+    {
+        super();
+        this.grafico = grafico;
+        this.id = id;
+        this.nombreImagen = nombreImagen;
+        this.x = x;
+        this.y = y;
+        
+    }
+    
+
+    ejecutar(): void {
+        this.grafico.entidades.push(new EntidadGrafica(this.id, this.nombreImagen, this.x, this.y))
+        
+        console.log("rompelaaaaa");
     }
 }

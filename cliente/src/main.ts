@@ -1,5 +1,5 @@
 import './assets/main.css'
-import { AccionEscribirPorConsola, AccionGrafica, AccionGraficaAnimar, AccionGraficaCambiarVelovidad, AccionGraficaEjecutarSonido } from './modelo/AccionGrafica';
+import { AccionEscribirPorConsola, AccionGrafica, AccionGraficaAgregarEntidad, AccionGraficaAnimar, AccionGraficaCambiarVelovidad, AccionGraficaEjecutarSonido } from './modelo/AccionGrafica';
 import { graficoJuego }  from './modelo/graficoJuego';
 import { JuegoFactory }  from './modelo/juegoFactory';
 
@@ -21,13 +21,13 @@ document.addEventListener('DOMContentLoaded', () => {
         btnMover.addEventListener('click', () => {
 
             
-            const player = graficos.GetEntidad("tipo");
+            const player = graficos.GetEntidad("player");
             const sonido = graficos.GetSonido("cancion")
-            graficos.agenda.agregarAccionGrafica(1, new AccionGraficaCambiarVelovidad(player, 40, 0) );
+            graficos.agenda.agregarAccionGrafica(1, new AccionGraficaCambiarVelovidad(player, 50, 0) );
             graficos.agenda.agregarAccionGrafica(1, new AccionGraficaAnimar(player, "animacioncaminando") );
             graficos.agenda.agregarAccionGrafica(1, new AccionGraficaEjecutarSonido(sonido));
             
-            graficos.agenda.agregarAccionGrafica(420, new AccionGraficaCambiarVelovidad(player, 0, -100) );
+            graficos.agenda.agregarAccionGrafica(420, new AccionGraficaCambiarVelovidad(player, 70, -100) );
             graficos.agenda.agregarAccionGrafica(420, new AccionGraficaAnimar(player, "animacionvolando") );
             
             graficos.agenda.iniciar();
@@ -39,10 +39,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnAccion = document.getElementById('btnAccion') as HTMLInputElement;
     if (btnAccion) {
         btnAccion.addEventListener('click', () => {
-            
-            const player = graficos.GetEntidad("tipo");
-            const frame_actual = graficos.agenda.getFrame();
-            graficos.agenda.agregarAccionGrafica(frame_actual,new  AccionGraficaCambiarVelovidad(player, -40, 0));
+            const frame_actual = graficos.agenda.getFrame(); 
+            graficos.agenda.agregarAccionGrafica(frame_actual ,new  AccionGraficaAgregarEntidad(graficos, "bala_1", "player", 90, 90));
 
         });
     }

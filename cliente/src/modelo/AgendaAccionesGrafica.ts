@@ -40,7 +40,7 @@ export class AgendaAccionesGrafica {
     }
 
     
-    getFrame(): number | null {
+    getFrame(): number  {
         if (this.inicio === null) {
             return null;
         }
