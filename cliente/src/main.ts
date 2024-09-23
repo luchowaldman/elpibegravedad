@@ -24,10 +24,11 @@ document.addEventListener('DOMContentLoaded', () => {
             const player = graficos.GetEntidad("tipo");
             const sonido = graficos.GetSonido("cancion")
             graficos.agenda.agregarAccionGrafica(1, new AccionGraficaCambiarVelovidad(player, 40, 0) );
-            graficos.agenda.agregarAccionGrafica(1, new AccionGraficaAnimar(player, "animacion") );
+            graficos.agenda.agregarAccionGrafica(1, new AccionGraficaAnimar(player, "animacioncaminando") );
             graficos.agenda.agregarAccionGrafica(1, new AccionGraficaEjecutarSonido(sonido));
             
-            graficos.agenda.agregarAccionGrafica(120, new AccionGraficaCambiarVelovidad(player, 0, -100) );
+            graficos.agenda.agregarAccionGrafica(420, new AccionGraficaCambiarVelovidad(player, 0, -100) );
+            graficos.agenda.agregarAccionGrafica(420, new AccionGraficaAnimar(player, "animacionvolando") );
             
             graficos.agenda.iniciar();
         });
