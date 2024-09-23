@@ -1,4 +1,5 @@
 import { EntidadGrafica } from "./entidadgrafica";
+import { Sonido } from "./sonido";
 
 export class AccionGrafica {
     ejecutar(): void {
@@ -53,5 +54,20 @@ export class AccionGraficaAnimar extends AccionGrafica {
 
     ejecutar(): void {
         this.entidad.setAnimacion(this.key_animacion);
+    }
+}
+
+
+
+export class AccionGraficaEjecutarSonido extends AccionGrafica {
+    sonido: Sonido;
+
+    constructor(sonido: Sonido) {
+        super(); // Llama al constructor de la clase base si es necesario
+        this.sonido = sonido;
+    }
+
+    ejecutar(): void {
+        this.sonido.tocar();
     }
 }

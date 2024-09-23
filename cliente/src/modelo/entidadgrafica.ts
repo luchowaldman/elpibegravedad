@@ -2,6 +2,7 @@ export class EntidadGrafica {
 
 
 
+
     public id: string;
     public nombreImagen: string;
     public x: number;
@@ -48,10 +49,8 @@ export class EntidadGrafica {
 
     agregar(scene: Phaser.Scene) {
         this.imagenenescena = scene.physics.add.sprite(this.x, this.y, this.nombreImagen);
-
-
-
     }
+    
 
 
 }

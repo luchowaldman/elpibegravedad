@@ -24,8 +24,8 @@ export class JuegoFactory {
         juego.imagenes.push(new Imagen('star', 'https://labs.phaser.io/assets/sprites/star.png'));
 
         // Añadir animaciones al vector 'animaciones'
-        juego.animaciones.push(new Animacion('dude', '/img/perso1.png', 70, 100));
-        juego.animacionesendadgrafica.push(new AnimacionEntidadGrafica('animacion', 'dude', 0, 3, 10, -1))
+        juego.animaciones.push(new Animacion('dude', '/img/player_caminando1.png', 70, 100));
+        juego.animacionesendadgrafica.push(new AnimacionEntidadGrafica('animacion', 'dude', 0, 1, 7, -1))
 
         
 

@@ -24,6 +24,10 @@ export class graficoJuego {
         return this.entidades.find(entidad => entidad.id === id);
     }
     
+    GetSonido(nombre: string): Sonido {
+        return this.sonidos.find(sonido => sonido.nombre === nombre);
+    }
+    
     constructor() {
         //super('Juego');
         this.agenda = new AgendaAccionesGrafica(60);
