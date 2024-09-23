@@ -26,8 +26,6 @@ export class JuegoFactory {
         // Añadir animaciones al vector 'animaciones'
         juego.animaciones.push(new Animacion('player_caminando', '/img/player_caminando1.png', 70, 100));
         juego.animacionesendadgrafica.push(new AnimacionEntidadGrafica('animacioncaminando', 'player_caminando', 0, 1, 7, -1))
-
-
         juego.animaciones.push(new Animacion('player_volando', '/img/player_volando.png', 70, 100));
         juego.animacionesendadgrafica.push(new AnimacionEntidadGrafica('animacionvolando', 'player_volando', 0, 1, 7, -1))
 
@@ -36,14 +34,7 @@ export class JuegoFactory {
         
 
 
-        juego.entidades.push(new EntidadGrafica("ent_piso1", "piso1", 130, 500));
-        juego.entidades.push(new EntidadGrafica("ent_piso2", "piso2", 230, 500));
-        juego.entidades.push(new EntidadGrafica("ent_piso3", "piso2", 330, 500));
-        juego.entidades.push(new EntidadGrafica("ent_piso4", "piso3", 430, 500));
-
         
-        const ent2 = new EntidadGrafica("player", "player_caminando", 130, 445);
-        juego.entidades.push(ent2);
 
 
         return juego;

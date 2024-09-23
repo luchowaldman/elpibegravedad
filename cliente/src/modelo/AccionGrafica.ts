@@ -26,65 +26,73 @@ export class AccionEscribirPorConsola extends AccionGrafica {
 
 
 export class AccionGraficaCambiarVelovidad extends AccionGrafica {
-    entidad: EntidadGrafica;
     x: number;
     y: number;
+    grafico: graficoJuego;
+    entidad: string;
 
-    constructor(entidad: EntidadGrafica, x: number, y: number) {
+    constructor(grafico: graficoJuego, entidad: string, x: number, y: number) {
         super(); // Llama al constructor de la clase base si es necesario
+        this.grafico = grafico;
         this.entidad = entidad;
         this.x = x;
         this.y = y;
     }
 
     ejecutar(): void {
-        this.entidad.setVelocity(this.x, this.y);
+        this.grafico.GetEntidad(this.entidad)?.setVelocity(this.x, this.y);
     }
 }
 
 export class AccionGraficaSetPosicion extends AccionGrafica {
-    entidad: EntidadGrafica;
+    grafico: graficoJuego;
+    entidad: string;
     x: number;
     y: number;
 
-    constructor(entidad: EntidadGrafica, x: number, y: number) {
+    constructor(grafico: graficoJuego, entidad: string, x: number, y: number) {
         super(); // Llama al constructor de la clase base si es necesario
         this.entidad = entidad;
+        this.grafico = grafico;
         this.x = x;
         this.y = y;
     }
 
     ejecutar(): void {
-        this.entidad.setPosicion(40, 0);
+        this.grafico.GetEntidad(this.entidad)?.setPosicion(40, 0);
     }
 }
 
 
 export class AccionGraficaAnimar extends AccionGrafica {
-    entidad: EntidadGrafica;
+    entidad: string;
     key_animacion:string;
+    grafico: graficoJuego;
 
-    constructor(entidad: EntidadGrafica, key_animacion:string) {
+    constructor(grafico: graficoJuego, entidad: string, key_animacion:string) {
         super(); // Llama al constructor de la clase base si es necesario
         this.entidad = entidad;
+        this.grafico = grafico;
         this.key_animacion = key_animacion;
     }
 
     ejecutar(): void {
-        this.entidad.setAnimacion(this.key_animacion);
+        this.grafico.GetEntidad(this.entidad)?.setAnimacion(this.key_animacion);
     }
 }
 
 export class AccionGraficaEjecutarSonido extends AccionGrafica {
-    sonido: Sonido;
+    sonido: string;
+    grafico: graficoJuego;
 
-    constructor(sonido: Sonido) {
+    constructor(grafico: graficoJuego, sonido: string) {
         super(); // Llama al constructor de la clase base si es necesario
         this.sonido = sonido;
+        this.grafico = grafico;
     }
 
     ejecutar(): void {
-        this.sonido.tocar();
+        this.grafico.GetSonido(this.sonido).tocar();
     }
 }
 
@@ -110,8 +118,6 @@ export class AccionGraficaAgregarEntidad extends AccionGrafica {
     
 
     ejecutar(): void {
-        this.grafico.entidades.push(new EntidadGrafica(this.id, this.nombreImagen, this.x, this.y))
-        
-        console.log("rompelaaaaa");
+        this.grafico.AdddEntidad(new EntidadGrafica(this.id, this.nombreImagen, this.x, this.y));
     }
 }
