@@ -81,6 +81,27 @@ export class AccionGraficaAnimar extends AccionGrafica {
     }
 }
 
+
+
+
+export class AccionGraficaRotar extends AccionGrafica {
+    entidad: string;
+    rotacion:number;
+    grafico: graficoJuego;
+
+    constructor(grafico: graficoJuego, entidad: string, rotacion:number) {
+        super(); // Llama al constructor de la clase base si es necesario
+        this.entidad = entidad;
+        this.grafico = grafico;
+        this.rotacion = rotacion;
+    }
+
+    ejecutar(): void {
+        this.grafico.GetEntidad(this.entidad)?.rotar(this.rotacion)
+    }
+}
+
+
 export class AccionGraficaEjecutarSonido extends AccionGrafica {
     sonido: string;
     grafico: graficoJuego;

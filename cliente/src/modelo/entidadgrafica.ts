@@ -1,5 +1,5 @@
 export class EntidadGrafica {
-
+    
 
 
 
@@ -27,6 +27,9 @@ export class EntidadGrafica {
     
     setFrame(frame: number) {
         this.imagenenescena.setFrame(frame);
+    }
+    rotar(rotacion: number) {
+        this.imagenenescena.rotation = rotacion;
     }
 
     

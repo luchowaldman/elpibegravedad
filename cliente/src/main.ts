@@ -1,5 +1,5 @@
 import './assets/main.css'
-import { AccionEscribirPorConsola, AccionGrafica, AccionGraficaAgregarEntidad, AccionGraficaAnimar, AccionGraficaCambiarVelovidad, AccionGraficaEjecutarSonido } from './modelo/AccionGrafica';
+import { AccionEscribirPorConsola, AccionGrafica, AccionGraficaAgregarEntidad, AccionGraficaAnimar, AccionGraficaCambiarVelovidad, AccionGraficaEjecutarSonido, AccionGraficaRotar } from './modelo/AccionGrafica';
 import { EntidadGrafica } from './modelo/entidadgrafica';
 import { graficoJuego }  from './modelo/graficoJuego';
 import { JuegoFactory }  from './modelo/juegoFactory';
@@ -57,8 +57,14 @@ document.addEventListener('DOMContentLoaded', () => {
     if (btnAccion) {
         btnAccion.addEventListener('click', () => {
             const frame_actual = graficos.agenda.getFrame(); 
-            graficos.agenda.agregarAccionGrafica(frame_actual ,new  AccionGraficaAgregarEntidad(graficos, "bala_1", "player", 90, 90));
-
+            graficos.agenda.agregarAccionGrafica(frame_actual ,new  AccionGraficaAgregarEntidad(graficos, "play", "player_caminando", 90, 90));
+            for (let i = 0; i < 10; i++) {
+                const fr = 1;
+                const ft = 60;
+                graficos.agenda.agregarAccionGrafica(frame_actual + (i * ft),new  AccionGraficaRotar(graficos, "play", i * fr));
+            }
+            
+            graficos.agenda.iniciar();
         });
     }
 
