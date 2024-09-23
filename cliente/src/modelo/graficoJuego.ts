@@ -46,7 +46,7 @@ export class graficoJuego {
     init() {
         const config: Phaser.Types.Core.GameConfig = {
             type: Phaser.AUTO,
-            width: 800,
+            width: 1500,
             height: 600,
             parent: 'juego-container',
             physics: {
@@ -108,7 +108,7 @@ export class graficoJuego {
 
         
         // Añadir fondo
-        this.scene.add.image(400, 300, 'sky').setScrollFactor(0);
+        this.scene.add.image(700, 600, 'sky').setScale(1.5).setScrollFactor(0);
         this.scene.cameras.main.setBounds(0, 0, 3000, 600);
 
 
