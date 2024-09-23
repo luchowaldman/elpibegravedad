@@ -7,6 +7,23 @@ export class AccionGrafica {
     }
 }
 
+
+
+
+export class AccionEscribirPorConsola extends AccionGrafica {
+    texto: string;
+
+    constructor(texto: string) {
+        super(); // Llama al constructor de la clase base si es necesario
+        this.texto = texto;
+    }
+
+    ejecutar(): void {
+        console.log(this.texto);
+    }
+}
+
+
 export class AccionGraficaCambiarVelovidad extends AccionGrafica {
     entidad: EntidadGrafica;
     x: number;

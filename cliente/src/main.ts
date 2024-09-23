@@ -1,5 +1,5 @@
 import './assets/main.css'
-import { AccionGrafica, AccionGraficaAnimar, AccionGraficaCambiarVelovidad, AccionGraficaEjecutarSonido } from './modelo/AccionGrafica';
+import { AccionEscribirPorConsola, AccionGrafica, AccionGraficaAnimar, AccionGraficaCambiarVelovidad, AccionGraficaEjecutarSonido } from './modelo/AccionGrafica';
 import { graficoJuego }  from './modelo/graficoJuego';
 import { JuegoFactory }  from './modelo/juegoFactory';
 
@@ -33,6 +33,20 @@ document.addEventListener('DOMContentLoaded', () => {
             graficos.agenda.iniciar();
         });
     }
+
+
+    
+    const btnAccion = document.getElementById('btnAccion') as HTMLInputElement;
+    if (btnAccion) {
+        btnAccion.addEventListener('click', () => {
+            
+            const player = graficos.GetEntidad("tipo");
+            const frame_actual = graficos.agenda.getFrame();
+            graficos.agenda.agregarAccionGrafica(frame_actual,new  AccionGraficaCambiarVelovidad(player, -40, 0));
+
+        });
+    }
+
 
 
 

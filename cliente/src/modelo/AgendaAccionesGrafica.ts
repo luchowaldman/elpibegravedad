@@ -38,4 +38,14 @@ export class AgendaAccionesGrafica {
             }
         }
     }
+
+    
+    getFrame(): number | null {
+        if (this.inicio === null) {
+            return null;
+        }
+
+        const tiempoTranscurrido = Date.now() - this.inicio;
+        return Math.floor((tiempoTranscurrido / 1000) * this.framePorSegundo);
+    }
 }
