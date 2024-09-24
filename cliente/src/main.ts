@@ -1,11 +1,20 @@
 import './assets/main.css'
+
+import { AccionGrafica, AccionGraficaAnimar, AccionGraficaCambiarVelovidad } from './modelo/AccionGrafica';
+import { graficoJuego } from './modelo/graficoJuego';
+import { JuegoFactory } from './modelo/juegoFactory';
+import { Client } from './modelo/client_socketio';
+
 import { AccionEscribirPorConsola, AccionGrafica, AccionGraficaAgregarEntidad, AccionGraficaAnimar, AccionGraficaCambiarVelovidad, AccionGraficaEjecutarSonido, AccionGraficaRotar } from './modelo/AccionGrafica';
 import { EntidadGrafica } from './modelo/entidadgrafica';
 import { graficoJuego }  from './modelo/graficoJuego';
 import { JuegoFactory }  from './modelo/juegoFactory';
 
+
 const graficos: graficoJuego = (new JuegoFactory()).juego_ejemplo1();
 graficos.init();
+
+var client = new Client(graficos);
 
 document.addEventListener('DOMContentLoaded', () => {
     const rangeInput = document.getElementById('camarainput') as HTMLInputElement;
@@ -20,8 +29,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnMover = document.getElementById('btnMover') as HTMLInputElement;
     if (btnMover) {
         btnMover.addEventListener('click', () => {
+            client.sendChangeGravity();
 
-            
+  /*          
 
             graficos.AdddEntidad(new EntidadGrafica("ent_piso1", "piso1", 130, 500));
             graficos.AdddEntidad(new EntidadGrafica("ent_piso2", "piso2", 230, 500));
@@ -43,7 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
         
             const ent2 = new EntidadGrafica("player", "player_caminando", 130, 445);
             graficos.AdddEntidad(ent2);
-
+*/
   /*          
             graficos.agenda.agregarAccionGrafica(0 ,new  AccionGraficaAgregarEntidad(graficos, "bala_1", "player", 90, 90));
             graficos.agenda.agregarAccionGrafica(0 ,new  AccionGraficaAgregarEntidad(graficos, "bala_1", "player", 90, 90));

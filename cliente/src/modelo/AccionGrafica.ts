@@ -59,12 +59,14 @@ export class AccionGraficaSetPosicion extends AccionGrafica {
     }
 
     ejecutar(): void {
+
         this.grafico.GetEntidad(this.entidad)?.setPosicion(40, 0);
     }
 }
 
 
 export class AccionGraficaAnimar extends AccionGrafica {
+
     entidad: string;
     key_animacion:string;
     grafico: graficoJuego;
