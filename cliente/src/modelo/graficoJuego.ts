@@ -18,10 +18,24 @@ export class graficoJuego {
     animaciones: Animacion[] = [];
     animacionesendadgrafica :AnimacionEntidadGrafica[] = [];
     
-    entidades: EntidadGrafica[] = [];
+    private entidades: EntidadGrafica[] = [];
     
     GetEntidad(id: string): EntidadGrafica {
         return this.entidades.find(entidad => entidad.id === id);
+    }
+
+   
+    AdddEntidad(entidad: EntidadGrafica): EntidadGrafica {
+        entidad.agregar(this.scene);
+        this.entidades.push(entidad)
+        return entidad;
+    }
+ 
+
+
+    
+    GetSonido(nombre: string): Sonido {
+        return this.sonidos.find(sonido => sonido.nombre === nombre);
     }
     
     constructor() {
@@ -32,7 +46,7 @@ export class graficoJuego {
     init() {
         const config: Phaser.Types.Core.GameConfig = {
             type: Phaser.AUTO,
-            width: 800,
+            width: 1500,
             height: 600,
             parent: 'juego-container',
             physics: {
@@ -94,13 +108,9 @@ export class graficoJuego {
 
         
         // Añadir fondo
-        this.scene.add.image(400, 300, 'sky').setScrollFactor(0);
-        //this.scene.physics.world.setBounds(0, 0, 3000, 600);
+        this.scene.add.image(700, 600, 'sky').setScale(1.5).setScrollFactor(0);
         this.scene.cameras.main.setBounds(0, 0, 3000, 600);
 
-        this.entidades.forEach(entidad => {
-            entidad.agregar(this.scene)
-        });
 
         
         this.sonidos.forEach(sonido => {

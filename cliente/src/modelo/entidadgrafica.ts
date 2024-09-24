@@ -1,4 +1,5 @@
 export class EntidadGrafica {
+    
 
 
 
@@ -6,9 +7,8 @@ export class EntidadGrafica {
     public nombreImagen: string;
     public x: number;
     public y: number;
-    
-    
-    imagenenescena: Phaser.Physics.Arcade.Sprite;
+       
+    imagenenescena: Phaser.Physics.Arcade.Sprite ;
 
     constructor(id: string, nombreImagen: string, x: number, y: number)
     {
@@ -26,6 +26,9 @@ export class EntidadGrafica {
     
     setFrame(frame: number) {
         this.imagenenescena.setFrame(frame);
+    }
+    rotar(rotacion: number) {
+        this.imagenenescena.angle = rotacion;
     }
 
     
@@ -48,10 +51,8 @@ export class EntidadGrafica {
 
     agregar(scene: Phaser.Scene) {
         this.imagenenescena = scene.physics.add.sprite(this.x, this.y, this.nombreImagen);
-
-
-
     }
+    
 
 
 }
