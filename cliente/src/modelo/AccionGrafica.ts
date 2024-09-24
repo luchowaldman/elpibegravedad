@@ -59,8 +59,7 @@ export class AccionGraficaSetPosicion extends AccionGrafica {
     }
 
     ejecutar(): void {
-
-        this.grafico.GetEntidad(this.entidad)?.setPosicion(40, 0);
+        this.grafico.GetEntidad(this.entidad)?.setPosicion(this.x, this.y);
     }
 }
 

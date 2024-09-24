@@ -39,8 +39,8 @@ export class Client {
         socket.on("playerPosition", (x, y) => {
             console.log("received player position (%d, %d)", x, y)
 
-            const player = graficos.GetEntidad("tipo");
-            graficos.agenda.agregarAccionGrafica(1, new AccionGraficaSetPosicion(player, x, y));
+            
+            graficos.agenda.agregarAccionGrafica(1, new AccionGraficaSetPosicion(graficos, "player_server", y, x));
 
             graficos.agenda.iniciar();
         });
