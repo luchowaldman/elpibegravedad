@@ -22,24 +22,22 @@ export class JuegoFactory {
         juego.imagenes.push(new Imagen('piso2', '/img/piso_viro_med.png'));
         juego.imagenes.push(new Imagen('piso3', '/img/piso_viro_fin.png'));
         juego.imagenes.push(new Imagen('star', 'https://labs.phaser.io/assets/sprites/star.png'));
-
+        
         // Añadir animaciones al vector 'animaciones'
-        juego.animaciones.push(new Animacion('dude', '/img/perso1.png', 70, 100));
-        juego.animacionesendadgrafica.push(new AnimacionEntidadGrafica('animacion', 'dude', 0, 3, 10, -1))
+        juego.animaciones.push(new Animacion('player_caminando', '/img/player_caminando1.png', 70, 100));
+        juego.animacionesendadgrafica.push(new AnimacionEntidadGrafica('animacioncaminando', 'player_caminando', 0, 1, 7, -1))
+        juego.animaciones.push(new Animacion('player_volando', '/img/player_volando.png', 70, 100));
+        juego.animacionesendadgrafica.push(new AnimacionEntidadGrafica('animacionvolando', 'player_volando', 0, 1, 7, -1))
+
+        juego.animaciones.push(new Animacion('lazo', '/img/lazo.png', 20, 30));
+        juego.animacionesendadgrafica.push(new AnimacionEntidadGrafica('lazo', 'lazo', 0, 2, 4, -1))
 
         
 
         
 
 
-        juego.entidades.push(new EntidadGrafica("ent_piso1", "piso1", 130, 500));
-        juego.entidades.push(new EntidadGrafica("ent_piso2", "piso2", 230, 500));
-        juego.entidades.push(new EntidadGrafica("ent_piso3", "piso2", 330, 500));
-        juego.entidades.push(new EntidadGrafica("ent_piso4", "piso3", 430, 500));
-
         
-        const ent2 = new EntidadGrafica("tipo", "dude", 130, 445);
-        juego.entidades.push(ent2);
 
 
         return juego;
