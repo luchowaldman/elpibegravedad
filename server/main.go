@@ -73,7 +73,18 @@ func main() {
 					player.Advance()
 
 					// TODO could probably be outside mutex lock for better performance
-					player.Socket.Emit("playerPosition", player.PosX, player.PosY)
+					player.Socket.Emit("playerPosition", []any{
+						map[string]any{
+							"playerNumber": 1,
+							"x":            player.PosX,
+							"y":            player.PosY,
+						},
+						map[string]any{
+							"playerNumber": 2,
+							"x":            100,
+							"y":            100,
+						},
+					})
 				}
 
 				playersMutex.Unlock()
