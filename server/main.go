@@ -81,13 +81,14 @@ func main() {
 							"tieneGravedadInvertida": false,
 							"estaCaminando":          false,
 						},
-						map[string]any{
-							"numeroJugador":          2,
-							"x":                      100,
-							"y":                      100,
-							"tieneGravedadInvertida": false,
-							"estaCaminando":          false,
-						},
+						// TODO send more players
+						// map[string]any{
+						// 	"numeroJugador":          2,
+						// 	"x":                      100,
+						// 	"y":                      100,
+						// 	"tieneGravedadInvertida": false,
+						// 	"estaCaminando":          false,
+						// },
 					})
 				}
 
