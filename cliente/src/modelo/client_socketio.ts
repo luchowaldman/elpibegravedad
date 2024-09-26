@@ -3,7 +3,13 @@ import { graficoJuego } from './graficoJuego';
 import { AccionGraficaSetPosicion } from "./AccionGrafica";
 
 interface ServerToClientEvents {
-    playerPosition: (x: number, y: number) => void;
+    posicionesDeLosJugadores: (positions: {
+        numeroJugador: number,
+        x: number,
+        y: number,
+        tieneGravedadInvertida: boolean,
+        estaCaminando: boolean,
+    }[]) => void;
 }
 
 interface ClientToServerEvents {
@@ -36,10 +42,14 @@ export class Client {
             console.log(`connect_error due to ${err.message}`);
         });
 
-        socket.on("playerPosition", (x, y) => {
-            console.log("received player position (%d, %d)", x, y)
+        socket.on("posicionesDeLosJugadores", (posicionesDeLosJugadores) => {
+            // TODO hacer un for para todos los jugadores
+            // console.log("received player 2 position (%d, %d)", posicionesDeLosJugadores[1].x, posicionesDeLosJugadores[1].y)
+            let x = posicionesDeLosJugadores[0].x
+            let y = posicionesDeLosJugadores[0].y
 
-            
+            console.log("received player 1 position (%d, %d)", x, y)
+
             graficos.agenda.agregarAccionGrafica(1, new AccionGraficaSetPosicion(graficos, "player_server", y, x));
 
             graficos.agenda.iniciar();
