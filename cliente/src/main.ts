@@ -3,12 +3,15 @@ import { graficoJuego } from './modelo/graficoJuego';
 import { JuegoFactory } from './modelo/juegoFactory';
 import { Client } from './modelo/client_socketio';
 
-import { AccionEscribirPorConsola, AccionGrafica, AccionGraficaAgregarEntidad, AccionGraficaAnimar, AccionGraficaCambiarVelovidad, AccionGraficaEjecutarSonido, AccionGraficaRotar } from './modelo/AccionGrafica';
+import { AccionGraficaAgregarEntidad, AccionGraficaAnimar, AccionGraficaCambiarVelovidad, AccionGraficaRotar } from './modelo/AccionGrafica';
 import { EntidadGrafica } from './modelo/entidadgrafica';
+import { Mapa } from './modelo/mapa';
 
 
 const graficos: graficoJuego = (new JuegoFactory()).juego_ejemplo1();
 graficos.init();
+const mapa: Mapa = new Mapa();
+
 
 let client: Client | undefined; 
 
@@ -33,6 +36,30 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+
+    const btnIniciarAgenda= document.getElementById('btnIniciarAgenda') as HTMLInputElement;
+    if (btnIniciarAgenda) {
+        btnIniciarAgenda.addEventListener('click', async () => {
+            
+                graficos.agenda.iniciar();
+
+
+        });
+    };
+    
+
+    
+    const btnCargarMapa= document.getElementById('btnCargarMapa') as HTMLInputElement;
+    if (btnCargarMapa) {
+        btnCargarMapa.addEventListener('click', async () => {
+            
+                await mapa.cargarMapa("./mapas/mapa1.json");
+                mapa.dibujarMapa(graficos);
+                graficos.agenda.iniciar();
+
+
+        });
+    };
 
     const btnCambiarGravedad = document.getElementById('btnCambirGravedad') as HTMLInputElement;
     if (btnCambiarGravedad) {
