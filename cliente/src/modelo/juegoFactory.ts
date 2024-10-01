@@ -25,6 +25,9 @@ export class JuegoFactory {
         juego.imagenes.push(new Imagen('techo2', Direcciones.obtenerConstante('techo2')!));
         juego.imagenes.push(new Imagen('techo3', Direcciones.obtenerConstante('techo3')!));
 
+        
+        juego.imagenes.push(new Imagen('caja', Direcciones.obtenerConstante('caja')!));
+
 
         juego.imagenes.push(new Imagen('star', Direcciones.obtenerConstante('star')!));
         
