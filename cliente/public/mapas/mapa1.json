@@ -1,0 +1,15 @@
+{
+    "nombre": "Mapa 1",
+    "ancho": 6000,
+    "fondo": "sky",
+    "cancion": "cancion",
+    "plataformas": [
+        { "tipo": "piso", "desdeX": 0, "desdeY": 100, "hastaX": 1000, "hastaY": 100 },
+        { "tipo": "techo", "desdeX": 900, "desdeY": 500, "hastaX": 1200, "hastaY": 500 },
+        { "tipo": "piso", "desdeX": 1100, "desdeY": 100, "hastaX": 3000, "hastaY": 100 }
+    ],
+    "obstaculos": [
+        { "tipo": "resorte", "desdeX": 50, "desdeY": 120 }
+    ],
+    "inicio_jugadores": { "x": 0, "y": 30 }
+}
