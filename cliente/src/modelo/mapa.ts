@@ -4,6 +4,7 @@ import { Plataforma } from "./Plataforma";
 
 import { graficoJuego } from "./graficoJuego";
 import { EntidadGrafica } from "./entidadgrafica";
+import TipoPlataformaFactory from "./tiposplataforma/tipoplataformafactory";
 
 export class Mapa {
     nombre: string = '';
@@ -23,7 +24,7 @@ export class Mapa {
       this.ancho = mapaData.ancho;
       this.fondo = mapaData.fondo;
       this.cancion = mapaData.cancion;
-      this.plataformas = mapaData.plataformas.map((plataforma: Plataforma) => new Plataforma(plataforma.tipo, plataforma.desdeX, plataforma.desdeY, plataforma.hastaX, plataforma.hastaY));
+      this.plataformas = mapaData.plataformas.map((plataforma: Plataforma) => TipoPlataformaFactory.Crear(plataforma.tipo, plataforma.desdeX, plataforma.desdeY, plataforma.hastaX, plataforma.hastaY));
       this.obstaculos = mapaData.obstaculos.map((obstaculo: Obstaculo) => new Obstaculo(obstaculo.tipo, obstaculo.desdeX, obstaculo.desdeY));
       this.inicio_jugadores = new InicioJugadores(mapaData.inicio_jugadores.x, mapaData.inicio_jugadores.y);
       
@@ -35,13 +36,14 @@ export class Mapa {
 
     dibujarMapa(graficos: graficoJuego) {
         // Dibujar plataformas
-        console.log("ddibu");
         this.plataformas.forEach((plataforma, index) => {
-          console.log(plataforma);
+            console.log(plataforma);
             plataforma.dibujar(graficos, index);
         });
     
         // Dibujar obstáculos
+
+        /*
         this.obstaculos.forEach((obstaculo, index) => {
           const id = `obs_${index + 1}`;
           graficos.AdddEntidad(new EntidadGrafica(id, obstaculo.tipo, obstaculo.desdeX, obstaculo.desdeY));
@@ -50,6 +52,8 @@ export class Mapa {
         // Dibujar jugador
         const jugador = new EntidadGrafica("player", "player_caminando", this.inicio_jugadores.x, this.inicio_jugadores.y);
         graficos.AdddEntidad(jugador);
+
+        */
       }
  }
  

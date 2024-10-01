@@ -19,6 +19,13 @@ export class JuegoFactory {
         juego.imagenes.push(new Imagen('piso1', Direcciones.obtenerConstante('piso1')!));
         juego.imagenes.push(new Imagen('piso2', Direcciones.obtenerConstante('piso2')!));
         juego.imagenes.push(new Imagen('piso3', Direcciones.obtenerConstante('piso3')!));
+
+        
+        juego.imagenes.push(new Imagen('techo1', Direcciones.obtenerConstante('techo1')!));
+        juego.imagenes.push(new Imagen('techo2', Direcciones.obtenerConstante('techo2')!));
+        juego.imagenes.push(new Imagen('techo3', Direcciones.obtenerConstante('techo3')!));
+
+
         juego.imagenes.push(new Imagen('star', Direcciones.obtenerConstante('star')!));
         
         juego.animaciones.push(new Animacion('player_caminando', Direcciones.obtenerConstante('player_caminando')!, 70, 100));

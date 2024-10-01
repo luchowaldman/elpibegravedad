@@ -6,6 +6,12 @@ export class Direcciones {
       piso1: '/img/piso_viro_ini.png',
       piso2: '/img/piso_viro_med.png',
       piso3: '/img/piso_viro_fin.png',
+
+      techo1: '/img/techo_viro_ini.png',
+      techo2: '/img/techo_viro_med.png',
+      techo3: '/img/techo_viro_fin.png',
+
+
       star: 'https://labs.phaser.io/assets/sprites/star.png',
       player_caminando: '/img/player_caminando1.png',
       player_volando: '/img/player_volando.png',
