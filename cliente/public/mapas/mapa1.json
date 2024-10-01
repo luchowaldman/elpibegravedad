@@ -4,9 +4,12 @@
     "fondo": "sky",
     "cancion": "cancion",
     "plataformas": [
-        { "tipo": "piso1", "desdeX": 0, "desdeY": 100, "hastaX": 1000, "hastaY": 100 },
-        { "tipo": "techo", "desdeX": 900, "desdeY": 500, "hastaX": 1200, "hastaY": 500 },
-        { "tipo": "piso1", "desdeX": 1100, "desdeY": 100, "hastaX": 3000, "hastaY": 100 }
+        { "tipo": "piso", "desdeX": 200, "desdeY": 500, "hastaX": 1000, "hastaY": 500 },
+        { "tipo": "techo", "desdeX": 900, "desdeY": 160, "hastaX": 1200, "hastaY": 160 },
+        
+        { "tipo": "piso", "desdeX": 1200, "desdeY": 500, "hastaX": 2000, "hastaY": 500 },
+        { "tipo": "techo", "desdeX": 1900, "desdeY": 200, "hastaX": 3000, "hastaY": 200 }
+
     ],
     "obstaculos": [
         { "tipo": "resorte", "desdeX": 50, "desdeY": 120 }
