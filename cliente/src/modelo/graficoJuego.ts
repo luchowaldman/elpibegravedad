@@ -73,6 +73,7 @@ export class graficoJuego {
     
     this.scene = this.game.scene.scenes[0];
     this.imagenes.forEach(imagen => {
+    
         this.scene.load.image(imagen.nombre, imagen.url);
     });
 
