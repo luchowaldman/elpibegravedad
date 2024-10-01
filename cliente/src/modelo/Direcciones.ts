@@ -11,6 +11,7 @@ export class Direcciones {
       techo2: '/img/techo_viro_med.png',
       techo3: '/img/techo_viro_fin.png',
 
+      caja: '/img/caja.png',
 
       star: 'https://labs.phaser.io/assets/sprites/star.png',
       player_caminando: '/img/player_caminando1.png',
