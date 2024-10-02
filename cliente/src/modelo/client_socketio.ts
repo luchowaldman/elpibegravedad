@@ -20,7 +20,7 @@ export class Client {
     private socket!: Socket<ServerToClientEvents, ClientToServerEvents>;
 
     constructor(graficos: graficoJuego) {
-        let socket: Socket<ServerToClientEvents, ClientToServerEvents> = io("http://localhost:8000", {
+        let socket: Socket<ServerToClientEvents, ClientToServerEvents> = io("http://localhost:8080", {
             autoConnect: true,
             rejectUnauthorized: false,
             transports: ['websocket']

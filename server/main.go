@@ -12,13 +12,17 @@ import (
 	"github.com/zishang520/socket.io/v2/socket"
 )
 
-const FPSAmount = 30 // frames per second
+const TicksPerSecond = 30
+const Port = ":8080"
 
 func main() {
 	io := socket.NewServer(nil, nil)
 	http.Handle("/socket.io/", io.ServeHandler(nil))
+
+	log.Println("Starting sever")
+
 	go func() {
-		log.Fatalln(http.ListenAndServe(":8000", nil))
+		log.Fatalln(http.ListenAndServe(Port, nil))
 	}()
 
 	playersMutex := &sync.Mutex{}
@@ -62,7 +66,7 @@ func main() {
 	})
 
 	// game loop
-	ticker := time.NewTicker(time.Second / FPSAmount)
+	ticker := time.NewTicker(time.Second / TicksPerSecond)
 	quit := make(chan struct{})
 	go func() {
 		for {
