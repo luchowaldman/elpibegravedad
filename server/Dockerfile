@@ -1,6 +1,6 @@
 ARG BUILD_ENV=cicd
 
-FROM golang:1.23.1-alpine as base
+FROM golang:1.23-alpine as base
 WORKDIR /app
 
 RUN apk add -U --no-cache ca-certificates git openssh-client build-base
