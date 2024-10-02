@@ -17,6 +17,9 @@ const FPSAmount = 30 // frames per second
 func main() {
 	io := socket.NewServer(nil, nil)
 	http.Handle("/socket.io/", io.ServeHandler(nil))
+
+	log.Println("Starting sever")
+
 	go func() {
 		log.Fatalln(http.ListenAndServe(":8000", nil))
 	}()

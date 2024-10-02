@@ -1,6 +1,6 @@
 # Server
 
-Servidor escrito en Golang para el juego "El pibe gravedad"
+Servidor escrito en Golang para el juego "El pibe gravedad".
 
 ## Ejecucion local
 
