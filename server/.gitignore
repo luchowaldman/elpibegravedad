@@ -1,1 +1,32 @@
+# Binaries for programs and plugins
+main
 server
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Test binary, built with `go test -c`
+*.test
+
+# Output of the go coverage tool, specifically when used with LiteIDE
+*.out
+coverage.txt
+
+# go.sum should be committed
+!go.sum
+vendor/
+
+# CDK asset staging directory
+.cdk.staging
+cdk.out
+
+# Goland project files
+.idea
+*.iml
+
+# github token
+github_token.txt
+
+.vscode
