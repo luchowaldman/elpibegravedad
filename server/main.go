@@ -13,6 +13,7 @@ import (
 )
 
 const FPSAmount = 30 // frames per second
+const Port = ":8080"
 
 func main() {
 	io := socket.NewServer(nil, nil)
@@ -21,7 +22,7 @@ func main() {
 	log.Println("Starting sever")
 
 	go func() {
-		log.Fatalln(http.ListenAndServe(":8000", nil))
+		log.Fatalln(http.ListenAndServe(Port, nil))
 	}()
 
 	playersMutex := &sync.Mutex{}
