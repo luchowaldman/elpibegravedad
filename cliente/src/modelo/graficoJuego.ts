@@ -6,6 +6,7 @@ import { EntidadGrafica } from './entidadgrafica';
 import { AgendaAccionesGrafica }  from './AgendaAccionesGrafica';
 import { AnimacionEntidadGrafica } from './animacionentidadgrafica';
 import { Sonido } from './sonido';
+import { Direcciones } from './Direcciones';
 
 export class graficoJuego {
     
@@ -30,7 +31,31 @@ export class graficoJuego {
         this.entidades.push(entidad)
         return entidad;
     }
- 
+        
+    AddImagen(nombre: string): void {
+        const url = Direcciones.obtenerConstante(nombre);
+        if (url) {
+            this.imagenes.push(new Imagen(nombre, url));
+        }
+    }
+
+    AddSonido(nombre: string): void {
+        const url = Direcciones.obtenerConstante(nombre);
+        if (url) {
+            this.sonidos.push(new Sonido(nombre, url));
+        }
+    }
+
+    AddAnimacion(nombre: string, largoCuadro: number, anchoCuadro: number): void {
+        const url = Direcciones.obtenerConstante(nombre);
+        if (url) {
+            this.animaciones.push(new Animacion(nombre, url, largoCuadro, anchoCuadro));
+        }
+    }
+
+    AddAnimacionEntidadGrafica(key: string, nombreImagen: string, startFrame: number, endFrame: number, frameRate: number, repeat: number): void {
+        this.animacionesendadgrafica.push(new AnimacionEntidadGrafica(key, nombreImagen, startFrame, endFrame, frameRate, repeat));
+    }
 
 
     
@@ -42,8 +67,7 @@ export class graficoJuego {
         //super('Juego');
         this.agenda = new AgendaAccionesGrafica(60);
     }
-
-    init() {
+    async init() {
         const config: Phaser.Types.Core.GameConfig = {
             type: Phaser.AUTO,
             width: 1500,
@@ -63,8 +87,13 @@ export class graficoJuego {
             }
         };
         this.game = new Phaser.Game(config);
-        this.scene = this.game.scene.scenes[0];
+        
+        // Wait for the game to be fully initialized
+        await new Promise<void>((resolve) => {
+            this.game.events.once('ready', resolve);
+        });
 
+        this.scene = this.game.scene.scenes[0];
     }
 
     

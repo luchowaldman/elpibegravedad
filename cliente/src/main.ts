@@ -12,13 +12,12 @@ let mapa: Mapa = new Mapa();
 
 
 const graficos: graficoJuego = (new JuegoFactory()).juego_ejemplo1();
-mapa.cargarMapa("./mapas/mapa1.json");
-graficos.init();
+await mapa.cargarMapa("./mapas/mapa1.json");
+await graficos.init();
 
 setTimeout(() => {
-    mapa.dibujarMapa(graficos);
+    mapa.dibujarMapa(graficos);    
 }, 1000);
-
 
 let client: Client | undefined; 
 
@@ -62,8 +61,6 @@ document.addEventListener('DOMContentLoaded', () => {
     if (btnCargarMapa) {
         btnCargarMapa.addEventListener('click', async () => {
             
-    mapa.dibujarMapa(graficos);
-
         });
     };
 
