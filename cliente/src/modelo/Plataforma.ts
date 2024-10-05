@@ -2,6 +2,7 @@ import { EntidadGrafica } from "./entidadgrafica";
 import { graficoJuego } from "./graficoJuego";
 
 export class Plataforma {
+    
     dibujar(graficos: graficoJuego, index: number) {
         console.log("plataforma", graficos, index)
     }
@@ -16,5 +17,9 @@ export class Plataforma {
       this.desdeY = desdeY;
       this.hastaX = hastaX;
       this.hastaY = hastaY;
+    }
+
+    cargarImagenes(graficos: graficoJuego) {
+      throw new Error("Method not implemented.");
     }
   }
