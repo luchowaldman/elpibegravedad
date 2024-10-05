@@ -24,4 +24,12 @@ export default class Techo extends Plataforma {
         graficos.AdddEntidad(new EntidadGrafica(id, "techo3", this.hastaX - 100, this.desdeY));
         
     }
+
+    
+
+    cargarImagenes(graficos: graficoJuego): void {
+        graficos.AddImagen("techo1");
+        graficos.AddImagen("techo2");
+        graficos.AddImagen("techo3");
+    }
 }

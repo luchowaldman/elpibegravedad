@@ -24,4 +24,10 @@ export default class Piso extends Plataforma {
         graficos.AdddEntidad(new EntidadGrafica(id, "piso3", this.hastaX - 100, this.desdeY));
         
     }
+
+    cargarImagenes(graficos: graficoJuego): void {
+        graficos.AddImagen("piso1");
+        graficos.AddImagen("piso2");
+        graficos.AddImagen("piso3");
+    }
 }

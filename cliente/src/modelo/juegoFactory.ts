@@ -5,6 +5,7 @@ export class JuegoFactory {
         const juego = new graficoJuego();
 
         // Uso de la clase
+        
         juego.AddSonido('cancion');
         
         juego.AddImagen('sky');

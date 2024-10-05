@@ -11,9 +11,11 @@ import { Mapa } from './modelo/mapa';
 let mapa: Mapa = new Mapa();
 
 
-const graficos: graficoJuego = (new JuegoFactory()).juego_ejemplo1();
+const graficos: graficoJuego = (new graficoJuego());
 await mapa.cargarMapa("./mapas/mapa1.json");
+mapa.cargarImagenes(graficos);
 await graficos.init();
+
 
 setTimeout(() => {
     mapa.dibujarMapa(graficos);    
