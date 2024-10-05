@@ -8,14 +8,23 @@ import { EntidadGrafica } from './modelo/entidadgrafica';
 import { Mapa } from './modelo/mapa';
 
 
+let mapa: Mapa = new Mapa();
+
+
 const graficos: graficoJuego = (new JuegoFactory()).juego_ejemplo1();
+mapa.cargarMapa("./mapas/mapa1.json");
 graficos.init();
-const mapa: Mapa = new Mapa();
+
+setTimeout(() => {
+    mapa.dibujarMapa(graficos);
+}, 1000);
 
 
 let client: Client | undefined; 
 
 document.addEventListener('DOMContentLoaded', () => {
+
+
     const rangeInput = document.getElementById('camarainput') as HTMLInputElement;
     if (rangeInput) {
         rangeInput.addEventListener('input', (event) => {
@@ -53,10 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (btnCargarMapa) {
         btnCargarMapa.addEventListener('click', async () => {
             
-                await mapa.cargarMapa("./mapas/mapa1.json");
-                mapa.dibujarMapa(graficos);
-                graficos.agenda.iniciar();
-
+    mapa.dibujarMapa(graficos);
 
         });
     };
