@@ -44,6 +44,20 @@ export class Mapa {
         });
         
       }
+
+      
+    cargarImagenes(graficos: graficoJuego) {
+      
+      graficos.AddImagen(this.fondo);
+      this.plataformas.forEach((plataforma) => {
+        plataforma.cargarImagenes(graficos);
+    });
+
+    this.obstaculos.forEach((obstaculo) => {
+      obstaculo.cargarImagenes(graficos);
+      
+    });
+  }
  }
  
   

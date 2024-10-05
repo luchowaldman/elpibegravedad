@@ -3,6 +3,8 @@ import { graficoJuego } from "./graficoJuego";
 
   
   export class Obstaculo {
+    
+   
     dibujar(graficos: graficoJuego) {
       graficos.AdddEntidad(new EntidadGrafica(this.id, this.tipo, this.desdeX, this.desdeY));
     }
@@ -17,5 +19,9 @@ import { graficoJuego } from "./graficoJuego";
       this.desdeX = desdeX;
       this.desdeY = desdeY;
     }
+
+    cargarImagenes(graficos: graficoJuego): void {
+      graficos.AddImagen(this.tipo);
+  }
   }
   

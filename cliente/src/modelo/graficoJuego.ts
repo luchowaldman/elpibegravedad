@@ -31,31 +31,38 @@ export class graficoJuego {
         this.entidades.push(entidad)
         return entidad;
     }
-        
-    AddImagen(nombre: string): void {
-        const url = Direcciones.obtenerConstante(nombre);
-        if (url) {
-            this.imagenes.push(new Imagen(nombre, url));
+        AddImagen(nombre: string): void {
+            if (!this.imagenes.some(imagen => imagen.nombre === nombre)) {
+                const url = Direcciones.obtenerConstante(nombre);
+                if (url) {
+                    this.imagenes.push(new Imagen(nombre, url));
+                }
+            }
         }
-    }
 
-    AddSonido(nombre: string): void {
-        const url = Direcciones.obtenerConstante(nombre);
-        if (url) {
-            this.sonidos.push(new Sonido(nombre, url));
+        AddSonido(nombre: string): void {
+            if (!this.sonidos.some(sonido => sonido.nombre === nombre)) {
+                const url = Direcciones.obtenerConstante(nombre);
+                if (url) {
+                    this.sonidos.push(new Sonido(nombre, url));
+                }
+            }
         }
-    }
 
-    AddAnimacion(nombre: string, largoCuadro: number, anchoCuadro: number): void {
-        const url = Direcciones.obtenerConstante(nombre);
-        if (url) {
-            this.animaciones.push(new Animacion(nombre, url, largoCuadro, anchoCuadro));
+        AddAnimacion(nombre: string, largoCuadro: number, anchoCuadro: number): void {
+            if (!this.animaciones.some(animacion => animacion.nombre === nombre)) {
+                const url = Direcciones.obtenerConstante(nombre);
+                if (url) {
+                    this.animaciones.push(new Animacion(nombre, url, largoCuadro, anchoCuadro));
+                }
+            }
         }
-    }
 
-    AddAnimacionEntidadGrafica(key: string, nombreImagen: string, startFrame: number, endFrame: number, frameRate: number, repeat: number): void {
-        this.animacionesendadgrafica.push(new AnimacionEntidadGrafica(key, nombreImagen, startFrame, endFrame, frameRate, repeat));
-    }
+        AddAnimacionEntidadGrafica(key: string, nombreImagen: string, startFrame: number, endFrame: number, frameRate: number, repeat: number): void {
+            if (!this.animacionesendadgrafica.some(animacion => animacion.key === key)) {
+                this.animacionesendadgrafica.push(new AnimacionEntidadGrafica(key, nombreImagen, startFrame, endFrame, frameRate, repeat));
+            }
+        }
 
 
     
