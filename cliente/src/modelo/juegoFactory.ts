@@ -1,38 +1,32 @@
 import { graficoJuego } from './graficoJuego';
-import { Imagen } from './imagen';
-import { Animacion } from './animacion';
-import { EntidadGrafica } from './entidadgrafica';
-import { Sonido } from './sonido';
-import { AnimacionEntidadGrafica } from './animacionentidadgrafica';
-import { AgendaAccionesGrafica }  from './AgendaAccionesGrafica';
-import { AccionGrafica, AccionGraficaCambiarVelovidad }  from './AccionGrafica';
-
 
 export class JuegoFactory {
     juego_ejemplo1(): graficoJuego {
         const juego = new graficoJuego();
 
+        // Uso de la clase
         
-        juego.sonidos.push(new Sonido('cancion', '/audio/musica_juego.mp3'));
-
-
-        juego.imagenes.push(new Imagen('sky', '/img/fondocuaderno.jpg'));
-        juego.imagenes.push(new Imagen('ground', '/img/piso_02.png'));
-        juego.imagenes.push(new Imagen('piso1', '/img/piso_viro_ini.png'));
-        juego.imagenes.push(new Imagen('piso2', '/img/piso_viro_med.png'));
-        juego.imagenes.push(new Imagen('piso3', '/img/piso_viro_fin.png'));
-        juego.imagenes.push(new Imagen('star', 'https://labs.phaser.io/assets/sprites/star.png'));
+        juego.AddSonido('cancion');
         
-        // Añadir animaciones al vector 'animaciones'
-        juego.animaciones.push(new Animacion('player_caminando', '/img/player_caminando1.png', 70, 100));
-        juego.animacionesendadgrafica.push(new AnimacionEntidadGrafica('animacioncaminando', 'player_caminando', 0, 1, 7, -1))
-        juego.animaciones.push(new Animacion('player_volando', '/img/player_volando.png', 70, 100));
-        juego.animacionesendadgrafica.push(new AnimacionEntidadGrafica('animacionvolando', 'player_volando', 0, 1, 7, -1))
-
-        juego.animaciones.push(new Animacion('lazo', '/img/lazo.png', 20, 30));
-        juego.animacionesendadgrafica.push(new AnimacionEntidadGrafica('lazo', 'lazo', 0, 2, 4, -1))
-
+        juego.AddImagen('sky');
+        juego.AddImagen('ground');
+        juego.AddImagen('piso1');
+        juego.AddImagen('piso2');
+        juego.AddImagen('piso3');
+        juego.AddImagen('techo1');
+        juego.AddImagen('techo2');
+        juego.AddImagen('techo3');
+        juego.AddImagen('caja');
+        juego.AddImagen('star');
         
+        juego.AddAnimacion('player_caminando', 70, 100);
+        juego.AddAnimacionEntidadGrafica('animacioncaminando', 'player_caminando', 0, 1, 7, -1);
+        juego.AddAnimacion('player_volando', 70, 100);
+        juego.AddAnimacionEntidadGrafica('animacionvolando', 'player_volando', 0, 1, 7, -1);
+        
+        juego.AddAnimacion('lazo', 20, 30);
+        juego.AddAnimacionEntidadGrafica('lazo', 'lazo', 0, 2, 4, -1);
+                
 
         
 

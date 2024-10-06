@@ -1,6 +1,5 @@
 import { EntidadGrafica } from "./entidadgrafica";
 import { graficoJuego } from "./graficoJuego";
-import { Sonido } from "./sonido";
 
 export class AccionGrafica {
     ejecutar(): void {

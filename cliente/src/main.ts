@@ -3,16 +3,29 @@ import { graficoJuego } from './modelo/graficoJuego';
 import { JuegoFactory } from './modelo/juegoFactory';
 import { Client } from './modelo/client_socketio';
 
-import { AccionEscribirPorConsola, AccionGrafica, AccionGraficaAgregarEntidad, AccionGraficaAnimar, AccionGraficaCambiarVelovidad, AccionGraficaEjecutarSonido, AccionGraficaRotar } from './modelo/AccionGrafica';
+import { AccionGraficaAgregarEntidad, AccionGraficaAnimar, AccionGraficaCambiarVelovidad, AccionGraficaRotar } from './modelo/AccionGrafica';
 import { EntidadGrafica } from './modelo/entidadgrafica';
+import { Mapa } from './modelo/mapa';
 
 
-const graficos: graficoJuego = (new JuegoFactory()).juego_ejemplo1();
-graficos.init();
+let mapa: Mapa = new Mapa();
+
+
+const graficos: graficoJuego = (new graficoJuego());
+await mapa.cargarMapa("./mapas/mapa1.json");
+mapa.cargarImagenes(graficos);
+await graficos.init();
+
+
+setTimeout(() => {
+    mapa.dibujarMapa(graficos);    
+}, 1000);
 
 let client: Client | undefined; 
 
 document.addEventListener('DOMContentLoaded', () => {
+
+
     const rangeInput = document.getElementById('camarainput') as HTMLInputElement;
     if (rangeInput) {
         rangeInput.addEventListener('input', (event) => {
@@ -33,6 +46,25 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+
+    const btnIniciarAgenda= document.getElementById('btnIniciarAgenda') as HTMLInputElement;
+    if (btnIniciarAgenda) {
+        btnIniciarAgenda.addEventListener('click', async () => {
+            
+                graficos.agenda.iniciar();
+
+
+        });
+    };
+    
+
+    
+    const btnCargarMapa= document.getElementById('btnCargarMapa') as HTMLInputElement;
+    if (btnCargarMapa) {
+        btnCargarMapa.addEventListener('click', async () => {
+            
+        });
+    };
 
     const btnCambiarGravedad = document.getElementById('btnCambirGravedad') as HTMLInputElement;
     if (btnCambiarGravedad) {
