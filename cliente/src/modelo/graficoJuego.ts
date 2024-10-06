@@ -7,14 +7,17 @@ import { AgendaAccionesGrafica }  from './AgendaAccionesGrafica';
 import { AnimacionEntidadGrafica } from './animacionentidadgrafica';
 import { Sonido } from './sonido';
 import { Direcciones } from './Direcciones';
+import { Texto } from './Texto';
 
 export class graficoJuego {
+    
     
     private game: Phaser.Game;
     private scene: Phaser.Scene;
     public agenda: AgendaAccionesGrafica;
 
     sonidos: Sonido[] = [];
+    textos: Texto[] = [];
     imagenes: Imagen[] = [];
     animaciones: Animacion[] = [];
     animacionesendadgrafica :AnimacionEntidadGrafica[] = [];
@@ -69,6 +72,29 @@ export class graficoJuego {
     GetSonido(nombre: string): Sonido {
         return this.sonidos.find(sonido => sonido.nombre === nombre);
     }
+
+    GetTexto(id: string): Texto {
+        return this.textos.find(texto => texto.id === id);
+    }
+
+    
+    mostrarTexto(texto: Texto) {
+        texto.agregar(this.scene);
+        this.textos.push(texto);
+    }
+
+    
+    eliminarTexto(id: string) {
+        const texto = this.textos.find(texto => texto.id === id);
+        if (texto) {
+            this.textos = this.textos.filter(texto => texto.id !== id);
+            texto.text?.destroy();
+            this.textos = this.textos.filter(texto => texto.id !== id);
+        //    texto.eliminar();
+        }
+    }
+
+
     
     constructor() {
         //super('Juego');
@@ -126,12 +152,12 @@ export class graficoJuego {
 
 
 
+
+
   }
 
 
   create() {
-
-        
         this.animacionesendadgrafica.forEach(animacion => {
             this.scene.anims.create({
                 key: animacion.key,

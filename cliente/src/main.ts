@@ -1,24 +1,26 @@
 import './assets/main.css'
 import { graficoJuego } from './modelo/graficoJuego';
-import { JuegoFactory } from './modelo/juegoFactory';
 import { Client } from './modelo/client_socketio';
 
-import { AccionGraficaAgregarEntidad, AccionGraficaAnimar, AccionGraficaCambiarVelovidad, AccionGraficaRotar } from './modelo/AccionGrafica';
+import { AccionGraficaAgregarEntidad, AccionGraficaAnimar, AccionGraficaCambiarVelovidad, AccionGraficaMostrarTexto, AccionGraficaEliminarTexto, AccionGraficaRotar, AccionGraficaModificarTexto } from './modelo/AccionGrafica';
 import { EntidadGrafica } from './modelo/entidadgrafica';
 import { Mapa } from './modelo/mapa';
 
 
-let mapa: Mapa = new Mapa();
-
-
+const mapa: Mapa = new Mapa();
 const graficos: graficoJuego = (new graficoJuego());
 await mapa.cargarMapa("./mapas/mapa1.json");
 mapa.cargarImagenes(graficos);
 await graficos.init();
-
-
+graficos.agenda.iniciar();
+graficos.agenda.agregarAccionGrafica(0 ,new  AccionGraficaMostrarTexto(graficos, "texto1", "Cargando Mapa...", 600, 100));
+    
 setTimeout(() => {
     mapa.dibujarMapa(graficos);    
+    
+    graficos.agenda.agregarAccionGrafica(0 ,new  AccionGraficaModificarTexto(graficos, "texto1", "Conectando con servidor..."));
+    graficos.agenda.agregarAccionGrafica(200 ,new  AccionGraficaEliminarTexto(graficos, "texto1"));
+
 }, 1000);
 
 let client: Client | undefined; 
