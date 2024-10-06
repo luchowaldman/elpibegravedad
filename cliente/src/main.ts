@@ -9,31 +9,35 @@ import { Mapa } from './modelo/mapa';
 
 const mapa: Mapa = new Mapa();
 const graficos: graficoJuego = (new graficoJuego());
+graficos.controles.setOnKeyPressCallback((key: string) => {
+
+    console.log(key);
+});
 await mapa.cargarMapa("./mapas/mapa1.json");
 mapa.cargarImagenes(graficos);
 await graficos.init();
 graficos.agenda.iniciar();
 graficos.agenda.agregarAccionGrafica(0 ,new  AccionGraficaMostrarTexto(graficos, "texto1", "Cargando Mapa...", 600, 100));
-    
+
 setTimeout(() => {
     mapa.dibujarMapa(graficos);    
     
     graficos.agenda.agregarAccionGrafica(0 ,new  AccionGraficaModificarTexto(graficos, "texto1", "Conectando con servidor..."));
     graficos.agenda.agregarAccionGrafica(200 ,new  AccionGraficaEliminarTexto(graficos, "texto1"));
-
+    
 }, 1000);
 
 let client: Client | undefined; 
 
 document.addEventListener('DOMContentLoaded', () => {
 
-
+    console.log("DOM Caragado");
     const rangeInput = document.getElementById('camarainput') as HTMLInputElement;
     if (rangeInput) {
+        console.log("rangeInput", rangeInput);
         rangeInput.addEventListener('input', (event) => {
             const target = event.target as HTMLInputElement;
             graficos.setPosicionCamara(parseInt(target.value));
-            //console.log(`Nuevo valor: ${target.value}`);
         });
     }
 
