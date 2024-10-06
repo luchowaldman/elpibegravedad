@@ -1,5 +1,6 @@
 import { EntidadGrafica } from "./entidadgrafica";
 import { graficoJuego } from "./graficoJuego";
+import { Texto } from "./Texto";
 
 export class AccionGrafica {
     ejecutar(): void {
@@ -140,5 +141,64 @@ export class AccionGraficaAgregarEntidad extends AccionGrafica {
 
     ejecutar(): void {
         this.grafico.AdddEntidad(new EntidadGrafica(this.id, this.nombreImagen, this.x, this.y));
+    }
+}
+
+
+export class AccionGraficaMostrarTexto extends AccionGrafica {
+    public id: string;
+    public texto: string;
+    public x: number;
+    public y: number;
+    private grafico: graficoJuego;
+
+    constructor(grafico: graficoJuego, id: string, texto: string, x: number, y: number)
+    {
+        super();
+        this.grafico = grafico;
+        this.id = id;
+        this.texto = texto;
+        this.x = x;
+        this.y = y;
+    }
+
+    ejecutar(): void {
+        this.grafico.mostrarTexto(new Texto(this.id, this.x, this.y, this.texto));
+    }
+}
+
+export class AccionGraficaModificarTexto extends AccionGrafica {
+    public id: string;
+    public contenido: string;
+    private grafico: graficoJuego;
+
+    constructor(grafico: graficoJuego, id: string, contenido: string)
+    {
+        super();
+        this.contenido = contenido;
+        this.grafico = grafico;
+        this.id = id;
+    }
+
+    ejecutar(): void {
+        this.grafico.GetTexto(this.id)?.cambiarContenido(this.contenido);
+    }
+}
+
+
+
+export class AccionGraficaEliminarTexto extends AccionGrafica {
+    public id: string;
+    private grafico: graficoJuego;
+
+    constructor(grafico: graficoJuego, id: string)
+    {
+        super();
+        this.grafico = grafico;
+        this.id = id;
+    }
+
+    ejecutar(): void {
+        this.grafico.eliminarTexto(this.id);
     }
 }
