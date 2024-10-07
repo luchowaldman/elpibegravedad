@@ -5,6 +5,7 @@ import { Client } from './modelo/client_socketio';
 import { AccionGraficaAgregarEntidad, AccionGraficaAnimar, AccionGraficaCambiarVelovidad, AccionGraficaMostrarTexto, AccionGraficaEliminarTexto, AccionGraficaRotar, AccionGraficaModificarTexto } from './modelo/AccionGrafica';
 import { EntidadGrafica } from './modelo/entidadgrafica';
 import { Mapa } from './modelo/mapa';
+import { Jugador } from './modelo/jugador';
 
 
 const mapa: Mapa = new Mapa();
@@ -14,18 +15,40 @@ graficos.controles.setOnKeyPressCallback((key: string) => {
     console.log(key);
 });
 await mapa.cargarMapa("./mapas/mapa1.json");
+
+
+graficos.AddAnimacion('player_caminando', 70, 100);
+graficos.AddAnimacionEntidadGrafica('animacioncaminando', 'player_caminando', 0, 1, 7, -1);
+graficos.AddAnimacion('player_volando', 70, 100);
+graficos.AddAnimacionEntidadGrafica('animacionvolando', 'player_volando', 0, 1, 7, -1);
+
+
+
 mapa.cargarImagenes(graficos);
 await graficos.init();
 graficos.agenda.iniciar();
 graficos.agenda.agregarAccionGrafica(0 ,new  AccionGraficaMostrarTexto(graficos, "texto1", "Cargando Mapa...", 600, 100));
 
+
+
+const jugador1 = new Jugador(0x0000ff, 230, 535);
+
 setTimeout(() => {
     mapa.dibujarMapa(graficos);    
     
     graficos.agenda.agregarAccionGrafica(0 ,new  AccionGraficaModificarTexto(graficos, "texto1", "Conectando con servidor..."));
+    jugador1.dibujar(graficos);
     graficos.agenda.agregarAccionGrafica(200 ,new  AccionGraficaEliminarTexto(graficos, "texto1"));
     
 }, 1000);
+
+
+setTimeout(() => {
+    jugador1.animar(graficos, "animacionvolando");
+}, 2000);
+
+
+
 
 let client: Client | undefined; 
 
