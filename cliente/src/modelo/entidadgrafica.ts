@@ -37,6 +37,10 @@ export class EntidadGrafica {
         this.imagenenescena.setVelocityY(y);
     }
 
+    // ejemplos de color. Rojo: 0xff0000, Verde: 0x00ff00, Azul: 0x0000ff
+    setColor(color: number) {
+        this.imagenenescena.setTint(color);
+    }
     
     
     setPosicion(x: number, y: number) {
