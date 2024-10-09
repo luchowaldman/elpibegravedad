@@ -27,7 +27,6 @@ export class Mapa {
       this.obstaculos = mapaData.obstaculos.map((obstaculo: Obstaculo) => new Obstaculo(obstaculo.tipo, obstaculo.id, obstaculo.desdeX, obstaculo.desdeY));
       this.inicio_jugadores = new InicioJugadores(mapaData.inicio_jugadores.x, mapaData.inicio_jugadores.y);
       
-      console.log(this);
       } catch (error) {
         console.error('Error al cargar el mapa:', error);
       }

@@ -7,19 +7,27 @@ import { AgendaAccionesGrafica }  from './AgendaAccionesGrafica';
 import { AnimacionEntidadGrafica } from './animacionentidadgrafica';
 import { Sonido } from './sonido';
 import { Direcciones } from './Direcciones';
+import { Texto } from './Texto';
+import { Controles } from './controles';
 
 export class graficoJuego {
+    
     
     private game: Phaser.Game;
     private scene: Phaser.Scene;
     public agenda: AgendaAccionesGrafica;
+    public controles: Controles = new Controles();
 
     sonidos: Sonido[] = [];
+    textos: Texto[] = [];
     imagenes: Imagen[] = [];
     animaciones: Animacion[] = [];
     animacionesendadgrafica :AnimacionEntidadGrafica[] = [];
     
     private entidades: EntidadGrafica[] = [];
+    cursors: Phaser.Types.Input.Keyboard.CursorKeys;
+    spaceBar: Phaser.Input.Keyboard.Key;
+    keyG: Phaser.Input.Keyboard.Key;
     
     GetEntidad(id: string): EntidadGrafica {
         return this.entidades.find(entidad => entidad.id === id);
@@ -69,6 +77,29 @@ export class graficoJuego {
     GetSonido(nombre: string): Sonido {
         return this.sonidos.find(sonido => sonido.nombre === nombre);
     }
+
+    GetTexto(id: string): Texto {
+        return this.textos.find(texto => texto.id === id);
+    }
+
+    
+    mostrarTexto(texto: Texto) {
+        texto.agregar(this.scene);
+        this.textos.push(texto);
+    }
+
+    
+    eliminarTexto(id: string) {
+        const texto = this.textos.find(texto => texto.id === id);
+        if (texto) {
+            this.textos = this.textos.filter(texto => texto.id !== id);
+            texto.text?.destroy();
+            this.textos = this.textos.filter(texto => texto.id !== id);
+        //    texto.eliminar();
+        }
+    }
+
+
     
     constructor() {
         //super('Juego');
@@ -126,12 +157,14 @@ export class graficoJuego {
 
 
 
+
+
   }
 
 
   create() {
 
-        
+
         this.animacionesendadgrafica.forEach(animacion => {
             this.scene.anims.create({
                 key: animacion.key,
@@ -140,23 +173,30 @@ export class graficoJuego {
                 repeat: animacion.repeat
             });
         });
-
-        
-
-        
         // Añadir fondo
         this.scene.add.image(700, 600, 'sky').setScale(1.5).setScrollFactor(0);
         this.scene.cameras.main.setBounds(0, 0, 3000, 600);
 
-
-        
         this.sonidos.forEach(sonido => {
             sonido.agregar(this.scene)
         });
+        this.controles.agregar(this.scene);
+
+
+
+
+
+
+
+        
     }
 
 
+    
+
   update() {
+
+    this.controles.actualizar();
     this.agenda?.actualizar()
   }
 
