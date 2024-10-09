@@ -1,5 +1,4 @@
 import { io, Socket } from "socket.io-client";
-import { graficoJuego } from './graficoJuego';
 import { AccionGraficaSetPosicion } from "./AccionGrafica";
 
 interface ServerToClientEvents {
@@ -18,9 +17,21 @@ interface ClientToServerEvents {
 
 export class Client {
     private socket!: Socket<ServerToClientEvents, ClientToServerEvents>;
+    private onPosicionJugadores(positions: { numeroJugador: number, x: number, y: number, tieneGravedadInvertida: boolean, estaCaminando: boolean }[]) {
+        if (this.posicionJugadoresHandler) {
+            this.posicionJugadoresHandler(positions);
+        }
+    }
 
-    constructor(graficos: graficoJuego) {
-        let socket: Socket<ServerToClientEvents, ClientToServerEvents> = io("http://localhost:8080", {
+    private posicionJugadoresHandler?: (positions: { numeroJugador: number, x: number, y: number, tieneGravedadInvertida: boolean, estaCaminando: boolean }[]) => void;
+
+    public setPosicionJugadoresHandler(handler: (positions: { numeroJugador: number, x: number, y: number, tieneGravedadInvertida: boolean, estaCaminando: boolean }[]) => void) {
+        this.posicionJugadoresHandler = handler;
+    }
+
+
+    constructor() {
+        let socket: Socket<ServerToClientEvents, ClientToServerEvents> = io("http://localhost:8000", {
             autoConnect: true,
             rejectUnauthorized: false,
             transports: ['websocket']
@@ -43,18 +54,8 @@ export class Client {
         });
 
         socket.on("posicionesDeLosJugadores", (posicionesDeLosJugadores) => {
-            // TODO hacer un for para todos los jugadores
-            // console.log("received player 2 position (%d, %d)", posicionesDeLosJugadores[1].x, posicionesDeLosJugadores[1].y)
-            let x = posicionesDeLosJugadores[0].x
-            let y = posicionesDeLosJugadores[0].y
-
-            console.log("received player 1 position (%d, %d)", x, y)
-
-            graficos.agenda.agregarAccionGrafica(1, new AccionGraficaSetPosicion(graficos, "player_server", y, x));
-
-            graficos.agenda.iniciar();
+            this.onPosicionJugadores(posicionesDeLosJugadores);
         });
-
         this.socket = socket;
     }
 
