@@ -23,7 +23,7 @@ func manageClientConnection(clients []any, playersMutex *sync.Mutex, players *[]
 		playersMutex.Unlock()
 	})
 	if err != nil {
-		log.Println("failed to register on changeGravity message")
+		log.Println("failed to register on changeGravity message", "err", err)
 		newClient.Disconnect(true)
 	}
 
@@ -35,7 +35,7 @@ func manageClientConnection(clients []any, playersMutex *sync.Mutex, players *[]
 		playersMutex.Unlock()
 	})
 	if err != nil {
-		log.Println("failed to register on disconnect message")
+		log.Println("failed to register on disconnect message", "err", err)
 		newClient.Disconnect(true)
 	}
 

@@ -22,7 +22,7 @@ func startGame(playersMutex *sync.Mutex, players *[]*Player) {
 					player.Advance()
 
 					// TODO could probably be outside mutex lock for better performance
-					player.Socket.Emit("posicionesDeLosJugadores", []any{
+					err := player.Socket.Emit("posicionesDeLosJugadores", []any{
 						map[string]any{
 							"numeroJugador":          1,
 							"x":                      player.PosX,
@@ -39,6 +39,9 @@ func startGame(playersMutex *sync.Mutex, players *[]*Player) {
 						// 	"estaCaminando":          false,
 						// },
 					})
+					if err != nil {
+						log.Println("failed to send posicionesDeLosJugadores", "err", err)
+					}
 				}
 
 				playersMutex.Unlock()
