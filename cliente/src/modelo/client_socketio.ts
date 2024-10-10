@@ -29,7 +29,7 @@ export class Client {
         this.posicionJugadoresHandler = handler;
     }
 
-    
+
     constructor() {
         let socket: Socket<ServerToClientEvents, ClientToServerEvents> = io("http://localhost:8000", {
             autoConnect: true,

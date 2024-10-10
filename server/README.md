@@ -1,11 +1,24 @@
 # Server
 
-Servidor escrito en Golang para el juego "El pibe gravedad"
+Servidor escrito en Golang para el juego "El pibe gravedad".
 
 ## Ejecucion local
 
-Para la ejecucion local del proyecto utiliza:
+La ejecucion local del proyecto es utilizando `docker` y `make`:
 
-```bash
-go run .
-```
+1. Instala docker y el plugin compose
+2. Instala make
+3. Ejecuta
+
+    ```bash
+    make dev
+    ```
+
+O directamente usando `go`:
+
+1. Instala go>1.23.1
+2. Ejecuta
+
+    ```bash
+    go run .
+    ```

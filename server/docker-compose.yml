@@ -1,0 +1,14 @@
+version: "2"
+services:
+  elpibegravedad-server:
+    build:
+      context: .
+      args:
+        BUILD_ENV: local
+      ssh:
+        - default
+    ports:
+      - 8080:8080
+    volumes:
+      - ./:/app
+    env_file: .env
