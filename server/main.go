@@ -3,10 +3,7 @@ package main
 import (
 	"log"
 	"net/http"
-	"os"
-	"os/signal"
 	"sync"
-	"syscall"
 
 	"github.com/zishang520/socket.io/v2/socket"
 )
@@ -19,10 +16,6 @@ func main() {
 
 	log.Println("Starting sever")
 
-	go func() {
-		log.Fatalln(http.ListenAndServe(Port, nil))
-	}()
-
 	playersMutex := &sync.Mutex{}
 	// players := map[socket.SocketId]Player{}
 	players := &[]*Player{}
@@ -34,23 +27,9 @@ func main() {
 		log.Fatalln("Error setting sockert.io on connection", "err", err)
 	}
 
-	startGame(playersMutex, players)
-
-	exit := make(chan struct{})
-	SignalC := make(chan os.Signal)
-
-	signal.Notify(SignalC, os.Interrupt, syscall.SIGHUP, syscall.SIGINT, syscall.SIGTERM, syscall.SIGQUIT)
 	go func() {
-		for s := range SignalC {
-			switch s {
-			case os.Interrupt, syscall.SIGHUP, syscall.SIGINT, syscall.SIGTERM, syscall.SIGQUIT:
-				close(exit)
-				return
-			}
-		}
+		log.Fatalln(http.ListenAndServe(Port, nil))
 	}()
 
-	<-exit
-	io.Close(nil)
-	os.Exit(0)
+	gameLoop(playersMutex, players)
 }
