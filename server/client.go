@@ -7,7 +7,7 @@ import (
 	"github.com/zishang520/socket.io/v2/socket"
 )
 
-func manageClientConnection(clients []any, playersMutex *sync.Mutex, players *[]*Player) {
+func manageClientConnection(clients []any, playersMutex *sync.Mutex, players *[]*Player, gameMap Map) {
 	newClient := clients[0].(*socket.Socket)
 	newClientID := newClient.Id()
 
@@ -39,24 +39,20 @@ func manageClientConnection(clients []any, playersMutex *sync.Mutex, players *[]
 		newClient.Disconnect(true)
 	}
 
+	newPlayer := &Player{
+		Socket: newClient,
+		PosX:   gameMap.PlayersStart.X,
+		PosY:   gameMap.PlayersStart.Y,
+	}
+
 	playersMutex.Lock()
 	// players[newClientID] = Player{
 	// 	Socket: newClient,
 	// }
 	if len(*players) == 0 {
-		*players = []*Player{
-			{
-				Socket: newClient,
-				PosX:   130,
-				PosY:   445,
-			},
-		}
+		*players = []*Player{newPlayer}
 	} else {
-		(*players)[0] = &Player{
-			Socket: newClient,
-			PosX:   130,
-			PosY:   445,
-		}
+		(*players)[0] = newPlayer
 	}
 	playersMutex.Unlock()
 }
