@@ -19,7 +19,7 @@ func manageClientConnection(clients []any, playersMutex *sync.Mutex, players *[]
 	// }
 	if len(*players) == 0 {
 		*players = []*Player{
-			&Player{
+			{
 				Socket: newClient,
 				PosX:   130,
 				PosY:   445,
