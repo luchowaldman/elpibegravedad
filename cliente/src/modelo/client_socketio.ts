@@ -31,7 +31,7 @@ export class Client {
 
 
     constructor() {
-        let socket: Socket<ServerToClientEvents, ClientToServerEvents> = io("http://localhost:8000", {
+        let socket: Socket<ServerToClientEvents, ClientToServerEvents> = io("http://localhost:8080", {
             autoConnect: true,
             rejectUnauthorized: false,
             transports: ['websocket']
