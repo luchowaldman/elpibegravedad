@@ -1,0 +1,25 @@
+.body {
+    color: #0000ff;
+}
+
+.divMapa {
+    border: 1px solid #0000ff;
+    align-content: center;
+    padding: 12px;
+    margin: 12px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.divMapa:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.divMapa img {
+    margin-left: 40px;
+}
+
+.divMapa p {
+    margin-top: 12px;
+    font-size: 16px;
+}
