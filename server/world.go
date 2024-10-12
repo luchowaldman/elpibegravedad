@@ -82,7 +82,7 @@ func (world *World) Init(gameMap Map) {
 		)
 
 		player.Object = playerObject
-		player.SetSpeed(playerSpeedX, playerSpeedY)
+		player.SetSpeed(playerSpeedX, -playerSpeedY)
 
 		world.Space.Add(playerObject)
 	}

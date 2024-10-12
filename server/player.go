@@ -17,16 +17,11 @@ type Player struct {
 
 func (player *Player) SetSpeed(x, y float64) {
 	player.Speed.X = x
-
-	if player.HasGravityInverted {
-		player.Speed.Y = y
-	} else {
-		player.Speed.Y = -y
-	}
+	player.Speed.Y = y
 }
 
 func (player *Player) InvertGravity() {
 	player.HasGravityInverted = !player.HasGravityInverted
 
-	player.SetSpeed(player.Speed.X, player.Speed.Y)
+	player.SetSpeed(player.Speed.X, -player.Speed.Y)
 }
