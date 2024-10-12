@@ -8,24 +8,33 @@ import (
 
 const TicksPerSecond = 30
 
-func gameLoop(playersMutex *sync.Mutex, players *[]*Player) {
+func gameLoop(world *World, playersMutex *sync.Mutex) {
 	ticker := time.NewTicker(time.Second / TicksPerSecond)
 	quit := make(chan struct{})
 	log.Println("Stating game loop")
 	for {
 		select {
 		case <-ticker.C:
-			playersMutex.Lock()
-			if len(*players) != 0 {
-				player := (*players)[0]
-				player.Advance()
+			for _, player := range *world.Players {
+				playersMutex.Lock()
+				world.Update()
+
+				posX := player.Object.Position.X
+				posY := player.Object.Position.Y
+				playerHeight := player.Object.Size.Y
+				playersMutex.Unlock()
+
+				point := Point{
+					X: int(posX),
+					Y: int(posY),
+				}.FromServerToClient(mapHeight, int(playerHeight))
 
 				// TODO could probably be outside mutex lock for better performance
 				err := player.Socket.Emit("posicionesDeLosJugadores", []any{
 					map[string]any{
 						"numeroJugador":          1,
-						"x":                      player.PosX,
-						"y":                      player.PosY,
+						"x":                      point.X,
+						"y":                      point.Y,
 						"tieneGravedadInvertida": false,
 						"estaCaminando":          false,
 					},
@@ -42,8 +51,6 @@ func gameLoop(playersMutex *sync.Mutex, players *[]*Player) {
 					log.Println("failed to send posicionesDeLosJugadores", "err", err)
 				}
 			}
-
-			playersMutex.Unlock()
 		case <-quit:
 			ticker.Stop()
 			return
