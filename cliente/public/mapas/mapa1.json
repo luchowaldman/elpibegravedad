@@ -1,6 +1,6 @@
 {
     "nombre": "Mapa 1",
-    "ancho": 6000,
+    "largo": 6000,
     "fondo": "sky",
     "cancion": "cancion",
     "plataformas": [
