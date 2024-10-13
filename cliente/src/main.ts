@@ -10,7 +10,7 @@ import { Jugador } from './modelo/jugador';
 let client: Client | undefined; 
 client = new Client();
 const mapa: Mapa = new Mapa();
-const graficos: graficoJuego = (new graficoJuego());
+const graficos: graficoJuego = new graficoJuego();
 
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnIniciarCliente = document.getElementById('btnIniciarCliente') as HTMLInputElement;
     if (btnIniciarCliente) {
         btnIniciarCliente.addEventListener('click', () => {
-            client = new Client(graficos);
+            client = new Client();
             graficos.agenda.agregarAccionGrafica(0 ,new  AccionGraficaAgregarEntidad(graficos, "player_server", "player_caminando", 130, 445));
 
         });
@@ -186,8 +186,8 @@ graficos.agenda.iniciar();
 graficos.agenda.agregarAccionGrafica(0 ,new  AccionGraficaMostrarTexto(graficos, "texto1", "Cargando Mapa...", 600, 100));
 
 const jugadores: Jugador[] = [
-    new Jugador("Play1",0x0000ff, 330, 535),
-    new Jugador("Play2",0xff0000, 330, 535)
+    new Jugador("Play1",0x0000ff, 330, 450),
+    new Jugador("Play2",0xff0000, 330, 200)
 ];
 
 setTimeout(() => {

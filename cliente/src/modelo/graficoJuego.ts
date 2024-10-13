@@ -11,6 +11,7 @@ import { Texto } from './Texto';
 import { Controles } from './controles';
 
 export class graficoJuego {
+    largo: number;
     
     
     private game: Phaser.Game;
@@ -74,6 +75,10 @@ export class graficoJuego {
 
 
     
+  setLargo(largo: number) {
+    this.largo = largo;
+  }
+
     GetSonido(nombre: string): Sonido {
         return this.sonidos.find(sonido => sonido.nombre === nombre);
     }
@@ -175,7 +180,8 @@ export class graficoJuego {
         });
         // Añadir fondo
         this.scene.add.image(700, 600, 'sky').setScale(1.5).setScrollFactor(0);
-        this.scene.cameras.main.setBounds(0, 0, 3000, 600);
+        console.log("largoooo", this.largo);
+        this.scene.cameras.main.setBounds(0, 0, this.largo, 600);
 
         this.sonidos.forEach(sonido => {
             sonido.agregar(this.scene)
