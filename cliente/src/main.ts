@@ -10,7 +10,7 @@ import { Jugador } from './modelo/jugador';
 let client: Client | undefined; 
 client = new Client();
 const mapa: Mapa = new Mapa();
-const graficos: graficoJuego = (new graficoJuego());
+const graficos: graficoJuego = new graficoJuego();
 
 
 document.addEventListener('DOMContentLoaded', () => {
