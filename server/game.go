@@ -22,6 +22,8 @@ func gameLoop(world *World, playersMutex *sync.Mutex) {
 				posX := player.Object.Position.X
 				posY := player.Object.Position.Y
 				playerHeight := player.Object.Size.Y
+				hasGravityInverted := player.HasGravityInverted
+				isWalking := player.IsWalking
 				playersMutex.Unlock()
 
 				point := Point{
@@ -35,8 +37,8 @@ func gameLoop(world *World, playersMutex *sync.Mutex) {
 						"numeroJugador":          1,
 						"x":                      point.X,
 						"y":                      point.Y,
-						"tieneGravedadInvertida": false,
-						"estaCaminando":          false,
+						"tieneGravedadInvertida": hasGravityInverted,
+						"estaCaminando":          isWalking,
 					},
 					// TODO send more players
 					// map[string]any{
