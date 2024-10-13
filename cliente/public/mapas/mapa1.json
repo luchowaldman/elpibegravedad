@@ -1,22 +1,38 @@
 {
     "nombre": "Mapa 1",
-    "ancho": 6000,
+    "ancho": 60000,
     "fondo": "sky",
     "cancion": "cancion",
     "plataformas": [
         { "tipo": "piso", "desdeX": 200, "desdeY": 590, "hastaX": 1000, "hastaY": 590 },
         { "tipo": "techo", "desdeX": 900, "desdeY": 20, "hastaX": 1200, "hastaY": 20 },
-        
         { "tipo": "piso", "desdeX": 1200, "desdeY": 590, "hastaX": 2000, "hastaY": 590 },
-        { "tipo": "techo", "desdeX": 1900, "desdeY": 20, "hastaX": 3000, "hastaY": 20 }
-
+        { "tipo": "techo", "desdeX": 1900, "desdeY": 20, "hastaX": 3000, "hastaY": 20 },
+        { "tipo": "piso", "desdeX": 3300, "desdeY": 590, "hastaX": 4100, "hastaY": 590 },
+        { "tipo": "techo", "desdeX": 4000, "desdeY": 20, "hastaX": 4300, "hastaY": 20 },
+        { "tipo": "piso", "desdeX": 4300, "desdeY": 590, "hastaX": 5100, "hastaY": 590 },
+        { "tipo": "techo", "desdeX": 5000, "desdeY": 20, "hastaX": 6100, "hastaY": 20 },
+        { "tipo": "piso", "desdeX": 6200, "desdeY": 590, "hastaX": 7000, "hastaY": 590 },
+        { "tipo": "piso", "desdeX": 7200, "desdeY": 590, "hastaX": 8000, "hastaY": 590 },
+        { "tipo": "techo", "desdeX": 7900, "desdeY": 20, "hastaX": 9000, "hastaY": 20 },
+        { "tipo": "piso", "desdeX": 9300, "desdeY": 590, "hastaX": 10100, "hastaY": 590 },
+        { "tipo": "techo", "desdeX": 10000, "desdeY": 20, "hastaX": 10300, "hastaY": 20 },
+        { "tipo": "piso", "desdeX": 10300, "desdeY": 590, "hastaX": 11100, "hastaY": 590 },
+        { "tipo": "techo", "desdeX": 11000, "desdeY": 20, "hastaX": 12100, "hastaY": 20 },
+        { "tipo": "techo", "desdeX": 5000, "desdeY": 20, "hastaX": 6100, "hastaY": 20 }
     ],
     "obstaculos": [
+        { "tipo": "caja", "id": "caja_0", "desdeX": 500, "desdeY": 560 },
         { "tipo": "caja", "id": "caja_1", "desdeX": 800, "desdeY": 560 },
         { "tipo": "caja", "id": "caja_2", "desdeX": 850, "desdeY": 560 },
         { "tipo": "caja", "id": "caja_3", "desdeX": 825, "desdeY": 510 },
         { "tipo": "caja", "id": "caja_4", "desdeX": 825, "desdeY": 460 },
-        { "tipo": "caja", "id": "caja_entecho", "desdeX": 940, "desdeY": 50 }
+        { "tipo": "caja", "id": "caja_entecho", "desdeX": 940, "desdeY": 50 },
+        { "tipo": "caja", "id": "caja_1_dup", "desdeX": 3900, "desdeY": 560 },
+        { "tipo": "caja", "id": "caja_2_dup", "desdeX": 3950, "desdeY": 560 },
+        { "tipo": "caja", "id": "caja_3_dup", "desdeX": 3925, "desdeY": 510 },
+        { "tipo": "caja", "id": "caja_4_dup", "desdeX": 3925, "desdeY": 490 },
+        { "tipo": "caja", "id": "caja_entecho_dup", "desdeX": 4040, "desdeY": 50 }
     ],
     "inicio_jugadores": { "x": 0, "y": 30 }
 }
