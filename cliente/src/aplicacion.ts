@@ -1,4 +1,7 @@
 export class  Aplicacion {
+    DOMIniciado() {
+      throw new Error('Method not implemented.');
+    }
     constructor() {
         console.log('Aplicación creada');
     }
