@@ -8,11 +8,11 @@ import (
 type Player struct {
 	Socket *socket.Socket
 
-	Object   *resolv.Object
-	Speed    resolv.Vector
-	OnGround *resolv.Object
+	Object *resolv.Object
+	Speed  resolv.Vector
 
 	HasGravityInverted bool
+	IsWalking          bool
 }
 
 func (player *Player) SetSpeed(x, y float64) {

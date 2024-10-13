@@ -7,7 +7,7 @@ import (
 )
 
 const (
-	mapHeight              = 900
+	mapHeight              = 600
 	platformHeight         = 20
 	obstacleHeightAndWidth = 50
 )
