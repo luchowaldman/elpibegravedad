@@ -11,12 +11,14 @@ export class Plataforma {
     desdeY: number;
     hastaX: number;
     hastaY: number;
+    alto: number;
   
-    constructor(desdeX: number, desdeY: number, hastaX: number, hastaY: number) {
+    constructor(desdeX: number, desdeY: number, hastaX: number, hastaY: number, alto: number) {
       this.desdeX = desdeX;
       this.desdeY = desdeY;
       this.hastaX = hastaX;
       this.hastaY = hastaY;
+      this.alto = alto;
     }
 
     cargarImagenes(graficos: graficoJuego) {

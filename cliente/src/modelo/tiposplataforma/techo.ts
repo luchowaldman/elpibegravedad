@@ -6,8 +6,8 @@ const tamanio_figura = 100;
 export default class Techo extends Plataforma {
 
   
-    constructor(desdeX: number, desdeY: number, hastaX: number, hastaY: number) {
-        super(desdeX, desdeY, hastaX, hastaY);
+    constructor(desdeX: number, desdeY: number, hastaX: number, hastaY: number, alto: number) {
+        super(desdeX, desdeY, hastaX, hastaY, alto);
         this.tipo = "Techo";
     }
 
@@ -15,11 +15,11 @@ export default class Techo extends Plataforma {
         
         const id = `ent_piso${index + 1}`;
 
-        graficos.AdddEntidad(new EntidadGrafica(id, "techo1", this.desdeX, this.desdeY));
+        graficos.AdddEntidad(new EntidadGrafica(id, "techo1", this.desdeX, this.desdeY, 100, this.alto));
         for (let posX = this.desdeX + tamanio_figura; posX < this.hastaX - tamanio_figura; posX += tamanio_figura ) {
-            graficos.AdddEntidad(new EntidadGrafica(id, "techo2", posX, this.desdeY));
+            graficos.AdddEntidad(new EntidadGrafica(id, "techo2", posX, this.desdeY, 100, this.alto));
         }
-        graficos.AdddEntidad(new EntidadGrafica(id, "techo3", this.hastaX - 100, this.desdeY));
+        graficos.AdddEntidad(new EntidadGrafica(id, "techo3", this.hastaX - 100, this.desdeY, 100, this.alto));
         
     }
 
