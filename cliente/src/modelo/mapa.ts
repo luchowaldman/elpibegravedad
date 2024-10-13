@@ -7,7 +7,7 @@ import TipoPlataformaFactory from "./tiposplataforma/tipoplataformafactory";
 
 export class Mapa {
     nombre: string = '';
-    ancho: number = 0;
+    largo: number = 0;
     fondo: string = '';
     cancion: string = '';
     plataformas: Plataforma[] = [];
@@ -20,7 +20,7 @@ export class Mapa {
         const mapaData = await response.json();
         
       this.nombre = mapaData.nombre;
-      this.ancho = mapaData.ancho;
+      this.largo = mapaData.largo;
       this.fondo = mapaData.fondo;
       this.cancion = mapaData.cancion;
       this.plataformas = mapaData.plataformas.map((plataforma: Plataforma) => TipoPlataformaFactory.Crear(plataforma.tipo, plataforma.desdeX, plataforma.desdeY, plataforma.hastaX, plataforma.hastaY, plataforma.alto));
@@ -47,6 +47,7 @@ export class Mapa {
       
     cargarImagenes(graficos: graficoJuego) {
       
+      graficos.setLargo(this.largo);
       graficos.AddImagen(this.fondo);
       this.plataformas.forEach((plataforma) => {
         plataforma.cargarImagenes(graficos);
