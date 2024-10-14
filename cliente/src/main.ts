@@ -173,9 +173,9 @@ client.setPosicionJugadoresHandler((posicionesDeLosJugadores) => {
 });
 
 await mapa.cargarMapa("./mapas/mapa1.json");
-graficos.AddAnimacion('player_caminando', 70, 100);
+graficos.AddAnimacion('player_caminando', 35, 50);
 graficos.AddAnimacionEntidadGrafica('animacioncaminando', 'player_caminando', 0, 1, 7, -1);
-graficos.AddAnimacion('player_volando', 70, 100);
+graficos.AddAnimacion('player_volando',  35, 50);
 graficos.AddAnimacionEntidadGrafica('animacionvolando', 'player_volando', 0, 1, 7, -1);
 
 
