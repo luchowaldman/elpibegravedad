@@ -19,7 +19,7 @@ export class Jugador {
     }
 
     dibujar(graficos: graficoJuego) {
-        this.entidad = new EntidadGrafica(this.id, "player_caminando", this.x, this.y, 75, 100 );
+        this.entidad = new EntidadGrafica(this.id, "player_caminando", this.x, this.y, 35, 50 );
         graficos.AdddEntidad(this.entidad);
         this.entidad.setColor(this.color);
         this.animar(graficos, "animacioncaminando");
