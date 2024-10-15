@@ -5,7 +5,6 @@
     <link rel="icon" type="image/" href="/img/icono.png" />
     <link rel="stylesheet" href="/css/site.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <title>El pibe gravedad</title>
   </head> 
 
@@ -25,8 +24,8 @@
             </li>
           </ul>
           <form class="form-inline mt-2 mt-md-0">
-            <input class="form-control mr-sm-2" type="text" placeholder="Unirse a partida" aria-label="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Unirse</button>
+            <input class="form-control mr-sm-2" id="partida_id" type="text" placeholder="Unirse a partida" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" id="btnUnirse_Partida" type="button">Unirse</button>
           </form>
         </div>
       </nav>
@@ -34,31 +33,14 @@
     <body class="body">
     <div style="margin-top: 80px; margin-left: 25px;">
       <h1>Nueva Partida:</h1>
-      <div class="row">
-
-        <div class="col-md-3 divMapa" id="nuevoJuego_Mapa1">
-            <img src="/img/mapa1_icono.png" class="img-fluid">
-            <p>Mapa en lapicera</p>
-        </div>
-
-
-
-        <div class="col-md-3 divMapa">
-          <img src="/img/mapa1_icono.png" class="img-fluid">
-          <p>Algun mapa no creado</p>
-      </div>
-
-
-      <div class="col-md-3 divMapa">
-        <img src="/img/mapa1_icono.png" class="img-fluid">
-        <p>y este menos</p>
-    </div>
+      <div id="mapas" class="row">
       </div>
     </div>
+    <div id="juego-container"></div>
+
     </body>
+    <script type="module" src="/src/menu.ts"></script>
 
-      <div id="juego-container"></div>
-      <script type="module" src="/src/menu.ts"></script>
-
+      
       
 </html>
