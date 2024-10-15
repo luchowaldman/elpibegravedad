@@ -180,20 +180,12 @@ export class graficoJuego {
         });
         // Añadir fondo
         this.scene.add.image(700, 600, 'sky').setScale(1.5).setScrollFactor(0);
-        this.scene.cameras.main.setBounds(0, 0, 60000, 600);
+        this.scene.cameras.main.setBounds(0, 0, this.largo, 600);
 
         this.sonidos.forEach(sonido => {
             sonido.agregar(this.scene)
         });
         this.controles.agregar(this.scene);
-
-
-
-
-
-
-
-
     }
 
 
