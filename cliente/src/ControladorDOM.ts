@@ -2,7 +2,7 @@ import { divMapa } from "./modelo/divMapa";
 
 export class ControladorDOM {
 
-    
+    private document: Document;
     private onNuevaPartida: (partida_id: string) => void = () => {};
 
     setonNuevaPartida(callback: (message: string) => void) {
@@ -16,6 +16,7 @@ export class ControladorDOM {
     }
 
     DOMIniciado(document: Document, mapas: divMapa[]) {
+        this.document = document;
         this.CargarMapas(document, mapas);
         const btnUnirsePartida = document.getElementById('btnUnirse_Partida') as HTMLButtonElement;
         const inputPartidaId = document.getElementById('partida_id') as HTMLInputElement;
@@ -33,6 +34,8 @@ export class ControladorDOM {
             });
         }
     }
+
+
     CargarMapas(document: Document, mapas: divMapa[]) {
         const divMapas = document.getElementById('mapas') as HTMLDivElement;
         if (divMapas) {
@@ -48,6 +51,18 @@ export class ControladorDOM {
                 });
                 divMapas.appendChild(divMapa);
             });
+        }
+    }
+
+
+    public mostrar_pagina(pagina: string) {
+        const paginas = this.document.getElementsByClassName('pagina') as HTMLCollectionOf<HTMLElement>;
+        for (let i = 0; i < paginas.length; i++) {
+            paginas[i].style.display = 'none';
+        }
+        const paginaMostrar = this.document.getElementById(pagina);
+        if (paginaMostrar) {
+            paginaMostrar.style.display = 'block';
         }
     }
 }

@@ -34,6 +34,7 @@ export class Mapa {
 
     dibujarMapa(graficos: graficoJuego) {
         this.plataformas.forEach((plataforma, index) => {
+          console.log("Dibujando plataforma");
             plataforma.dibujar(graficos, index);
         });
     
