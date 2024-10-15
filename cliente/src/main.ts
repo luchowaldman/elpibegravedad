@@ -208,4 +208,3 @@ setTimeout(() => {
 setTimeout(() => {
     jugadores[1].animar(graficos, "animacionvolando");
 }, 2000);
-
