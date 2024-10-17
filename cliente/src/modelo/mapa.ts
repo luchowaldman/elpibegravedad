@@ -7,7 +7,7 @@ import TipoPlataformaFactory from "./tiposplataforma/tipoplataformafactory";
 
 export class Mapa {
     nombre: string = '';
-    ancho: number = 0;
+    largo: number = 0;
     fondo: string = '';
     cancion: string = '';
     plataformas: Plataforma[] = [];
@@ -20,11 +20,11 @@ export class Mapa {
         const mapaData = await response.json();
         
       this.nombre = mapaData.nombre;
-      this.ancho = mapaData.ancho;
+      this.largo = mapaData.largo;
       this.fondo = mapaData.fondo;
       this.cancion = mapaData.cancion;
-      this.plataformas = mapaData.plataformas.map((plataforma: Plataforma) => TipoPlataformaFactory.Crear(plataforma.tipo, plataforma.desdeX, plataforma.desdeY, plataforma.hastaX, plataforma.hastaY));
-      this.obstaculos = mapaData.obstaculos.map((obstaculo: Obstaculo) => new Obstaculo(obstaculo.tipo, obstaculo.id, obstaculo.desdeX, obstaculo.desdeY));
+      this.plataformas = mapaData.plataformas.map((plataforma: Plataforma) => TipoPlataformaFactory.Crear(plataforma.tipo, plataforma.desdeX, plataforma.desdeY, plataforma.hastaX, plataforma.hastaY, plataforma.alto));
+      this.obstaculos = mapaData.obstaculos.map((obstaculo: Obstaculo) => new Obstaculo(obstaculo.tipo, obstaculo.id, obstaculo.desdeX, obstaculo.desdeY, obstaculo.largo, obstaculo.alto));
       this.inicio_jugadores = new InicioJugadores(mapaData.inicio_jugadores.x, mapaData.inicio_jugadores.y);
       
       } catch (error) {
@@ -34,6 +34,7 @@ export class Mapa {
 
     dibujarMapa(graficos: graficoJuego) {
         this.plataformas.forEach((plataforma, index) => {
+          console.log("Dibujando plataforma");
             plataforma.dibujar(graficos, index);
         });
     
@@ -47,6 +48,7 @@ export class Mapa {
       
     cargarImagenes(graficos: graficoJuego) {
       
+      graficos.setLargo(this.largo);
       graficos.AddImagen(this.fondo);
       this.plataformas.forEach((plataforma) => {
         plataforma.cargarImagenes(graficos);

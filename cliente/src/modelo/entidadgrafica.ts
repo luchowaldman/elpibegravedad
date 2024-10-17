@@ -1,22 +1,29 @@
 export class EntidadGrafica {
     
 
+    imagenenescena: Phaser.Physics.Arcade.Sprite ;
 
 
     public id: string;
     public nombreImagen: string;
     public x: number;
     public y: number;
-       
-    imagenenescena: Phaser.Physics.Arcade.Sprite ;
+    public largo: number;
+    public alto: number;
 
-    constructor(id: string, nombreImagen: string, x: number, y: number)
-    {
-        this.id = id;
+    constructor(id: string, nombreImagen: string, x: number, y: number, largo: number, alto: number) {
         this.nombreImagen = nombreImagen;
+        this.id = id;
         this.x = x;
         this.y = y;
-        
+        this.largo = largo;
+        this.alto = alto;
+        if (this.largo == null) {
+            this.largo = 1;
+        }
+        if (this.alto == null) {
+            this.alto = 1;
+        }
     }
 
     setEscala(escala: number) {
@@ -54,7 +61,7 @@ export class EntidadGrafica {
     }
 
     agregar(scene: Phaser.Scene) {
-        this.imagenenescena = scene.physics.add.sprite(this.x, this.y, this.nombreImagen);
+        this.imagenenescena = scene.physics.add.sprite(this.x + (this.largo / 2), this.y + (this.alto / 2), this.nombreImagen);
     }
     
 

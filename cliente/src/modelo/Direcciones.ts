@@ -16,6 +16,7 @@ export class Direcciones {
       star: 'https://labs.phaser.io/assets/sprites/star.png',
       player_caminando: '/img/player_caminando.png',
       player_volando: '/img/player_volando.png',
+      player_muriendo: '/img/player_muriendo.png',
       lazo: '/img/lazo.png'
     };
   
