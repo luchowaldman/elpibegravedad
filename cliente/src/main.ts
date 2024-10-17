@@ -7,6 +7,12 @@ import { EntidadGrafica } from './modelo/entidadgrafica';
 import { Mapa } from './modelo/mapa';
 import { Jugador } from './modelo/jugador';
 
+let client: Client | undefined;
+client = new Client();
+client.connect();
+const mapa: Mapa = new Mapa();
+const graficos: graficoJuego = new graficoJuego();
+
 
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -170,11 +176,7 @@ client.setPosicionJugadoresHandler((posicionesDeLosJugadores) => {
 await mapa.cargarMapa("./mapas/mapa1.json");
 graficos.AddAnimacion('player_caminando', 35, 50);
 graficos.AddAnimacionEntidadGrafica('animacioncaminando', 'player_caminando', 0, 1, 7, -1);
-<<<<<<< HEAD
 graficos.AddAnimacion('player_volando', 35, 50);
-=======
-graficos.AddAnimacion('player_volando',  35, 50);
->>>>>>> 71ff7c5 (Creo clase aplicacion)
 graficos.AddAnimacionEntidadGrafica('animacionvolando', 'player_volando', 0, 1, 7, -1);
 
 
