@@ -6,25 +6,38 @@ import (
 	"os"
 )
 
+const (
+	mapHeight = 600
+)
+
 type Map struct {
-	Width        int          `json:"ancho"`
+	Height       int
+	Width        int          `json:"largo"`
 	Platforms    []Platform   `json:"plataformas"`
 	Obstacles    []Obstacle   `json:"obstaculos"`
 	PlayersStart PlayersStart `json:"inicio_jugadores"`
+
+	Solids []Solid
+}
+
+type Solid struct {
+	coordinates Coordinates
 }
 
 type Platform struct {
-	Type  string `json:"tipo"`
-	FromX int    `json:"desdeX"`
-	FromY int    `json:"desdeY"`
-	ToX   int    `json:"hastaX"`
-	ToY   int    `json:"hastaY"`
+	Type   string `json:"tipo"`
+	FromX  int    `json:"desdeX"`
+	FromY  int    `json:"desdeY"`
+	ToX    int    `json:"hastaX"`
+	Height int    `json:"alto"`
 }
 
 type Obstacle struct {
-	Type  string `json:"tipo"`
-	FromX int    `json:"desdeX"`
-	FromY int    `json:"desdeY"`
+	Type   string `json:"tipo"`
+	FromX  int    `json:"desdeX"`
+	FromY  int    `json:"desdeY"`
+	Width  int    `json:"largo"`
+	Height int    `json:"alto"`
 }
 
 type PlayersStart struct {
@@ -40,14 +53,52 @@ func loadMap() Map {
 		log.Fatalln("Error opening map file", "err", err)
 	}
 
-	var gameMap Map
+	gameMap := Map{
+		Height: mapHeight,
+	}
 
 	jsonParser := json.NewDecoder(configFile)
 	if err = jsonParser.Decode(&gameMap); err != nil {
 		log.Fatalln("Error parsing map file", "err", err)
 	}
 
+	solids := make([]Solid, 0, len(gameMap.Platforms)+len(gameMap.Obstacles))
+
 	log.Println("Map loaded", gameMap)
+
+	for _, platform := range gameMap.Platforms {
+		solids = append(solids, Solid{
+			coordinates: Coordinates{
+				From: Point{
+					X: platform.FromX,
+					Y: platform.FromY,
+				},
+				To: Point{
+					X: platform.ToX,
+					Y: platform.FromY + platform.Height,
+				},
+			}.FromClientToServer(mapHeight),
+		})
+	}
+
+	for _, obstacle := range gameMap.Obstacles {
+		solids = append(solids, Solid{
+			coordinates: Coordinates{
+				From: Point{
+					X: obstacle.FromX,
+					Y: obstacle.FromY,
+				},
+				To: Point{
+					X: obstacle.FromX + obstacle.Width,
+					Y: obstacle.FromY + obstacle.Height,
+				},
+			}.FromClientToServer(mapHeight),
+		})
+	}
+
+	gameMap.Solids = solids
+
+	log.Println("Map solids generated", gameMap.Solids)
 
 	return gameMap
 }
