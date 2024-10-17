@@ -51,8 +51,10 @@ export class EntidadGrafica {
     
     
     setPosicion(x: number, y: number) {
-        this.imagenenescena.setX(x);
-        this.imagenenescena.setY(y);
+        this.x = x;
+        this.y = y;
+        this.imagenenescena.setX(x + (this.largo / 2));
+        this.imagenenescena.setY(y + (this.alto / 2));
     }
 
 
