@@ -9,6 +9,7 @@ import { Jugador } from './modelo/jugador';
 
 let client: Client | undefined; 
 client = new Client();
+client.connect();
 const mapa: Mapa = new Mapa();
 const graficos: graficoJuego = new graficoJuego();
 

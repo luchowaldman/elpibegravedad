@@ -29,6 +29,7 @@ export class graficoJuego {
     cursors: Phaser.Types.Input.Keyboard.CursorKeys;
     spaceBar: Phaser.Input.Keyboard.Key;
     keyG: Phaser.Input.Keyboard.Key;
+    fondo: string = "sky";
     
     GetEntidad(id: string): EntidadGrafica {
         return this.entidades.find(entidad => entidad.id === id);
@@ -179,7 +180,7 @@ export class graficoJuego {
             });
         });
         // Añadir fondo
-        this.scene.add.image(700, 600, 'sky').setScale(1.5).setScrollFactor(0);
+        this.scene.add.image(700, 600, this.fondo).setScale(1.5).setScrollFactor(0);
         this.scene.cameras.main.setBounds(0, 0, this.largo, 600);
 
         this.sonidos.forEach(sonido => {
