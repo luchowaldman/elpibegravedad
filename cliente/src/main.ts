@@ -188,7 +188,7 @@ graficos.agenda.agregarAccionGrafica(0 ,new  AccionGraficaMostrarTexto(graficos,
 
 const jugadores: Jugador[] = [
     new Jugador("Play1",0x0000ff, 330, 450),
-    new Jugador("Play2",0xff0000, 330, 200)
+    new Jugador("Play2",0xff0000, 330, 500)
 ];
 
 setTimeout(() => {
