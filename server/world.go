@@ -37,6 +37,8 @@ func NewWorld(gameMap Map, players *[]*Player) *World {
 func (world *World) Init(gameMap Map) {
 	// Initialize the world.
 
+	log.Println("starting world with dimensions: ", gameMap.Width, gameMap.Height)
+
 	gameWidth := float64(gameMap.Width)
 	gameHeight := float64(gameMap.Height)
 
@@ -64,6 +66,8 @@ func (world *World) Init(gameMap Map) {
 	// Add solids
 	for _, solid := range gameMap.Solids {
 		x, y, w, h := solid.coordinates.ToDimensions()
+
+		log.Println("Adding solid: ", x, y, w, h)
 
 		world.Space.Add(
 			resolv.NewObject(

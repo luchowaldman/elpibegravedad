@@ -12,7 +12,7 @@ const (
 
 type Map struct {
 	Height       int
-	Width        int          `json:"ancho"`
+	Width        int          `json:"largo"`
 	Platforms    []Platform   `json:"plataformas"`
 	Obstacles    []Obstacle   `json:"obstaculos"`
 	PlayersStart PlayersStart `json:"inicio_jugadores"`
