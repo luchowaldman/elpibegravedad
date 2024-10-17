@@ -21,7 +21,6 @@ func gameLoop(world *World, playersMutex *sync.Mutex) {
 
 				posX := player.Object.Position.X
 				posY := player.Object.Position.Y
-				playerHeight := player.Object.Size.Y
 				hasGravityInverted := player.HasGravityInverted
 				isWalking := player.IsWalking
 				playersMutex.Unlock()
@@ -29,7 +28,7 @@ func gameLoop(world *World, playersMutex *sync.Mutex) {
 				point := Point{
 					X: int(posX),
 					Y: int(posY),
-				}.FromServerToClient(mapHeight, int(playerHeight))
+				}.FromServerToClient(mapHeight, playerWidth, playerHeight)
 
 				// TODO could probably be outside mutex lock for better performance
 				err := player.Socket.Emit("posicionesDeLosJugadores", []any{
