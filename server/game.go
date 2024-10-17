@@ -31,7 +31,7 @@ func gameLoop(world *World, playersMutex *sync.Mutex) {
 				}.FromServerToClient(mapHeight, playerWidth, playerHeight)
 
 				// TODO could probably be outside mutex lock for better performance
-				err := player.Socket.Emit("posicionesDeLosJugadores", []any{
+				err := player.Socket.Emit("tick", []any{
 					map[string]any{
 						"numeroJugador":          1,
 						"x":                      point.X,
@@ -47,7 +47,7 @@ func gameLoop(world *World, playersMutex *sync.Mutex) {
 					// 	"tieneGravedadInvertida": false,
 					// 	"estaCaminando":          false,
 					// },
-				})
+				}, 0)
 				if err != nil {
 					log.Println("failed to send posicionesDeLosJugadores", "err", err)
 				}
