@@ -11,8 +11,8 @@ const (
 	cellSize             = 1
 	solidTag             = "solid"
 	playerTag            = "player"
-	playerHeight         = 100
-	playerWidth          = 70
+	playerHeight         = 50
+	playerWidth          = 35
 	playerSpeedX float64 = 30 / TicksPerSecond
 	playerSpeedY         = playerSpeedX
 )

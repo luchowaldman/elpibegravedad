@@ -7,9 +7,7 @@ import (
 )
 
 const (
-	mapHeight              = 600
-	platformHeight         = 20
-	obstacleHeightAndWidth = 50
+	mapHeight = 600
 )
 
 type Map struct {
@@ -27,16 +25,19 @@ type Solid struct {
 }
 
 type Platform struct {
-	Type  string `json:"tipo"`
-	FromX int    `json:"desdeX"`
-	FromY int    `json:"desdeY"`
-	ToX   int    `json:"hastaX"`
+	Type   string `json:"tipo"`
+	FromX  int    `json:"desdeX"`
+	FromY  int    `json:"desdeY"`
+	ToX    int    `json:"hastaX"`
+	Height int    `json:"alto"`
 }
 
 type Obstacle struct {
-	Type  string `json:"tipo"`
-	FromX int    `json:"desdeX"`
-	FromY int    `json:"desdeY"`
+	Type   string `json:"tipo"`
+	FromX  int    `json:"desdeX"`
+	FromY  int    `json:"desdeY"`
+	Width  int    `json:"largo"`
+	Height int    `json:"alto"`
 }
 
 type PlayersStart struct {
@@ -74,7 +75,7 @@ func loadMap() Map {
 				},
 				To: Point{
 					X: platform.ToX,
-					Y: platform.FromY + platformHeight, // platforms have a fixed height
+					Y: platform.FromY + platform.Height,
 				},
 			}.FromClientToServer(mapHeight),
 		})
@@ -88,8 +89,8 @@ func loadMap() Map {
 					Y: obstacle.FromY,
 				},
 				To: Point{
-					X: obstacle.FromX + obstacleHeightAndWidth, // obstacles are always square
-					Y: obstacle.FromY + obstacleHeightAndWidth, // obstacles are always square
+					X: obstacle.FromX + obstacle.Width,
+					Y: obstacle.FromY + obstacle.Height,
 				},
 			}.FromClientToServer(mapHeight),
 		})

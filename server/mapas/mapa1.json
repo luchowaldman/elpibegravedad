@@ -1,32 +1,24 @@
 {
     "nombre": "Mapa 1",
-    "ancho": 1000,
+    "largo": 6000,
     "fondo": "sky",
     "cancion": "cancion",
     "plataformas": [
         {
+            "tipo": "piso",
             "desdeX": 200,
             "desdeY": 550,
             "hastaX": 1000,
-            "hastaY": 550
+            "hastaY": 550,
+            "alto": 10
         },
         {
+            "tipo": "techo",
             "desdeX": 900,
             "desdeY": 50,
             "hastaX": 1200,
-            "hastaY": 50
-        },
-        {
-            "desdeX": 1200,
-            "desdeY": 550,
-            "hastaX": 2000,
-            "hastaY": 550
-        },
-        {
-            "desdeX": 1900,
-            "desdeY": 50,
-            "hastaX": 3000,
-            "hastaY": 50
+            "hastaY": 20,
+            "alto": 10
         }
     ],
     "obstaculos": [
@@ -34,31 +26,9 @@
             "tipo": "caja",
             "id": "caja_1",
             "desdeX": 800,
-            "desdeY": 520
-        },
-        {
-            "tipo": "caja",
-            "id": "caja_2",
-            "desdeX": 850,
-            "desdeY": 520
-        },
-        {
-            "tipo": "caja",
-            "id": "caja_3",
-            "desdeX": 825,
-            "desdeY": 470
-        },
-        {
-            "tipo": "caja",
-            "id": "caja_4",
-            "desdeX": 825,
-            "desdeY": 420
-        },
-        {
-            "tipo": "caja",
-            "id": "caja_entecho",
-            "desdeX": 940,
-            "desdeY": 80
+            "desdeY": 500,
+            "largo": 50,
+            "alto": 50
         }
     ],
     "inicio_jugadores": {
