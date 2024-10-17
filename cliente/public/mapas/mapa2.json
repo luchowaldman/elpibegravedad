@@ -1,0 +1,12 @@
+{
+  "nombre": "Mapa de ejemplo",
+  "largo": 20000,
+  "fondo": "sky",
+  "cancion": "cancion",
+  "plataformas": [],
+  "obstaculos": [],
+  "inicio_jugadores": {
+    "x": 50,
+    "y": 50
+  }
+}
