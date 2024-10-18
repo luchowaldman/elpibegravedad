@@ -6,7 +6,28 @@ import (
 	"time"
 )
 
-const TicksPerSecond = 30
+const (
+	TicksPerSecond = 30
+	cameraWidth    = int(1500 / 2)
+)
+
+type PlayerInfo struct {
+	playerNumber       int
+	posX               int
+	posY               int
+	hasGravityInverted bool
+	isWalking          bool
+}
+
+func (playerInfo PlayerInfo) ToMap() map[string]any {
+	return map[string]any{
+		"numeroJugador":          playerInfo.playerNumber,
+		"x":                      playerInfo.posX,
+		"y":                      playerInfo.posY,
+		"tieneGravedadInvertida": playerInfo.hasGravityInverted,
+		"estaCaminando":          playerInfo.isWalking,
+	}
+}
 
 func gameLoop(world *World, playersMutex *sync.Mutex) {
 	ticker := time.NewTicker(time.Second / TicksPerSecond)
@@ -15,6 +36,8 @@ func gameLoop(world *World, playersMutex *sync.Mutex) {
 	for {
 		select {
 		case <-ticker.C:
+			playersPositions := []PlayerInfo{}
+
 			for _, player := range *world.Players {
 				playersMutex.Lock()
 				world.Update()
@@ -30,24 +53,33 @@ func gameLoop(world *World, playersMutex *sync.Mutex) {
 					Y: int(posY),
 				}.FromServerToClient(mapHeight, playerWidth, playerHeight)
 
-				// TODO could probably be outside mutex lock for better performance
-				err := player.Socket.Emit("posicionesDeLosJugadores", []any{
-					map[string]any{
-						"numeroJugador":          1,
-						"x":                      point.X,
-						"y":                      point.Y,
-						"tieneGravedadInvertida": hasGravityInverted,
-						"estaCaminando":          isWalking,
-					},
-					// TODO send more players
-					// map[string]any{
-					// 	"numeroJugador":          2,
-					// 	"x":                      100,
-					// 	"y":                      100,
-					// 	"tieneGravedadInvertida": false,
-					// 	"estaCaminando":          false,
-					// },
+				playersPositions = append(playersPositions, PlayerInfo{
+					playerNumber:       1, // TODO send more players
+					posX:               point.X,
+					posY:               point.Y,
+					hasGravityInverted: hasGravityInverted,
+					isWalking:          isWalking,
 				})
+			}
+
+			maxPosX := 0
+			playersPositionsProtocol := make([]any, 0, len(playersPositions))
+
+			for _, playersPosition := range playersPositions {
+				if playersPosition.posX > maxPosX {
+					maxPosX = playersPosition.posX
+				}
+
+				playersPositionsProtocol = append(playersPositionsProtocol, playersPosition.ToMap())
+			}
+
+			cameraX := maxPosX - cameraWidth
+			if cameraX < 0 {
+				cameraX = 0
+			}
+
+			for _, player := range *world.Players {
+				err := player.Socket.Emit("tick", playersPositionsProtocol, cameraX)
 				if err != nil {
 					log.Println("failed to send posicionesDeLosJugadores", "err", err)
 				}

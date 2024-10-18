@@ -2,13 +2,13 @@ import { io, Socket } from "socket.io-client";
 import { AccionGraficaSetPosicion } from "./AccionGrafica";
 
 interface ServerToClientEvents {
-    posicionesDeLosJugadores: (positions: {
+    tick: (positions: {
         numeroJugador: number,
         x: number,
         y: number,
         tieneGravedadInvertida: boolean,
         estaCaminando: boolean,
-    }[]) => void;
+    }[], camaraX: number) => void;
 }
 
 interface ClientToServerEvents {
@@ -34,7 +34,7 @@ export class Client {
     }
 
     public connect() {
-        
+
         let socket: Socket<ServerToClientEvents, ClientToServerEvents> = io("http://localhost:8080", {
             autoConnect: true,
             rejectUnauthorized: false,
@@ -57,8 +57,9 @@ export class Client {
             console.log(`connect_error due to ${err.message}`);
         });
 
-        socket.on("posicionesDeLosJugadores", (posicionesDeLosJugadores) => {
+        socket.on("tick", (posicionesDeLosJugadores, camaraX) => {
             this.onPosicionJugadores(posicionesDeLosJugadores);
+            console.log(`received camaraX: ${camaraX}`);
         });
         this.socket = socket;
     }
