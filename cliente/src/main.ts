@@ -165,12 +165,12 @@ client.setPosicionJugadoresHandler((posicionesDeLosJugadores) => {
     for (let i = 0; i < posicionesDeLosJugadores.length; i++) {
         let x = posicionesDeLosJugadores[i].x
         let y = posicionesDeLosJugadores[i].y
-        
-
-        
-        console.log("received player %s position (%d, %d)", i, x, y)
         jugadores[i].setPosicion(graficos, x, y);
     }
+});
+
+client.setCamaraHandler((camaraX) => {
+    graficos.setPosicionCamara(camaraX);
 });
 
 await mapa.cargarMapa("./mapas/mapa1.json");

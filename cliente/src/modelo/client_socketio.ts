@@ -23,6 +23,12 @@ export class Client {
         }
     }
 
+    private CamaraHandler?: (camaraX: number) => void;
+
+    public setCamaraHandler(handler: (camaraX: number) => void) {
+        this.CamaraHandler = handler
+    }
+
     private posicionJugadoresHandler?: (positions: { numeroJugador: number, x: number, y: number, tieneGravedadInvertida: boolean, estaCaminando: boolean }[]) => void;
 
     public setPosicionJugadoresHandler(handler: (positions: { numeroJugador: number, x: number, y: number, tieneGravedadInvertida: boolean, estaCaminando: boolean }[]) => void) {
@@ -59,7 +65,8 @@ export class Client {
 
         socket.on("tick", (posicionesDeLosJugadores, camaraX) => {
             this.onPosicionJugadores(posicionesDeLosJugadores);
-            console.log(`received camaraX: ${camaraX}`);
+            this.CamaraHandler?.(camaraX);
+            
         });
         this.socket = socket;
     }
