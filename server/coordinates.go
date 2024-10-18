@@ -45,7 +45,7 @@ func (coords Coordinates) FromClientToServer(mapHeight int) Coordinates {
 // transform server coordinates to client coordinates system
 func (point Point) FromServerToClient(mapHeight, objectWidth, objectHeight int) Point {
 	return Point{
-		X: point.X + objectWidth/2,
-		Y: mapHeight - (point.Y + objectHeight/2),
+		X: point.X,
+		Y: mapHeight - (point.Y + objectHeight),
 	}
 }
