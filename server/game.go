@@ -6,6 +6,11 @@ import (
 	"time"
 )
 
+const (
+	TicksPerSecond = 30
+	cameraWidth    = int(1500 / 2)
+)
+
 type PlayerInfo struct {
 	playerNumber       int
 	posX               int
@@ -23,8 +28,6 @@ func (playerInfo PlayerInfo) ToMap() map[string]any {
 		"estaCaminando":          playerInfo.isWalking,
 	}
 }
-
-const TicksPerSecond = 30
 
 func gameLoop(world *World, playersMutex *sync.Mutex) {
 	ticker := time.NewTicker(time.Second / TicksPerSecond)
@@ -59,19 +62,28 @@ func gameLoop(world *World, playersMutex *sync.Mutex) {
 				})
 			}
 
+			maxPosX := 0
 			playersPositionsProtocol := make([]any, 0, len(playersPositions))
+
 			for _, playersPosition := range playersPositions {
+				if playersPosition.posX > maxPosX {
+					maxPosX = playersPosition.posX
+				}
+
 				playersPositionsProtocol = append(playersPositionsProtocol, playersPosition.ToMap())
 			}
 
+			cameraX := maxPosX - cameraWidth
+			if cameraX < 0 {
+				cameraX = 0
+			}
+
 			for _, player := range *world.Players {
-				err := player.Socket.Emit("tick", playersPositionsProtocol, 0)
+				err := player.Socket.Emit("tick", playersPositionsProtocol, cameraX)
 				if err != nil {
 					log.Println("failed to send posicionesDeLosJugadores", "err", err)
 				}
 			}
-
-			// cameraX := posX
 		case <-quit:
 			ticker.Stop()
 			return
