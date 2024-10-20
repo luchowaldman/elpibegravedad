@@ -1,182 +1,390 @@
 {
-    "nombre": "Mapa 1",
-    "largo": 20000,
-    "fondo": "sky",
-    "cancion": "cancion",
-    "plataformas": [
-        {
-            "tipo": "piso",
-            "desdeX": 20,
-            "desdeY": 550,
-            "hastaX": 1000,
-            "hastaY": 550,
-            "alto": 10
-        },
-        {
-            "tipo": "techo",
-            "desdeX": 900,
-            "desdeY": 20,
-            "hastaX": 1200,
-            "hastaY": 20,
-            "alto": 10
-        },
-        {
-            "tipo": "piso",
-            "desdeX": 1200,
-            "desdeY": 550,
-            "hastaX": 2000,
-            "hastaY": 550,
-            "alto": 10
-        },
-        {
-            "tipo": "techo",
-            "desdeX": 1900,
-            "desdeY": 20,
-            "hastaX": 2700,
-            "hastaY": 20,
-            "alto": 10
-        },
-        {
-            "tipo": "piso",
-            "desdeX": 2700,
-            "desdeY": 550,
-            "hastaX": 3500,
-            "hastaY": 550,
-            "alto": 10
-        },
-        {
-            "tipo": "techo",
-            "desdeX": 3400,
-            "desdeY": 20,
-            "hastaX": 4200,
-            "hastaY": 20,
-            "alto": 10
-        },
-        {
-            "tipo": "piso",
-            "desdeX": 4200,
-            "desdeY": 550,
-            "hastaX": 5000,
-            "hastaY": 550,
-            "alto": 10
-        },
-        {
-            "tipo": "techo",
-            "desdeX": 4900,
-            "desdeY": 20,
-            "hastaX": 5700,
-            "hastaY": 20,
-            "alto": 10
-        },
-        {
-            "tipo": "piso",
-            "desdeX": 5700,
-            "desdeY": 550,
-            "hastaX": 6000,
-            "hastaY": 550,
-            "alto": 10
-        },
-        {
-            "tipo": "techo",
-            "desdeX": 5700,
-            "desdeY": 20,
-            "hastaX": 6100,
-            "hastaY": 20,
-            "alto": 10
-        },
-        {
-            "tipo": "piso",
-            "desdeX": 6000,
-            "desdeY": 550,
-            "hastaX": 7100,
-            "hastaY": 550,
-            "alto": 10
-        },
-        {
-            "tipo": "techo",
-            "desdeX": 6900,
-            "desdeY": 20,
-            "hastaX": 7900,
-            "hastaY": 20,
-            "alto": 10
-        },
-        {
-            "tipo": "piso",
-            "desdeX": 7800,
-            "desdeY": 550,
-            "hastaX": 8800,
-            "hastaY": 550,
-            "alto": 10
-        },
-        {
-            "tipo": "techo",
-            "desdeX": 8900,
-            "desdeY": 20,
-            "hastaX": 10100,
-            "hastaY": 20,
-            "alto": 10
-        },
-        {
-            "tipo": "piso",
-            "desdeX": 10000,
-            "desdeY": 550,
-            "hastaX": 10900,
-            "hastaY": 550,
-            "alto": 10
-        },
-        {
-            "tipo": "techo",
-            "desdeX": 10900,
-            "desdeY": 20,
-            "hastaX": 12000,
-            "hastaY": 20,
-            "alto": 10
-        },
-        {
-            "tipo": "piso",
-            "desdeX": 11900,
-            "desdeY": 550,
-            "hastaX": 12900,
-            "hastaY": 550,
-            "alto": 10
-        },
-        {
-            "tipo": "techo",
-            "desdeX": 12800,
-            "desdeY": 20,
-            "hastaX": 13800,
-            "hastaY": 20,
-            "alto": 10
-        },
-        {
-            "tipo": "piso",
-            "desdeX": 13700,
-            "desdeY": 550,
-            "hastaX": 14800,
-            "hastaY": 550,
-            "alto": 10
-        },
-        {
-            "tipo": "techo",
-            "desdeX": 14600,
-            "desdeY": 20,
-            "hastaX": 20000,
-            "hastaY": 20,
-            "alto": 10
-        }
-    ],
-    "obstaculos": [
-        {
-            "tipo": "caja",
-            "id": "caja_1",
-            "desdeX": 930,
-            "desdeY": 500,
-            "largo": 50,
-            "alto": 50
-        }
-    ],
-    "inicio_jugadores": {
-        "x": 200,
-        "y": 200
+  "nombre": "Mapa de ejemplo",
+  "largo": 20000,
+  "fondo": "sky",
+  "cancion": "cancion",
+  "plataformas": [
+    {
+      "tipo": "piso",
+      "desdeX": 0,
+      "desdeY": 490,
+      "hastaX": 1200,
+      "hastaY": 490,
+      "alto": 10
+    },
+    {
+      "tipo": "piso",
+      "desdeX": 1400,
+      "desdeY": 490,
+      "hastaX": 2400,
+      "hastaY": 490,
+      "alto": 10
+    },
+    {
+      "tipo": "techo",
+      "desdeX": 0,
+      "desdeY": 120,
+      "hastaX": 1700,
+      "hastaY": 120,
+      "alto": 10
+    },
+    {
+      "tipo": "techo",
+      "desdeX": 2000,
+      "desdeY": 120,
+      "hastaX": 2400,
+      "hastaY": 120,
+      "alto": 10
+    },
+    {
+      "tipo": "techo",
+      "desdeX": 2700,
+      "desdeY": 20,
+      "hastaX": 4540,
+      "hastaY": 20,
+      "alto": 10
+    },
+    {
+      "tipo": "techo",
+      "desdeX": 4600,
+      "desdeY": 20,
+      "hastaX": 6000,
+      "hastaY": 20,
+      "alto": 10
+    },
+    {
+      "tipo": "piso",
+      "desdeX": 2400,
+      "desdeY": 300,
+      "hastaX": 3600,
+      "hastaY": 300,
+      "alto": 10
+    },
+    {
+      "tipo": "piso",
+      "desdeX": 3800,
+      "desdeY": 300,
+      "hastaX": 4240,
+      "hastaY": 300,
+      "alto": 10
+    },
+    {
+      "tipo": "piso",
+      "desdeX": 4400,
+      "desdeY": 300,
+      "hastaX": 6000,
+      "hastaY": 300,
+      "alto": 10
+    },
+    {
+      "tipo": "piso",
+      "desdeX": 2100,
+      "desdeY": 540,
+      "hastaX": 6000,
+      "hastaY": 540,
+      "alto": 10
     }
+  ],
+  "obstaculos": [
+    {
+      "tipo": "caja",
+      "id": "caja_1",
+      "desdeX": 400,
+      "desdeY": 440,
+      "largo": 50,
+      "alto": 50
+    },
+    {
+      "tipo": "caja",
+      "id": "caja_2",
+      "desdeX": 450,
+      "desdeY": 440,
+      "largo": 50,
+      "alto": 50
+    },
+    {
+      "tipo": "caja",
+      "id": "caja_3",
+      "desdeX": 500,
+      "desdeY": 440,
+      "largo": 50,
+      "alto": 50
+    },
+    {
+      "tipo": "caja",
+      "id": "caja_4",
+      "desdeX": 500,
+      "desdeY": 390,
+      "largo": 50,
+      "alto": 50
+    },
+    {
+      "tipo": "caja",
+      "id": "caja_5",
+      "desdeX": 700,
+      "desdeY": 440,
+      "largo": 50,
+      "alto": 50
+    },
+    {
+      "tipo": "caja",
+      "id": "caja_6",
+      "desdeX": 930,
+      "desdeY": 440,
+      "largo": 50,
+      "alto": 50
+    },
+    {
+      "tipo": "caja",
+      "id": "caja_7",
+      "desdeX": 1160,
+      "desdeY": 440,
+      "largo": 50,
+      "alto": 50
+    },
+    {
+      "tipo": "caja",
+      "id": "caja_8",
+      "desdeX": 1390,
+      "desdeY": 440,
+      "largo": 50,
+      "alto": 50
+    },
+    {
+      "tipo": "caja",
+      "id": "caja_1",
+      "desdeX": 300,
+      "desdeY": 130,
+      "largo": 50,
+      "alto": 50
+    },
+    {
+      "tipo": "caja",
+      "id": "caja_2",
+      "desdeX": 815,
+      "desdeY": 130,
+      "largo": 50,
+      "alto": 50
+    },
+    {
+      "tipo": "caja",
+      "id": "caja_3",
+      "desdeX": 1045,
+      "desdeY": 130,
+      "largo": 50,
+      "alto": 50
+    },
+    {
+      "tipo": "caja",
+      "id": "caja_4",
+      "desdeX": 1275,
+      "desdeY": 130,
+      "largo": 50,
+      "alto": 50
+    },
+    {
+      "tipo": "caja",
+      "id": "caja_5",
+      "desdeX": 1505,
+      "desdeY": 130,
+      "largo": 50,
+      "alto": 50
+    },
+    {
+      "tipo": "caja",
+      "id": "caja_1",
+      "desdeX": 3200,
+      "desdeY": 30,
+      "largo": 50,
+      "alto": 50
+    },
+    {
+      "tipo": "caja",
+      "id": "caja_2",
+      "desdeX": 3800,
+      "desdeY": 30,
+      "largo": 50,
+      "alto": 50
+    },
+    {
+      "tipo": "caja",
+      "id": "caja_3",
+      "desdeX": 4400,
+      "desdeY": 30,
+      "largo": 50,
+      "alto": 50
+    },
+    {
+      "tipo": "caja",
+      "id": "caja_4",
+      "desdeX": 5000,
+      "desdeY": 30,
+      "largo": 50,
+      "alto": 50
+    },
+    {
+      "tipo": "caja",
+      "id": "caja_1",
+      "desdeX": 2900,
+      "desdeY": 250,
+      "largo": 50,
+      "alto": 50
+    },
+    {
+      "tipo": "caja",
+      "id": "caja_2",
+      "desdeX": 3500,
+      "desdeY": 250,
+      "largo": 50,
+      "alto": 50
+    },
+    {
+      "tipo": "caja",
+      "id": "caja_3",
+      "desdeX": 4100,
+      "desdeY": 250,
+      "largo": 50,
+      "alto": 50
+    },
+    {
+      "tipo": "caja",
+      "id": "caja_4",
+      "desdeX": 4700,
+      "desdeY": 250,
+      "largo": 50,
+      "alto": 50
+    },
+    {
+      "tipo": "caja",
+      "id": "caja_5",
+      "desdeX": 2865,
+      "desdeY": 310,
+      "largo": 50,
+      "alto": 50
+    },
+    {
+      "tipo": "caja",
+      "id": "caja_6",
+      "desdeX": 3195,
+      "desdeY": 310,
+      "largo": 50,
+      "alto": 50
+    },
+    {
+      "tipo": "caja",
+      "id": "caja_7",
+      "desdeX": 3525,
+      "desdeY": 310,
+      "largo": 50,
+      "alto": 50
+    },
+    {
+      "tipo": "caja",
+      "id": "caja_8",
+      "desdeX": 3855,
+      "desdeY": 310,
+      "largo": 50,
+      "alto": 50
+    },
+    {
+      "tipo": "caja",
+      "id": "caja_9",
+      "desdeX": 4185,
+      "desdeY": 310,
+      "largo": 50,
+      "alto": 50
+    },
+    {
+      "tipo": "caja",
+      "id": "caja_10",
+      "desdeX": 4515,
+      "desdeY": 310,
+      "largo": 50,
+      "alto": 50
+    },
+    {
+      "tipo": "caja",
+      "id": "caja_11",
+      "desdeX": 4845,
+      "desdeY": 310,
+      "largo": 50,
+      "alto": 50
+    },
+    {
+      "tipo": "caja",
+      "id": "caja_12",
+      "desdeX": 5175,
+      "desdeY": 310,
+      "largo": 50,
+      "alto": 50
+    },
+    {
+      "tipo": "caja",
+      "id": "caja_1",
+      "desdeX": 2700,
+      "desdeY": 490,
+      "largo": 50,
+      "alto": 50
+    },
+    {
+      "tipo": "caja",
+      "id": "caja_2",
+      "desdeX": 3030,
+      "desdeY": 490,
+      "largo": 50,
+      "alto": 50
+    },
+    {
+      "tipo": "caja",
+      "id": "caja_3",
+      "desdeX": 3360,
+      "desdeY": 490,
+      "largo": 50,
+      "alto": 50
+    },
+    {
+      "tipo": "caja",
+      "id": "caja_4",
+      "desdeX": 3690,
+      "desdeY": 490,
+      "largo": 50,
+      "alto": 50
+    },
+    {
+      "tipo": "caja",
+      "id": "caja_5",
+      "desdeX": 4020,
+      "desdeY": 490,
+      "largo": 50,
+      "alto": 50
+    },
+    {
+      "tipo": "caja",
+      "id": "caja_6",
+      "desdeX": 4350,
+      "desdeY": 490,
+      "largo": 50,
+      "alto": 50
+    },
+    {
+      "tipo": "caja",
+      "id": "caja_7",
+      "desdeX": 4680,
+      "desdeY": 490,
+      "largo": 50,
+      "alto": 50
+    },
+    {
+      "tipo": "caja",
+      "id": "caja_8",
+      "desdeX": 5010,
+      "desdeY": 490,
+      "largo": 50,
+      "alto": 50
+    }
+  ],
+  "inicio_jugadores": {
+    "x": 350,
+    "y": 350
+  }
 }
