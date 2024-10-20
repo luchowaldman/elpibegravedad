@@ -22,8 +22,37 @@ func manageClientConnection(clients []any, playersMutex *sync.Mutex, players *[]
 		(*players)[0].InvertGravity()
 		playersMutex.Unlock()
 	})
+
 	if err != nil {
 		log.Println("failed to register on changeGravity message", "err", err)
+		newClient.Disconnect(true)
+	}
+
+	err = newClient.On("iniciarJuego", func(datas ...any) {
+		log.Println("iniciarJuego event received")
+
+	})
+
+	if err != nil {
+		log.Println("failed to register on iniciarJuego message", "err", err)
+		newClient.Disconnect(true)
+	}
+
+	err = newClient.On("initSala", func(datas ...any) {
+		if len(datas) > 0 {
+			mapName, ok := datas[0].(string)
+			if ok {
+				log.Println("initSala event received with map name:", mapName)
+			} else {
+				log.Println("initSala event received but map name is not a string")
+			}
+		} else {
+			log.Println("initSala event received but no map name provided")
+		}
+	})
+
+	if err != nil {
+		log.Println("Fallo iniciando la sala", "err", err)
 		newClient.Disconnect(true)
 	}
 

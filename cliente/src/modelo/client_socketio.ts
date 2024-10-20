@@ -70,9 +70,24 @@ export class Client {
         });
         this.socket = socket;
     }
-
     sendChangeGravity() {
         console.log("sending changeGravity")
         this.socket.emit('changeGravity');
-    };
+    }
+
+    sendInitSala(mapName: string) {
+        console.log(`sending initSala with mapName: ${mapName}`);
+        this.socket.emit('initSala', mapName);
+    }
+
+    
+    sendiniciarJuego() {
+        console.log(`sending iniciarJuego`);
+        this.socket.emit('iniciarJuego');
+    }
+
+    sendUnirseSala(id_sala: string) {
+        console.log(`sending initSala with mapName: ${id_sala}`);
+        this.socket.emit('unirSala', id_sala);
+    }
 }
