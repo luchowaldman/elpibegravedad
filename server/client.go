@@ -7,7 +7,7 @@ import (
 	"github.com/zishang520/socket.io/v2/socket"
 )
 
-func manageClientConnection(clients []any, playersMutex *sync.Mutex, players *[]*Player) {
+func manageClientConnection(clients []any, playersMutex *sync.Mutex, players *[]*Player, gameStart chan bool) {
 	newClient := clients[0].(*socket.Socket)
 	newClientID := newClient.Id()
 
@@ -30,7 +30,9 @@ func manageClientConnection(clients []any, playersMutex *sync.Mutex, players *[]
 
 	err = newClient.On("iniciarJuego", func(datas ...any) {
 		log.Println("iniciarJuego event received")
+		newClient.Emit("inicioJuego")
 
+		gameStart <- true
 	})
 
 	if err != nil {
@@ -43,6 +45,7 @@ func manageClientConnection(clients []any, playersMutex *sync.Mutex, players *[]
 			mapName, ok := datas[0].(string)
 			if ok {
 				log.Println("initSala event received with map name:", mapName)
+				newClient.Emit("salaIniciada", "IDSALA")
 			} else {
 				log.Println("initSala event received but map name is not a string")
 			}

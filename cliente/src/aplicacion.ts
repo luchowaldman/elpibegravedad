@@ -39,17 +39,10 @@ export class  Aplicacion {
         await this.mapa.cargarMapa(mapa.JSON);       
         this.mapa.cargarImagenes(this.graficos);
         await this.graficos.init();
-        this.graficos.agenda.iniciar();
-        
-        this.controladorDOM.mostrar_pagina('pagina2');
-        
-        this.graficos.agenda.agregarAccionGrafica(0 ,new  AccionGraficaModificarTexto(this.graficos, "status_label", "Iniciando Sala..."));
-        
+        this.graficos.agenda.iniciar();        
+        this.controladorDOM.mostrar_pagina('pagina2');        
+        this.graficos.agenda.agregarAccionGrafica(0 ,new  AccionGraficaModificarTexto(this.graficos, "status_label", "Iniciando Sala..."));        
         this.graficos.agenda.agregarAccionGrafica(0 ,new  AccionGraficaModificarTexto(this.graficos, "jugadores_label", "Total de Jugadores: 1"));
-        this.client.sendInitSala(mapa.id);
-
-
-        
         this.graficos.controles.setOnKeyPressCallback((key: string) => {
             
             console.log("Tecla", key);
@@ -63,11 +56,21 @@ export class  Aplicacion {
             }
             console.log(key);
         });
+        this.client.setPosicionJugadoresHandler((posicionesDeLosJugadores) => {
+            console.log("Posiciones", posicionesDeLosJugadores);
+        });
+        this.client.setIniciarJuegoHandler(() => {
+            console.log("Iniciar Juego");
+            this.graficos.agenda.agregarAccionGrafica(0 ,new  AccionGraficaModificarTexto(this.graficos, "status_label", ""));
+            this.graficos.agenda.agregarAccionGrafica(0 ,new  AccionGraficaModificarTexto(this.graficos, "jugadores_label", ""));
+            this.mapa.dibujarMapa(this.graficos);    
+        });
+        this.client.setSalaIniciadaHandler((id) => {
+            console.log("Sala Iniciada", id);
+            this.graficos.agenda.agregarAccionGrafica(0 ,new  AccionGraficaModificarTexto(this.graficos, "status_label", `Sala Iniciada: ${id}`));
+        });
+        this.client.sendInitSala(mapa.id);
 
-        setTimeout(() => {
-            //this.mapa.dibujarMapa(this.graficos);    
-            
-        }, 100);
     }
     
 

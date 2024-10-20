@@ -2,6 +2,8 @@ import { io, Socket } from "socket.io-client";
 import { AccionGraficaSetPosicion } from "./AccionGrafica";
 
 interface ServerToClientEvents {
+    inicioJuego: () => void;
+    salaIniciada: (id: string) => void;
     tick: (positions: {
         numeroJugador: number,
         x: number,
@@ -22,11 +24,21 @@ export class Client {
             this.posicionJugadoresHandler(positions);
         }
     }
-
     private CamaraHandler?: (camaraX: number) => void;
 
     public setCamaraHandler(handler: (camaraX: number) => void) {
-        this.CamaraHandler = handler
+        this.CamaraHandler = handler;
+    }
+    private IniciarJuegoHandler?: () => void;
+
+    public setIniciarJuegoHandler(handler: () => void) {
+        this.IniciarJuegoHandler = handler;
+    }
+
+    private SalaIniciadaHandler?: (id: string) => void;
+
+    public setSalaIniciadaHandler(handler: (id: string) => void) {
+        this.SalaIniciadaHandler = handler;
     }
 
     private posicionJugadoresHandler?: (positions: { numeroJugador: number, x: number, y: number, tieneGravedadInvertida: boolean, estaCaminando: boolean }[]) => void;
@@ -68,6 +80,17 @@ export class Client {
             this.CamaraHandler?.(camaraX);
             
         });
+        socket.on("inicioJuego", () => {
+            console.log("initGame received");
+            this.IniciarJuegoHandler?.();
+        });
+
+        socket.on("salaIniciada", (id) => {
+            console.log("salaIniciada received");
+            this.SalaIniciadaHandler?.(id);
+        });
+
+        
         this.socket = socket;
     }
     sendChangeGravity() {
