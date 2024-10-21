@@ -32,7 +32,6 @@ export class Jugador {
 
     setPosicion(graficos: graficoJuego, x: number, y: number) 
     {
-        console.log("setPosicion", x, y);
         const frame = graficos.agenda.getFrame();
         graficos.agenda.agregarAccionGrafica(frame, new AccionGraficaSetPosicion(graficos, this.id, x, y) );
     }

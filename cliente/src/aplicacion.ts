@@ -3,6 +3,7 @@ import { AccionGraficaModificarTexto, AccionGraficaMostrarTexto } from './modelo
 import { Client } from './modelo/client_socketio';
 import { divMapa } from './modelo/divMapa';
 import { graficoJuego } from './modelo/graficoJuego';
+import { Jugador } from './modelo/jugador';
 import { Mapa } from './modelo/mapa';
 
 
@@ -17,6 +18,10 @@ export class  Aplicacion {
     private mapa: Mapa;
     private graficos: graficoJuego;
 
+    private jugadores: Jugador[] = [
+        new Jugador("Play1",0x0000ff, 330, 450),
+        new Jugador("Play2",0xff0000, 330, 500)
+    ];
 
 
     DOMIniciado(document: Document) {        
@@ -58,15 +63,24 @@ export class  Aplicacion {
         });
         this.client.setPosicionJugadoresHandler((posicionesDeLosJugadores) => {
             console.log("Posiciones", posicionesDeLosJugadores);
+            
+            for (let i = 0; i < posicionesDeLosJugadores.length; i++) {
+                let x = posicionesDeLosJugadores[i].x
+                let y = posicionesDeLosJugadores[i].y
+                this.jugadores[i].setPosicion(this.graficos, x, y);
+            }
         });
         this.client.setIniciarJuegoHandler(() => {
             console.log("Iniciar Juego");
             this.graficos.agenda.agregarAccionGrafica(0 ,new  AccionGraficaModificarTexto(this.graficos, "status_label", ""));
             this.graficos.agenda.agregarAccionGrafica(0 ,new  AccionGraficaModificarTexto(this.graficos, "jugadores_label", ""));
             this.mapa.dibujarMapa(this.graficos);    
+            this.jugadores[0].dibujar(this.graficos);
+        
         });
         this.client.setSalaIniciadaHandler((id) => {
             console.log("Sala Iniciada", id);
+            this.controladorDOM.mostrar_compartirpagina(id);
             this.graficos.agenda.agregarAccionGrafica(0 ,new  AccionGraficaModificarTexto(this.graficos, "status_label", `Sala Iniciada: ${id}`));
         });
         this.client.sendInitSala(mapa.id);

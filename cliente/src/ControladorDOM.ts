@@ -65,4 +65,42 @@ export class ControladorDOM {
             paginaMostrar.style.display = 'block';
         }
     }
+
+    public mostrar_compartirpagina(pagina: string) {
+        const paginas = this.document.getElementsByClassName('enheader') as HTMLCollectionOf<HTMLElement>;
+        for (let i = 0; i < paginas.length; i++) {
+            paginas[i].style.display = 'none';
+        }
+        const paginaMostrar = this.document.getElementById("formCompartirPartida");
+        if (paginaMostrar) {
+            paginaMostrar.style.display = 'block';
+            const labelPartida = this.document.getElementById('labelpartida') as HTMLLabelElement;
+            if (labelPartida) {
+                labelPartida.textContent = `http://localhost:5173/menu.html?partida=${pagina}`;
+            }
+            const btnCopiarPartida = this.document.getElementById('btnCopiarPartida_Partida') as HTMLButtonElement;
+            if (btnCopiarPartida) {
+                btnCopiarPartida.addEventListener('click', () => {
+                    navigator.clipboard.writeText(`http://localhost:5173/menu.html?partida=${pagina}`).then(() => {
+                        console.log('Texto copiado al portapapeles');
+                    }).catch(err => {
+                        console.error('Error al copiar el texto al portapapeles', err);
+                    });
+                });
+            }
+        }
+    }
+
+    
+    public mostrar_unirsepagina() {
+        const paginas = this.document.getElementsByClassName('enheader') as HTMLCollectionOf<HTMLElement>;
+        for (let i = 0; i < paginas.length; i++) {
+            paginas[i].style.display = 'none';
+        }
+        const paginaMostrar = this.document.getElementById("formUnirsePartida");
+        if (paginaMostrar) {
+            paginaMostrar.style.display = 'block';
+        }
+    }
+
 }
