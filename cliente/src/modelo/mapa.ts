@@ -18,7 +18,6 @@ export class Mapa {
       try {
         const response = await fetch(rutaArchivo);
         const mapaData = await response.json();
-        
       this.nombre = mapaData.nombre;
       this.largo = mapaData.largo;
       this.fondo = mapaData.fondo;

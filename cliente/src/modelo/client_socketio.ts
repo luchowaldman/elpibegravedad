@@ -35,9 +35,9 @@ export class Client {
         this.IniciarJuegoHandler = handler;
     }
 
-    private SalaIniciadaHandler?: (id: string) => void;
+    private SalaIniciadaHandler?: (id: string, mapa: string) => void;
 
-    public setSalaIniciadaHandler(handler: (id: string) => void) {
+    public setSalaIniciadaHandler(handler: (id: string, mapa: string) => void) {
         this.SalaIniciadaHandler = handler;
     }
 
@@ -85,9 +85,9 @@ export class Client {
             this.IniciarJuegoHandler?.();
         });
 
-        socket.on("salaIniciada", (id) => {
-            console.log("salaIniciada received");
-            this.SalaIniciadaHandler?.(id);
+        socket.on("salaIniciada", (id, mapa) => {
+            console.log("salaIniciada received", id, mapa);
+            this.SalaIniciadaHandler?.(id,  mapa);
         });
 
         

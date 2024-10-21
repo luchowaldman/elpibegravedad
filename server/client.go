@@ -40,12 +40,28 @@ func manageClientConnection(clients []any, playersMutex *sync.Mutex, players *[]
 		newClient.Disconnect(true)
 	}
 
+	err = newClient.On("unirSala", func(datas ...any) {
+		nombresala, ok := datas[0].(string)
+		if ok {
+			log.Println("unirSala event received with sala name:", nombresala)
+			newClient.Emit("salaIniciada", nombresala, "mapa1")
+		} else {
+			log.Println("unirSala event received but map name is not a string")
+		}
+
+	})
+
+	if err != nil {
+		log.Println("failed to register on unirSala message", "err", err)
+		newClient.Disconnect(true)
+	}
+
 	err = newClient.On("initSala", func(datas ...any) {
 		if len(datas) > 0 {
 			mapName, ok := datas[0].(string)
 			if ok {
-				log.Println("initSala event received with map name:", mapName)
-				newClient.Emit("salaIniciada", "IDSALA")
+				log.Println("initSala event received with sala name:", mapName)
+				newClient.Emit("salaIniciada", "IDSALA", mapName)
 			} else {
 				log.Println("initSala event received but map name is not a string")
 			}
