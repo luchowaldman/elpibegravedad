@@ -14,6 +14,11 @@ export class  Aplicacion {
                                 new divMapa('mapa3', '/img/mapa1_icono.png', 'Este menos', './mapas/mapa2.json')];
 
                                 
+    private jugadores: Jugador[] = [
+        new Jugador("Play1",0x0000ff, 330, 450),
+        new Jugador("Play2",0xff0000, 330, 500)
+    ];
+
     private client: Client; 
     private mapa: Mapa;
     private graficos: graficoJuego;
@@ -23,13 +28,27 @@ export class  Aplicacion {
         this.client = new Client();
         this.mapa = new Mapa();
         this.graficos = new graficoJuego();
+        this.ConfigGraficos();
+        this.SetControlCallBacks();
+
+            
+
+    }
+
+    private ConfigGraficos() {
+
         
         this.graficos.AddAnimacion('player_caminando', 35, 50);
         this.graficos.AddAnimacionEntidadGrafica('animacioncaminando', 'player_caminando', 0, 1, 7, -1);
         this.graficos.AddAnimacion('player_volando',  35, 50);
         this.graficos.AddAnimacionEntidadGrafica('animacionvolando', 'player_volando', 0, 1, 7, -1);
-        
 
+        
+        this.graficos.agenda.agregarAccionGrafica(0 ,new  AccionGraficaMostrarTexto(this.graficos, "status_label", "DOM INICIADO", 600, 100));
+        this.graficos.agenda.agregarAccionGrafica(0 ,new  AccionGraficaMostrarTexto(this.graficos, "jugadores_label", "", 500, 300));
+    }
+
+    private SetControlCallBacks() {
         this.graficos.controles.setOnKeyPressCallback((key: string) => {
             if (key == "Tecla G") {
             console.log("Envia Cambio Gravedadg");
@@ -37,15 +56,8 @@ export class  Aplicacion {
             }
             console.log(key);
         });
-
-
     }
     
-    private jugadores: Jugador[] = [
-        new Jugador("Play1",0x0000ff, 330, 450),
-        new Jugador("Play2",0xff0000, 330, 500)
-    ];
-
     getMapaJSON(id: string): string | undefined {
         const mapa = this.mapas.find(mapa => mapa.id === id);
         return mapa ? mapa.JSON : undefined;
@@ -56,9 +68,6 @@ export class  Aplicacion {
             this.controladorDOM.DOMIniciado(document, this.mapas);
             this.controladorDOM.setonNuevaPartida(this.unirse_partida.bind(this));
             this.controladorDOM.setonClickMapa(this.click_mapa.bind(this));
-            
-            this.graficos.agenda.agregarAccionGrafica(0 ,new  AccionGraficaMostrarTexto(this.graficos, "status_label", "DOM INICIADO", 600, 100));
-            this.graficos.agenda.agregarAccionGrafica(0 ,new  AccionGraficaMostrarTexto(this.graficos, "jugadores_label", "", 500, 300));
 
             const urlParams = new URLSearchParams(window.location.search);
             const partidaId = urlParams.get('partida');
@@ -69,88 +78,84 @@ export class  Aplicacion {
 
     async unirse_partida(partida_id: string) {
         //this.controladorDOM.mostrar_pagina('pagina2');
-        console.log("Unirse a partida", partida_id);
-        await this.graficos.init();
-        this.graficos.agenda.iniciar();        
-        this.controladorDOM.mostrar_pagina('pagina2');        
-        this.graficos.agenda.agregarAccionGrafica(0 ,new  AccionGraficaModificarTexto(this.graficos, "status_label", "Uniendo a Sala..."));        
-        this.graficos.agenda.agregarAccionGrafica(0 ,new  AccionGraficaModificarTexto(this.graficos, "jugadores_label", "Total de Jugadores: X"));
-        
+        console.log("Envia Unirse a partida", partida_id);
         this.client.sendUnirseSala(partida_id);
+    }
+
+    private SetLabelGrafico(status_label: string, jugadores_label: string)
+    {
+        this.graficos.agenda.agregarAccionGrafica(0 ,new  AccionGraficaModificarTexto(this.graficos, "status_label", status_label));        
+        this.graficos.agenda.agregarAccionGrafica(0 ,new  AccionGraficaModificarTexto(this.graficos, "jugadores_label", jugadores_label));
     }
 
     
     async click_mapa(mapa: divMapa) {
         await this.mapa.cargarMapa(mapa.JSON);       
         this.mapa.cargarImagenes(this.graficos);
-        await this.graficos.init();
         this.graficos.agenda.iniciar();        
         this.controladorDOM.mostrar_pagina('pagina2');        
-        this.graficos.agenda.agregarAccionGrafica(0 ,new  AccionGraficaModificarTexto(this.graficos, "status_label", "Iniciando Sala..."));        
-        this.graficos.agenda.agregarAccionGrafica(0 ,new  AccionGraficaModificarTexto(this.graficos, "jugadores_label", "Total de Jugadores: 1"));
+        this.SetLabelGrafico("Cargando Mapa", "Total de Jugadores: 1");
         this.client.sendInitSala(mapa.id);
 
     }
     
 
-    
     iniciar() {
         console.log('Aplicación iniciada');
         
-                
-        this.client.setPosicionJugadoresHandler((posicionesDeLosJugadores) => {
-            console.log("Posiciones", posicionesDeLosJugadores);
-            
-            for (let i = 0; i < posicionesDeLosJugadores.length; i++) {
-                let x = posicionesDeLosJugadores[i].x
-                let y = posicionesDeLosJugadores[i].y
-                this.jugadores[i].setPosicion(this.graficos, x, y);
-            }
-        });
-        this.client.setIniciarJuegoHandler(() => {
-            console.log("Iniciar Juego");
-            this.graficos.agenda.agregarAccionGrafica(0 ,new  AccionGraficaModificarTexto(this.graficos, "status_label", ""));
-            this.graficos.agenda.agregarAccionGrafica(0 ,new  AccionGraficaModificarTexto(this.graficos, "jugadores_label", ""));
-            this.mapa.dibujarMapa(this.graficos);    
-            this.jugadores[0].dibujar(this.graficos);
-        
-        });
+        this.client.setPosicionJugadoresHandler(this.handlePosicionJugadores.bind(this));
+        this.client.setIniciarJuegoHandler(this.handleIniciarJuego.bind(this));
+        this.client.setSalaIniciadaHandler(this.handleSalaIniciada.bind(this));
 
-
-        this.client.setSalaIniciadaHandler(async (id, mapa) => {
-            console.log("sala iniciada", id, mapa);
-            this.controladorDOM.mostrar_compartirpagina(id);
-            
-            await this.mapa.cargarMapa(this.getMapaJSON(mapa));       
-            this.graficos.agenda.iniciar();        
-            this.controladorDOM.mostrar_pagina('pagina2');        
-            
-
-            this.mapa.cargarImagenes(this.graficos);
-            this.mapa.dibujarMapa(this.graficos);
-            this.graficos.agenda.agregarAccionGrafica(0 ,new  AccionGraficaModificarTexto(this.graficos, "status_label", "En la sala"));        
-            this.graficos.agenda.agregarAccionGrafica(0 ,new  AccionGraficaModificarTexto(this.graficos, "jugadores_label", "Total de Jugadores: 1"));
-            
-
-        });
-
-        this.graficos.controles.setOnKeyPressCallback((key: string) => {
-        
-            console.log("Tecla", key);
-            if (key == "Tecla G") {
-                console.log("Envia Cambio Gravedadg");
-                this.client?.sendChangeGravity();
-            }
-            if (key == "Tecla I") {
-                console.log("Envia iniciar juego");
-                this.client?.sendiniciarJuego();
-            }
-            console.log(key);
-        });
-
+        this.graficos.controles.setOnKeyPressCallback(this.handleKeyPress.bind(this));
 
         this.client.connect();
     }
+
+    private handlePosicionJugadores(posicionesDeLosJugadores: any[]) {
+        console.log("Posiciones", posicionesDeLosJugadores);
+        
+        for (let i = 0; i < posicionesDeLosJugadores.length; i++) {
+            let x = posicionesDeLosJugadores[i].x;
+            let y = posicionesDeLosJugadores[i].y;
+            this.jugadores[i].setPosicion(this.graficos, x, y);
+        }
+    }
+
+    private handleIniciarJuego() {
+        console.log("Iniciar Juego");
+        this.SetLabelGrafico("", "");
+        this.mapa.dibujarMapa(this.graficos);    
+        this.jugadores[0].dibujar(this.graficos);
+    }
+
+    private async handleSalaIniciada(id: string, mapa: string) {
+        console.log("sala iniciada", id, mapa);
+        this.controladorDOM.mostrar_compartirpagina(id);
+        
+        await this.mapa.cargarMapa(this.getMapaJSON(mapa));       
+        this.mapa.cargarImagenes(this.graficos);
+        await this.graficos.init();
+        this.graficos.agenda.iniciar();        
+        this.controladorDOM.mostrar_pagina('pagina2');        
+        this.SetLabelGrafico("En la sala", "Total de Jugadores: 1");
+    }
+
+    private handleKeyPress(key: string) {
+        console.log("Tecla", key);
+        if (key == "Tecla G") {
+            console.log("Envia Cambio Gravedad");
+            this.client?.sendChangeGravity();
+        }
+        if (key == "Tecla I") {
+            console.log("Envia iniciar juego");
+            this.client?.sendiniciarJuego();
+        }
+        console.log(key);
+    }
+
+
+
     detener() {
         console.log('Aplicación detenida');
     }
