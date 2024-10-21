@@ -66,6 +66,16 @@ export class ControladorDOM {
         }
     }
 
+    
+
+    public mostrar_error(error: string) {
+        this.mostrar_pagina('paginaError');
+        const lblError = this.document.getElementById('lblError') as HTMLParagraphElement;
+        if (lblError) {
+            lblError.textContent = error;
+        }
+    }
+
     public mostrar_compartirpagina(pagina: string) {
         const paginas = this.document.getElementsByClassName('enheader') as HTMLCollectionOf<HTMLElement>;
         for (let i = 0; i < paginas.length; i++) {

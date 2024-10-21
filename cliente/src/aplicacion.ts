@@ -28,10 +28,7 @@ export class  Aplicacion {
         this.client = new Client();
         this.mapa = new Mapa();
         this.graficos = new graficoJuego();
-        this.ConfigGraficos();
-        this.SetControlCallBacks();
-
-            
+        this.ConfigGraficos();           
 
     }
 
@@ -48,15 +45,6 @@ export class  Aplicacion {
         this.graficos.agenda.agregarAccionGrafica(0 ,new  AccionGraficaMostrarTexto(this.graficos, "jugadores_label", "", 500, 300));
     }
 
-    private SetControlCallBacks() {
-        this.graficos.controles.setOnKeyPressCallback((key: string) => {
-            if (key == "Tecla G") {
-            console.log("Envia Cambio Gravedadg");
-            this.client?.sendChangeGravity();
-            }
-            console.log(key);
-        });
-    }
     
     getMapaJSON(id: string): string | undefined {
         const mapa = this.mapas.find(mapa => mapa.id === id);
