@@ -12,7 +12,7 @@
       <p id="titulonav">El pibe gravedad</a>
 
         <form id="formCompartirPartida" style="display: none;" class="enheader">
-          <label id="labelpartida">http://localhost:5173/menu.html?partida=IDPARTIDA</label>
+          <label id="labelpartida">http://localhost:5173/?partida=IDPARTIDA</label>
           <button id="btnCopiarPartida_Partida" type="button">Copiar</button>
         </form>
         <form id="formUnirsePartida"  class="enheader">
@@ -23,7 +23,9 @@
     </nav>
   </header>
     <body class="body">
-    <div id="pagina1" class="pagina" style="margin-top: 80px; margin-left: 25px;">
+
+
+    <div id="pagina1" class="pagina" style="display: none;">
       <h1>Nueva Partida:</h1>
       <div id="mapas" class="row">
       </div>
@@ -32,6 +34,10 @@
       <div id="juego-container"></div>
     </div>
     
+    <div id="paginaError"  class="pagina" style="display: none;">
+        <h2 style="color: red;">Error</h2>
+        <p id="lblError" style="color: red;">Lo sentimos, ha ocurrido un error inesperado. Por favor, inténtelo de nuevo más tarde.</p>
+    </div>
 
     </body>
     <script type="module" src="/src/menu.ts"></script>
