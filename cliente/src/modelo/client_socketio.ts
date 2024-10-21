@@ -46,40 +46,60 @@ export class Client {
     public setPosicionJugadoresHandler(handler: (positions: { numeroJugador: number, x: number, y: number, tieneGravedadInvertida: boolean, estaCaminando: boolean }[]) => void) {
         this.posicionJugadoresHandler = handler;
     }
+    private connectHandler?: () => void;
+    private disconnectHandler?: () => void;
+    private connectErrorHandler?: (err: Error) => void;
 
+    public setConnectHandler(handler: () => void) {
+        this.connectHandler = handler;
+    }
+
+    public setDisconnectHandler(handler: () => void) {
+        this.disconnectHandler = handler;
+    }
+
+    public setConnectErrorHandler(handler: (err: Error) => void) {
+        this.connectErrorHandler = handler;
+    }
 
     constructor() {
     }
 
-    public connect() {
+    public connect() 
+    {
 
+        
         let socket: Socket<ServerToClientEvents, ClientToServerEvents> = io("http://localhost:8080", {
             autoConnect: true,
             rejectUnauthorized: false,
             transports: ['websocket']
         });
 
+        
         if (socket.active) {
             console.log("socket active")
-        }
+       
 
         socket.on("connect", () => {
             console.log("socket connected");
+            this.connectHandler?.();
         });
 
         socket.on("disconnect", () => {
             console.log("socket disconnected");
+            this.disconnectHandler?.();
         });
 
         socket.on("connect_error", (err) => {
             console.log(`connect_error due to ${err.message}`);
+            this.connectErrorHandler?.(err);
         });
 
         socket.on("tick", (posicionesDeLosJugadores, camaraX) => {
             this.onPosicionJugadores(posicionesDeLosJugadores);
             this.CamaraHandler?.(camaraX);
-            
         });
+
         socket.on("inicioJuego", () => {
             console.log("initGame received");
             this.IniciarJuegoHandler?.();
@@ -90,9 +110,14 @@ export class Client {
             this.SalaIniciadaHandler?.(id,  mapa);
         });
 
-        
+
+
+
+    }
+
         this.socket = socket;
     }
+    
     sendChangeGravity() {
         console.log("sending changeGravity")
         this.socket.emit('changeGravity');

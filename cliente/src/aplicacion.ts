@@ -32,6 +32,33 @@ export class  Aplicacion {
 
     }
 
+    
+    iniciar() {
+        console.log('Aplicación iniciada');
+        this.ConfigurarCliente();
+        this.graficos.controles.setOnKeyPressHandler(this.handleKeyPress.bind(this));
+        this.client.connect();
+    }
+    private ConfigurarCliente() {
+        
+        this.client.setPosicionJugadoresHandler(this.handlePosicionJugadores.bind(this));
+        this.client.setIniciarJuegoHandler(this.handleIniciarJuego.bind(this));
+        this.client.setSalaIniciadaHandler(this.handleSalaIniciada.bind(this));
+        this.client.setConnectHandler(this.handleConnect.bind(this));
+        this.client.setDisconnectHandler(this.handleDisconnect.bind(this));
+        this.client.setConnectErrorHandler(this.handleConnectError.bind(this));
+    }
+    
+    DOMIniciado(document: Document) {        
+
+        this.controladorDOM.DOMIniciado(document, this.mapas);
+        this.controladorDOM.setonNuevaPartida(this.unirse_partida.bind(this));
+        this.controladorDOM.setonClickMapa(this.click_mapa.bind(this));
+
+}
+
+
+
     private ConfigGraficos() {
 
         
@@ -51,21 +78,9 @@ export class  Aplicacion {
         return mapa ? mapa.JSON : undefined;
     }
 
-    DOMIniciado(document: Document) {        
-
-            this.controladorDOM.DOMIniciado(document, this.mapas);
-            this.controladorDOM.setonNuevaPartida(this.unirse_partida.bind(this));
-            this.controladorDOM.setonClickMapa(this.click_mapa.bind(this));
-
-            const urlParams = new URLSearchParams(window.location.search);
-            const partidaId = urlParams.get('partida');
-            if (partidaId) {
-                this.unirse_partida(partidaId);
-            }
-    }
 
     async unirse_partida(partida_id: string) {
-        //this.controladorDOM.mostrar_pagina('pagina2');
+        
         console.log("Envia Unirse a partida", partida_id);
         this.client.sendUnirseSala(partida_id);
     }
@@ -88,18 +103,26 @@ export class  Aplicacion {
     }
     
 
-    iniciar() {
-        console.log('Aplicación iniciada');
+    private handleConnect(){
+
+        console.log("Conectado");
         
-        this.client.setPosicionJugadoresHandler(this.handlePosicionJugadores.bind(this));
-        this.client.setIniciarJuegoHandler(this.handleIniciarJuego.bind(this));
-        this.client.setSalaIniciadaHandler(this.handleSalaIniciada.bind(this));
-
-        this.graficos.controles.setOnKeyPressHandler(this.handleKeyPress.bind(this));
-
-        this.client.connect();
+        const urlParams = new URLSearchParams(window.location.search);
+        const partidaId = urlParams.get('partida');
+        if (partidaId) {
+            this.unirse_partida(partidaId);
+        } else {
+            this.controladorDOM.mostrar_pagina('pagina1');     
+        }   
     }
-
+    private handleDisconnect(){
+        console.log("Desconectado");
+        this.controladorDOM.mostrar_error("Desconectado");
+    }
+    private handleConnectError(){
+        console.log("Error en la conexion");
+        this.controladorDOM.mostrar_error("Error en la conexion");
+    }
     private handlePosicionJugadores(posicionesDeLosJugadores: any[]) {
         console.log("Posiciones", posicionesDeLosJugadores);
         
