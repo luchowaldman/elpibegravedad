@@ -65,4 +65,52 @@ export class ControladorDOM {
             paginaMostrar.style.display = 'block';
         }
     }
+
+    
+
+    public mostrar_error(error: string) {
+        this.mostrar_pagina('paginaError');
+        const lblError = this.document.getElementById('lblError') as HTMLParagraphElement;
+        if (lblError) {
+            lblError.textContent = error;
+        }
+    }
+
+    public mostrar_compartirpagina(pagina: string) {
+        const paginas = this.document.getElementsByClassName('enheader') as HTMLCollectionOf<HTMLElement>;
+        for (let i = 0; i < paginas.length; i++) {
+            paginas[i].style.display = 'none';
+        }
+        const paginaMostrar = this.document.getElementById("formCompartirPartida");
+        if (paginaMostrar) {
+            paginaMostrar.style.display = 'block';
+            const labelPartida = this.document.getElementById('labelpartida') as HTMLLabelElement;
+            if (labelPartida) {
+                labelPartida.textContent = `http://localhost:5173/?partida=${pagina}`;
+            }
+            const btnCopiarPartida = this.document.getElementById('btnCopiarPartida_Partida') as HTMLButtonElement;
+            if (btnCopiarPartida) {
+                btnCopiarPartida.addEventListener('click', () => {
+                    navigator.clipboard.writeText(`http://localhost:5173/?partida=${pagina}`).then(() => {
+                        console.log('Texto copiado al portapapeles');
+                    }).catch(err => {
+                        console.error('Error al copiar el texto al portapapeles', err);
+                    });
+                });
+            }
+        }
+    }
+
+    
+    public mostrar_unirsepagina() {
+        const paginas = this.document.getElementsByClassName('enheader') as HTMLCollectionOf<HTMLElement>;
+        for (let i = 0; i < paginas.length; i++) {
+            paginas[i].style.display = 'none';
+        }
+        const paginaMostrar = this.document.getElementById("formUnirsePartida");
+        if (paginaMostrar) {
+            paginaMostrar.style.display = 'block';
+        }
+    }
+
 }

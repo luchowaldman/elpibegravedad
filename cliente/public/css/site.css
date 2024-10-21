@@ -23,3 +23,16 @@
     margin-top: 12px;
     font-size: 16px;
 }
+
+#barranavegacion {
+    display: flex; justify-content: space-between; align-items: center; background-color: #0000FF; color: #FFFFFF; padding: 10px; width: 100%; position: fixed; top: 0; z-index: 1000;
+}
+
+#titulonav {
+    color: #FFFFFF; text-decoration: none; font-size: 1.5em;
+
+}
+
+.pagina {
+    margin-top: 80px; margin-left: 25px;
+}

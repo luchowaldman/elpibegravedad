@@ -24,11 +24,11 @@ func main() {
 
 	gameStarted := false
 	gameStart := make(chan bool)
-	expectedPlayers := 1
+	expectedPlayers := 2
 
 	err := io.On("connection", func(clients ...any) {
 		// TODO manejar conexiones de mas
-		manageClientConnection(clients, playersMutex, players)
+		manageClientConnection(clients, playersMutex, players, gameStart)
 
 		if !gameStarted && len((*players)) >= expectedPlayers {
 			gameStarted = true
