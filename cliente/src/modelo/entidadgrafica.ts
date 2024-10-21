@@ -38,6 +38,10 @@ export class EntidadGrafica {
         this.imagenenescena.angle = rotacion;
     }
 
+    invertir(value: boolean) {
+        this.imagenenescena.setFlipX(value);
+    }
+
     
     setVelocity(x: number, y: number) {
         this.imagenenescena.setVelocityX(x);

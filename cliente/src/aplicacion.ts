@@ -47,6 +47,7 @@ export class  Aplicacion {
         this.client.setConnectHandler(this.handleConnect.bind(this));
         this.client.setDisconnectHandler(this.handleDisconnect.bind(this));
         this.client.setConnectErrorHandler(this.handleConnectError.bind(this));
+        this.client.setCamaraHandler(this.handleCamara.bind(this));
     }
     
     DOMIniciado(document: Document) {        
@@ -124,13 +125,19 @@ export class  Aplicacion {
         this.controladorDOM.mostrar_error("Error en la conexion");
     }
     private handlePosicionJugadores(posicionesDeLosJugadores: any[]) {
-        console.log("Posiciones", posicionesDeLosJugadores);
         
         for (let i = 0; i < posicionesDeLosJugadores.length; i++) {
             let x = posicionesDeLosJugadores[i].x;
             let y = posicionesDeLosJugadores[i].y;
-            this.jugadores[i].setPosicion(this.graficos, x, y);
+            this.jugadores[i].setPosicion(this.graficos, x, y, posicionesDeLosJugadores[i].estaCaminando, posicionesDeLosJugadores[i].tieneGravedadInvertida);
         }
+    }
+
+    private handleCamara(camaraX: number) {
+                
+        this.client.setCamaraHandler((camaraX) => {
+            this.graficos.setPosicionCamara(camaraX);
+        });
     }
 
     private handleIniciarJuego() {
@@ -139,7 +146,7 @@ export class  Aplicacion {
         this.mapa.dibujarMapa(this.graficos);    
         this.jugadores[0].dibujar(this.graficos);
     }
-
+g
     private async handleSalaIniciada(id: string, mapa: string) {
         console.log("sala iniciada", id, mapa);
         this.controladorDOM.mostrar_compartirpagina(id);
