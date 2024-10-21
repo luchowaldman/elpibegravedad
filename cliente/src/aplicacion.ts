@@ -107,7 +107,7 @@ export class  Aplicacion {
         this.client.setIniciarJuegoHandler(this.handleIniciarJuego.bind(this));
         this.client.setSalaIniciadaHandler(this.handleSalaIniciada.bind(this));
 
-        this.graficos.controles.setOnKeyPressCallback(this.handleKeyPress.bind(this));
+        this.graficos.controles.setOnKeyPressHandler(this.handleKeyPress.bind(this));
 
         this.client.connect();
     }

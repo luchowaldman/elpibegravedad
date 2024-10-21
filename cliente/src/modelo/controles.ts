@@ -6,10 +6,10 @@ export class Controles {
     private keyI: Phaser.Input.Keyboard.Key;
     scene: Phaser.Scene;
 
-    private onKeyPressCallback: (message: string) => void = () => {};
+    private onKeyPressHandler: (message: string) => void = () => {};
 
-    setOnKeyPressCallback(callback: (message: string) => void) {
-        this.onKeyPressCallback = callback;
+    setOnKeyPressHandler(handler: (message: string) => void) {
+        this.onKeyPressHandler = handler;
     }
     agregar(scene: Phaser.Scene) {
         this.cursors = scene.input.keyboard.createCursorKeys();
@@ -33,7 +33,7 @@ export class Controles {
 
         keys.forEach(({ key, isDown, message }) => {
             if (isDown && !this.lastKeyState[key]) {
-                this.onKeyPressCallback?.(message);
+                this.onKeyPressHandler?.(message);
                 
             }
             this.lastKeyState[key] = isDown;
