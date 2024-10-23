@@ -8,13 +8,15 @@ import (
 )
 
 const (
-	cellSize             = 1
-	solidTag             = "solid"
-	playerTag            = "player"
-	playerHeight         = 50
-	playerWidth          = 35
-	playerSpeedX float64 = 30 / TicksPerSecond
-	playerSpeedY         = playerSpeedX
+	cellSize              = 3
+	solidTag              = "solid"
+	worldLimitTag         = "worldLimit"
+	playerTag             = "player"
+	playerHeight          = 50
+	playerWidth           = 35
+	playerSpeedX  float64 = 30 / TicksPerSecond
+	playerSpeedY          = playerSpeedX
+	// TODO quizo cambiar pero no anduvo
 )
 
 type World struct {
@@ -51,15 +53,15 @@ func (world *World) Init(gameMap Map) {
 	world.Space.Add(
 		resolv.NewObject(
 			gameWidth-cellSize, 0, cellSize, gameHeight,
-			solidTag,
+			worldLimitTag,
 		),
 		resolv.NewObject(
 			0, 0, gameWidth, cellSize,
-			solidTag,
+			worldLimitTag,
 		),
 		resolv.NewObject(
 			0, gameHeight-cellSize, gameWidth, cellSize,
-			solidTag,
+			worldLimitTag,
 		),
 	)
 
@@ -94,12 +96,25 @@ func (world *World) Init(gameMap Map) {
 
 func (world *World) Update() {
 	for _, player := range *world.Players {
-		// TODO aca tener cuidado con colisiones entre los mismos players, calcular antes de avanzar
-		world.updatePlayer(player)
+		if !player.IsDead {
+			// TODO aca tener cuidado con colisiones entre los mismos players, calcular antes de avanzar
+			world.updatePlayerPosition(player)
+
+			world.checkIfPlayerIsDead(player)
+		}
 	}
 }
 
-func (world *World) updatePlayer(player *Player) {
+// checkIfPlayerIsDead updates player's IsDead if the player touched a world limit
+func (world *World) checkIfPlayerIsDead(player *Player) {
+	if collision := player.Object.Check(0, 0, worldLimitTag); collision != nil {
+		log.Println("Player is dead")
+
+		player.IsDead = true
+	}
+}
+
+func (world *World) updatePlayerPosition(player *Player) {
 	// we update the Player's movement. This is the real bread-and-butter of this example, naturally.
 
 	// We handle horizontal movement separately from vertical movement. This is, conceptually, decomposing movement into two phases / axes.

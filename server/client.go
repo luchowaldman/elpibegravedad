@@ -22,7 +22,6 @@ func manageClientConnection(clients []any, playersMutex *sync.Mutex, players *[]
 		(*players)[0].InvertGravity()
 		playersMutex.Unlock()
 	})
-
 	if err != nil {
 		log.Println("failed to register on changeGravity message", "err", err)
 		newClient.Disconnect(true)
@@ -30,11 +29,13 @@ func manageClientConnection(clients []any, playersMutex *sync.Mutex, players *[]
 
 	err = newClient.On("iniciarJuego", func(datas ...any) {
 		log.Println("iniciarJuego event received")
-		newClient.Emit("inicioJuego")
+		err = newClient.Emit("inicioJuego")
+		if err != nil {
+			log.Println("failed to send inicioJuego", "err", err)
+		}
 
 		gameStart <- true
 	})
-
 	if err != nil {
 		log.Println("failed to register on iniciarJuego message", "err", err)
 		newClient.Disconnect(true)
@@ -50,7 +51,6 @@ func manageClientConnection(clients []any, playersMutex *sync.Mutex, players *[]
 		}
 
 	})
-
 	if err != nil {
 		log.Println("failed to register on unirSala message", "err", err)
 		newClient.Disconnect(true)
