@@ -13,6 +13,7 @@ type Player struct {
 
 	HasGravityInverted bool
 	IsWalking          bool
+	IsDead             bool
 }
 
 func (player *Player) SetSpeed(x, y float64) {

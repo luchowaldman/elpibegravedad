@@ -17,6 +17,7 @@ type PlayerInfo struct {
 	posY               int
 	hasGravityInverted bool
 	isWalking          bool
+	isDead             bool
 }
 
 func (playerInfo PlayerInfo) ToMap() map[string]any {
@@ -26,10 +27,11 @@ func (playerInfo PlayerInfo) ToMap() map[string]any {
 		"y":                      playerInfo.posY,
 		"tieneGravedadInvertida": playerInfo.hasGravityInverted,
 		"estaCaminando":          playerInfo.isWalking,
+		"estaMuerto":             playerInfo.isDead,
 	}
 }
-func initGame(world *World) {
 
+func initGame(world *World) {
 	for _, player := range *world.Players {
 		err := player.Socket.Emit("juegoIniciado")
 		if err != nil {
@@ -55,6 +57,7 @@ func gameLoop(world *World, playersMutex *sync.Mutex) {
 				posY := player.Object.Position.Y
 				hasGravityInverted := player.HasGravityInverted
 				isWalking := player.IsWalking
+				isDead := player.IsDead
 				playersMutex.Unlock()
 
 				point := Point{
@@ -68,6 +71,7 @@ func gameLoop(world *World, playersMutex *sync.Mutex) {
 					posY:               point.Y,
 					hasGravityInverted: hasGravityInverted,
 					isWalking:          isWalking,
+					isDead:             isDead,
 				})
 			}
 

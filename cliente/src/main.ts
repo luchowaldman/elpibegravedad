@@ -156,7 +156,7 @@ client.setCamaraHandler((camaraX) => {
 await mapa.cargarMapa("./mapas/mapa1.json");
 graficos.AddAnimacion('player_caminando', 35, 50);
 graficos.AddAnimacionEntidadGrafica('animacioncaminando', 'player_caminando', 0, 1, 7, -1);
-graficos.AddAnimacion('player_volando',  35, 50);
+graficos.AddAnimacion('player_volando', 35, 50);
 graficos.AddAnimacionEntidadGrafica('animacionvolando', 'player_volando', 0, 1, 7, -1);
 
 
@@ -164,23 +164,23 @@ graficos.AddAnimacionEntidadGrafica('animacionvolando', 'player_volando', 0, 1, 
 mapa.cargarImagenes(graficos);
 await graficos.init();
 graficos.agenda.iniciar();
-graficos.agenda.agregarAccionGrafica(0 ,new  AccionGraficaMostrarTexto(graficos, "texto1", "Cargando Mapa...", 600, 100));
+graficos.agenda.agregarAccionGrafica(0, new AccionGraficaMostrarTexto(graficos, "texto1", "Cargando Mapa...", 600, 100));
 
 const jugadores: Jugador[] = [
-    new Jugador("Play1",0x0000ff, 330, 450),
-    new Jugador("Play2",0xff0000, 330, 500)
+    new Jugador("Play1", 0x0000ff, 330, 450),
+    new Jugador("Play2", 0xff0000, 330, 500)
 ];
 
 setTimeout(() => {
-    mapa.dibujarMapa(graficos);    
-    
-    graficos.agenda.agregarAccionGrafica(0 ,new  AccionGraficaModificarTexto(graficos, "texto1", "Conectando con servidor..."));
+    mapa.dibujarMapa(graficos);
+
+    graficos.agenda.agregarAccionGrafica(0, new AccionGraficaModificarTexto(graficos, "texto1", "Conectando con servidor..."));
     jugadores[0].dibujar(graficos);
     jugadores[1].dibujar(graficos);
-    graficos.agenda.agregarAccionGrafica(200 ,new  AccionGraficaModificarTexto(graficos, "texto1", ""));
-    graficos.agenda.agregarAccionGrafica(200 ,new  AccionGraficaEliminarTexto(graficos, "texto1"));
-    
-    
+    graficos.agenda.agregarAccionGrafica(200, new AccionGraficaModificarTexto(graficos, "texto1", ""));
+    graficos.agenda.agregarAccionGrafica(200, new AccionGraficaEliminarTexto(graficos, "texto1"));
+
+
 }, 100);
 setTimeout(() => {
     jugadores[1].animar(graficos, "animacionvolando");
