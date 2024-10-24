@@ -11,6 +11,7 @@ const (
 	cellSize                 = 5
 	solidTag                 = "solid"
 	worldLimitTag            = "worldLimit"
+	raceFinishTag            = "raceFinish"
 	playerTag                = "player"
 	playerHeight             = 50
 	playerWidth              = 35
@@ -74,6 +75,14 @@ func (world *World) Init(gameMap Map) {
 	)
 	world.space.Add(world.cameraLimit)
 
+	// Add race finish
+	world.space.Add(
+		resolv.NewObject(
+			float64(gameMap.RaceFinish.X), float64(gameMap.RaceFinish.Y), cellSize, float64(gameMap.RaceFinish.Height),
+			raceFinishTag,
+		),
+	)
+
 	// Add solids
 	for _, solid := range gameMap.Solids {
 		x, y, w, h := solid.coordinates.ToDimensions()
@@ -103,15 +112,27 @@ func (world *World) Init(gameMap Map) {
 	}
 }
 
-func (world *World) Update() {
-	for _, player := range *world.Players {
+// Update updates the world with the new position of each player
+
+// Returns a list of the players that finished the race.
+func (world *World) Update() []int {
+	var finishedPlayers []int
+	for i, player := range *world.Players {
 		if !player.IsDead {
 			// TODO aca tener cuidado con colisiones entre los mismos players, calcular antes de avanzar
 			world.updatePlayerPosition(player)
 
-			world.checkIfPlayerIsDead(player)
+			playerFinished := world.checkIfPlayerFinishedRace(player)
+
+			if playerFinished {
+				finishedPlayers = append(finishedPlayers, i)
+			} else {
+				world.checkIfPlayerIsDead(player)
+			}
 		}
 	}
+
+	return finishedPlayers
 }
 
 // checkIfPlayerIsDead updates player's IsDead if the player touched a world limit
@@ -121,6 +142,19 @@ func (world *World) checkIfPlayerIsDead(player *Player) {
 
 		player.IsDead = true
 	}
+}
+
+// checkIfPlayerFinishedRace updates player's IsDead if the player touched the race finish
+func (world *World) checkIfPlayerFinishedRace(player *Player) bool {
+	if collision := player.Object.Check(0, 0, raceFinishTag); collision != nil {
+		log.Println("Player finished race")
+
+		player.IsDead = true
+
+		return true
+	}
+
+	return false
 }
 
 func (world *World) updatePlayerPosition(player *Player) {

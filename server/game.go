@@ -43,22 +43,27 @@ func initGame(world *World) {
 func gameLoop(world *World, playersMutex *sync.Mutex) {
 	ticker := time.NewTicker(time.Second / TicksPerSecond)
 	quit := make(chan struct{})
+
+	amountOfPlayers := len(*world.Players)
+
+	playersThatFinished := make([]int, 0, amountOfPlayers)
+
 	log.Println("Stating game loop")
 	for {
 		select {
 		case <-ticker.C:
 			playersPositions := []PlayerInfo{}
 
-			for _, player := range *world.Players {
-				playersMutex.Lock()
-				world.Update()
+			playersMutex.Lock()
+			playersThatFinished = append(playersThatFinished, world.Update()...)
+			playersMutex.Unlock()
 
+			for _, player := range *world.Players {
 				posX := player.Object.Position.X
 				posY := player.Object.Position.Y
 				hasGravityInverted := player.HasGravityInverted
 				isWalking := player.IsWalking
 				isDead := player.IsDead
-				playersMutex.Unlock()
 
 				point := Point{
 					X: int(posX),
@@ -90,6 +95,11 @@ func gameLoop(world *World, playersMutex *sync.Mutex) {
 				if err != nil {
 					log.Println("failed to send tick", "err", err)
 				}
+			}
+
+			if len(playersThatFinished) == amountOfPlayers {
+				log.Println("game finished")
+				return
 			}
 		case <-quit:
 			ticker.Stop()
