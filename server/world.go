@@ -126,11 +126,11 @@ func (world *World) Update() (finishedPlayers []int, diedPlayers []int) {
 			playerFinished := world.checkIfPlayerFinishedRace(player)
 
 			if playerFinished {
-				finishedPlayers = append(finishedPlayers, i)
+				finishedPlayers = append(finishedPlayers, i+1)
 			} else {
 				playerDied := world.checkIfPlayerHasDied(player)
 				if playerDied {
-					diedPlayers = append(diedPlayers, i)
+					diedPlayers = append(diedPlayers, i+1)
 				}
 			}
 		}

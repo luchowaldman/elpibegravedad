@@ -2,6 +2,7 @@ package main
 
 import (
 	"log"
+	"slices"
 	"sync"
 	"time"
 )
@@ -62,49 +63,61 @@ func gameLoop(world *World, playersMutex *sync.Mutex) {
 			playersThatFinished = append(playersThatFinished, playersThatFinishedThisTick...)
 			playersThatDied = append(playersThatDied, playersThatDiedThisTick...)
 
-			for _, player := range *world.Players {
-				posX := player.Object.Position.X
-				posY := player.Object.Position.Y
-				hasGravityInverted := player.HasGravityInverted
-				isWalking := player.IsWalking
-				isDead := player.IsDead
-
-				point := Point{
-					X: int(posX),
-					Y: int(posY),
-				}.FromServerToClient(mapHeight, playerWidth, playerHeight)
-
-				playersPositions = append(playersPositions, PlayerInfo{
-					playerNumber:       1, // TODO send more players
-					posX:               point.X,
-					posY:               point.Y,
-					hasGravityInverted: hasGravityInverted,
-					isWalking:          isWalking,
-					isDead:             isDead,
-				})
-			}
-
-			cameraX := calculateCameraPosition(playersPositions)
-
-			world.UpdateCameraLimitPosition(cameraX)
-
-			playersPositionsProtocol := make([]any, 0, len(playersPositions))
-
-			for _, playersPosition := range playersPositions {
-				playersPositionsProtocol = append(playersPositionsProtocol, playersPosition.ToMap())
-			}
-
-			for _, player := range *world.Players {
-				err := player.Socket.Emit("tick", playersPositionsProtocol, cameraX)
-				if err != nil {
-					log.Println("failed to send tick", "err", err)
-				}
-			}
-
 			if len(playersThatFinished)+len(playersThatDied) == amountOfPlayers {
-				log.Println("game finished")
+				log.Println("race finished")
+
+				slices.Reverse(playersThatDied)
+
+				raceResult := append(playersThatFinished, playersThatDied...)
+
+				for _, player := range *world.Players {
+					err := player.Socket.Emit("carreraTerminada", raceResult)
+					if err != nil {
+						log.Println("failed to send carreraTerminada", "err", err)
+					}
+				}
+
 				ticker.Stop()
 				return
+			} else {
+				for _, player := range *world.Players {
+					posX := player.Object.Position.X
+					posY := player.Object.Position.Y
+					hasGravityInverted := player.HasGravityInverted
+					isWalking := player.IsWalking
+					isDead := player.IsDead
+
+					point := Point{
+						X: int(posX),
+						Y: int(posY),
+					}.FromServerToClient(mapHeight, playerWidth, playerHeight)
+
+					playersPositions = append(playersPositions, PlayerInfo{
+						playerNumber:       1, // TODO send more players
+						posX:               point.X,
+						posY:               point.Y,
+						hasGravityInverted: hasGravityInverted,
+						isWalking:          isWalking,
+						isDead:             isDead,
+					})
+				}
+
+				cameraX := calculateCameraPosition(playersPositions)
+
+				world.UpdateCameraLimitPosition(cameraX)
+
+				playersPositionsProtocol := make([]any, 0, len(playersPositions))
+
+				for _, playersPosition := range playersPositions {
+					playersPositionsProtocol = append(playersPositionsProtocol, playersPosition.ToMap())
+				}
+
+				for _, player := range *world.Players {
+					err := player.Socket.Emit("tick", playersPositionsProtocol, cameraX)
+					if err != nil {
+						log.Println("failed to send tick", "err", err)
+					}
+				}
 			}
 		case <-quit:
 			ticker.Stop()
