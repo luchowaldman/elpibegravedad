@@ -4,6 +4,7 @@ interface ServerToClientEvents {
     inicioJuego: () => void;
     salaIniciada: (id: string) => void;
     tick: (posiciones: PosicionJugador[], camaraX: number) => void;
+    carreraTerminada: (resultado: number[]) => void;
 }
 
 interface PosicionJugador {
@@ -99,6 +100,10 @@ export class Client {
             socket.on("tick", (posicionesDeLosJugadores, camaraX) => {
                 this.onPosicionJugadores(posicionesDeLosJugadores);
                 this.CamaraHandler?.(camaraX);
+            });
+
+            socket.on("carreraTerminada", (resultado) => {
+                console.log("carreraTerminada received %s", resultado)
             });
 
             socket.on("inicioJuego", () => {

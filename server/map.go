@@ -16,6 +16,7 @@ type Map struct {
 	Platforms    []Platform   `json:"plataformas"`
 	Obstacles    []Obstacle   `json:"obstaculos"`
 	PlayersStart PlayersStart `json:"inicio_jugadores"`
+	RaceFinish   RaceFinish   `json:"meta"`
 
 	Solids []Solid
 }
@@ -43,6 +44,12 @@ type Obstacle struct {
 type PlayersStart struct {
 	X int `json:"x"`
 	Y int `json:"y"`
+}
+
+type RaceFinish struct {
+	X      int `json:"x"`
+	Y      int `json:"y"`
+	Height int `json:"alto"`
 }
 
 func loadMap() Map {
