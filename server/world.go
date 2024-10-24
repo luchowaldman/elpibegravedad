@@ -8,16 +8,15 @@ import (
 )
 
 const (
-	cellSize              = 3
-	solidTag              = "solid"
-	worldLimitTag         = "worldLimit"
-	playerTag             = "player"
-	playerHeight          = 50
-	playerWidth           = 35
-	playerSpeedX  float64 = 30 / TicksPerSecond
-	playerSpeedY          = playerSpeedX
-	// TODO quizo cambiar pero no anduvo
-	cameraLimitWidth = cellSize
+	cellSize                 = 5
+	solidTag                 = "solid"
+	worldLimitTag            = "worldLimit"
+	playerTag                = "player"
+	playerHeight             = 50
+	playerWidth              = 35
+	playerSpeedX     float64 = float64(60) / TicksPerSecond
+	playerSpeedY             = float64(90) / TicksPerSecond
+	cameraLimitWidth         = cellSize
 )
 
 type World struct {
