@@ -113,10 +113,11 @@ func (world *World) Init(gameMap Map) {
 }
 
 // Update updates the world with the new position of each player
-
-// Returns a list of the players that finished the race.
-func (world *World) Update() []int {
-	var finishedPlayers []int
+//
+// Returns:
+//   - finishedPlayers: list of the players that finished the race this tick
+//   - diedPlayers: list of the players that died this tick
+func (world *World) Update() (finishedPlayers []int, diedPlayers []int) {
 	for i, player := range *world.Players {
 		if !player.IsDead {
 			// TODO aca tener cuidado con colisiones entre los mismos players, calcular antes de avanzar
@@ -127,21 +128,28 @@ func (world *World) Update() []int {
 			if playerFinished {
 				finishedPlayers = append(finishedPlayers, i)
 			} else {
-				world.checkIfPlayerIsDead(player)
+				playerDied := world.checkIfPlayerHasDied(player)
+				if playerDied {
+					diedPlayers = append(diedPlayers, i)
+				}
 			}
 		}
 	}
 
-	return finishedPlayers
+	return
 }
 
-// checkIfPlayerIsDead updates player's IsDead if the player touched a world limit
-func (world *World) checkIfPlayerIsDead(player *Player) {
+// checkIfPlayerHasDied updates player's IsDead if the player touched a world limit
+func (world *World) checkIfPlayerHasDied(player *Player) bool {
 	if collision := player.Object.Check(0, 0, worldLimitTag); collision != nil {
 		log.Println("Player is dead")
 
 		player.IsDead = true
+
+		return true
 	}
+
+	return false
 }
 
 // checkIfPlayerFinishedRace updates player's IsDead if the player touched the race finish

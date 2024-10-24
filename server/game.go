@@ -47,6 +47,7 @@ func gameLoop(world *World, playersMutex *sync.Mutex) {
 	amountOfPlayers := len(*world.Players)
 
 	playersThatFinished := make([]int, 0, amountOfPlayers)
+	playersThatDied := make([]int, 0, amountOfPlayers)
 
 	log.Println("Stating game loop")
 	for {
@@ -55,8 +56,11 @@ func gameLoop(world *World, playersMutex *sync.Mutex) {
 			playersPositions := []PlayerInfo{}
 
 			playersMutex.Lock()
-			playersThatFinished = append(playersThatFinished, world.Update()...)
+			playersThatFinishedThisTick, playersThatDiedThisTick := world.Update()
 			playersMutex.Unlock()
+
+			playersThatFinished = append(playersThatFinished, playersThatFinishedThisTick...)
+			playersThatDied = append(playersThatDied, playersThatDiedThisTick...)
 
 			for _, player := range *world.Players {
 				posX := player.Object.Position.X
@@ -97,8 +101,9 @@ func gameLoop(world *World, playersMutex *sync.Mutex) {
 				}
 			}
 
-			if len(playersThatFinished) == amountOfPlayers {
+			if len(playersThatFinished)+len(playersThatDied) == amountOfPlayers {
 				log.Println("game finished")
+				ticker.Stop()
 				return
 			}
 		case <-quit:
