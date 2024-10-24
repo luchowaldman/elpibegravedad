@@ -75,26 +75,20 @@ func gameLoop(world *World, playersMutex *sync.Mutex) {
 				})
 			}
 
-			maxPosX := 0
+			cameraX := calculateCameraPosition(playersPositions)
+
+			world.UpdateCameraLimitPosition(cameraX)
+
 			playersPositionsProtocol := make([]any, 0, len(playersPositions))
 
 			for _, playersPosition := range playersPositions {
-				if playersPosition.posX > maxPosX {
-					maxPosX = playersPosition.posX
-				}
-
 				playersPositionsProtocol = append(playersPositionsProtocol, playersPosition.ToMap())
-			}
-
-			cameraX := maxPosX - cameraWidth
-			if cameraX < 0 {
-				cameraX = 0
 			}
 
 			for _, player := range *world.Players {
 				err := player.Socket.Emit("tick", playersPositionsProtocol, cameraX)
 				if err != nil {
-					log.Println("failed to send posicionesDeLosJugadores", "err", err)
+					log.Println("failed to send tick", "err", err)
 				}
 			}
 		case <-quit:
@@ -102,4 +96,21 @@ func gameLoop(world *World, playersMutex *sync.Mutex) {
 			return
 		}
 	}
+}
+
+func calculateCameraPosition(playersPositions []PlayerInfo) int {
+	maxPosX := 0
+
+	for _, playersPosition := range playersPositions {
+		if playersPosition.posX > maxPosX {
+			maxPosX = playersPosition.posX
+		}
+	}
+
+	cameraX := maxPosX - cameraWidth
+	if cameraX < 0 {
+		cameraX = 0
+	}
+
+	return cameraX
 }

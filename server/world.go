@@ -17,14 +17,17 @@ const (
 	playerSpeedX  float64 = 30 / TicksPerSecond
 	playerSpeedY          = playerSpeedX
 	// TODO quizo cambiar pero no anduvo
+	cameraLimitWidth = cellSize
 )
 
 type World struct {
-	Space *resolv.Space
+	space *resolv.Space
 
 	// playersMutex *sync.Mutex
 	// players := map[socket.SocketId]Player{}
 	Players *[]*Player
+
+	cameraLimit *resolv.Object
 }
 
 func NewWorld(gameMap Map, players *[]*Player) *World {
@@ -47,10 +50,10 @@ func (world *World) Init(gameMap Map) {
 	// Define the world's Space. Here, a Space is essentially a grid (the game's width and height, or 640x360), made up of 16x16 cells. Each cell can have 0 or more Objects within it,
 	// and collisions can be found by checking the Space to see if the Cells at specific positions contain (or would contain) Objects. This is a broad, simplified approach to collision
 	// detection.
-	world.Space = resolv.NewSpace(int(gameWidth), int(gameHeight), cellSize, cellSize)
+	world.space = resolv.NewSpace(int(gameWidth), int(gameHeight), cellSize, cellSize)
 
 	// Add world limits
-	world.Space.Add(
+	world.space.Add(
 		resolv.NewObject(
 			gameWidth-cellSize, 0, cellSize, gameHeight,
 			worldLimitTag,
@@ -65,13 +68,20 @@ func (world *World) Init(gameMap Map) {
 		),
 	)
 
+	// Add camera limit
+	world.cameraLimit = resolv.NewObject(
+		toCameraLimitX(0), 0, cameraLimitWidth, gameHeight, // initially outside the world
+		worldLimitTag,
+	)
+	world.space.Add(world.cameraLimit)
+
 	// Add solids
 	for _, solid := range gameMap.Solids {
 		x, y, w, h := solid.coordinates.ToDimensions()
 
 		log.Println("Adding solid: ", x, y, w, h)
 
-		world.Space.Add(
+		world.space.Add(
 			resolv.NewObject(
 				x, y, w, h,
 				solidTag,
@@ -90,7 +100,7 @@ func (world *World) Init(gameMap Map) {
 		player.Object = playerObject
 		player.SetSpeed(playerSpeedX, -playerSpeedY)
 
-		world.Space.Add(playerObject)
+		world.space.Add(playerObject)
 	}
 }
 
@@ -170,4 +180,18 @@ func (world *World) updatePlayerPosition(player *Player) {
 	player.Object.Position.Y += dy
 
 	player.Object.Update() // Update the player's position in the space.
+}
+
+// UpdateCameraLimitPosition updates the position of the camera limit that is used in the world
+// to detect is a player is fully outside the camera
+func (world *World) UpdateCameraLimitPosition(x int) {
+	world.cameraLimit.Position.X = toCameraLimitX(x)
+
+	world.cameraLimit.Update()
+}
+
+// toCameraLimitX transforms the position x where the camera finished to the position the camera limit object must have
+// in order to allow the camera limit to have cameraLimitWidth and to the player not collide with it until is fully outside the camera
+func toCameraLimitX(cameraX int) float64 {
+	return float64(cameraX - cameraLimitWidth - playerWidth)
 }
