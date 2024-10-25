@@ -132,7 +132,12 @@ async function main() {
         cancion: "cancion",
         plataformas: [],
         obstaculos: [],
-        inicio_jugadores: { x: 50, y: 50 }
+        inicio_jugadores: { x: 50, y: 50 }, 
+        meta: {
+          x: 2500,
+          y: 0,
+          alto: 600
+        }
     };
 
 

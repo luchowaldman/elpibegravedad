@@ -198,6 +198,11 @@ export class graficoJuego {
         this.agenda?.actualizar()
     }
 
+    
+    getPosicionCamara(): number {
+        return this.scene.cameras.main.scrollX;
+    }
+
     setPosicionCamara(posicion: number) {
         this.scene.cameras.main.scrollX = posicion;
     }
