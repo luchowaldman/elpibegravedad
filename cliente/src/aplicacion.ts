@@ -1,11 +1,13 @@
 import { ControladorDOM } from './ControladorDOM';
-import { AccionGraficaModificarTexto, AccionGraficaMostrarTexto } from './modelo/AccionGrafica';
+import { AccionGraficaModificarTexto, AccionGraficaMostrarTexto, AccionGraficaSetPosicion, AccionGraficaSetPosicionTexto } from './modelo/AccionGrafica';
 import { Client } from './modelo/client_socketio';
 import { divMapa } from './modelo/divMapa';
 import { graficoJuego } from './modelo/graficoJuego';
 import { Jugador } from './modelo/jugador';
 import { Mapa } from './modelo/mapa';
 
+const posYLabelStatus = 100;
+const posYLabelJugadores = 300;
 
 export class  Aplicacion {
     private controladorDOM = new ControladorDOM();
@@ -48,6 +50,7 @@ export class  Aplicacion {
         this.client.setDisconnectHandler(this.handleDisconnect.bind(this));
         this.client.setConnectErrorHandler(this.handleConnectError.bind(this));
         this.client.setCamaraHandler(this.handleCamara.bind(this));
+        this.client.setCarreraTerminadaHandler(this.handleTerminoCarrera.bind(this));
     }
     
     DOMIniciado(document: Document) {        
@@ -61,16 +64,14 @@ export class  Aplicacion {
 
 
     private ConfigGraficos() {
-
-        
         this.graficos.AddAnimacion('player_caminando', 35, 50);
         this.graficos.AddAnimacionEntidadGrafica('animacioncaminando', 'player_caminando', 0, 1, 7, -1);
         this.graficos.AddAnimacion('player_volando',  35, 50);
         this.graficos.AddAnimacionEntidadGrafica('animacionvolando', 'player_volando', 0, 1, 7, -1);
-
-        
-        this.graficos.agenda.agregarAccionGrafica(0 ,new  AccionGraficaMostrarTexto(this.graficos, "status_label", "DOM INICIADO", 600, 100));
-        this.graficos.agenda.agregarAccionGrafica(0 ,new  AccionGraficaMostrarTexto(this.graficos, "jugadores_label", "", 500, 300));
+        this.graficos.AddAnimacion('player_muriendo',  35, 50);
+        this.graficos.AddAnimacionEntidadGrafica('animacionmuriendo', 'player_muriendo', 0, 1, 7, -1);
+        this.graficos.agenda.agregarAccionGrafica(0 ,new  AccionGraficaMostrarTexto(this.graficos, "status_label", "DOM INICIADO", 600, posYLabelStatus));
+        this.graficos.agenda.agregarAccionGrafica(0 ,new  AccionGraficaMostrarTexto(this.graficos, "jugadores_label", "", 500, posYLabelJugadores));
     }
 
     
@@ -86,10 +87,20 @@ export class  Aplicacion {
         this.client.sendUnirseSala(partida_id);
     }
 
+
+    private CentrarLabels() {
+
+        const pos = this.graficos.getPosicionCamara();
+        this.graficos.agenda.agregarAccionGrafica(0 ,new  AccionGraficaSetPosicionTexto(this.graficos, "status_label", pos + 600,  posYLabelStatus));
+        this.graficos.agenda.agregarAccionGrafica(0 ,new  AccionGraficaSetPosicionTexto(this.graficos, "jugadores_label", pos + 500,   posYLabelJugadores));
+    }
+
     private SetLabelGrafico(status_label: string, jugadores_label: string)
     {
+
         this.graficos.agenda.agregarAccionGrafica(0 ,new  AccionGraficaModificarTexto(this.graficos, "status_label", status_label));        
         this.graficos.agenda.agregarAccionGrafica(0 ,new  AccionGraficaModificarTexto(this.graficos, "jugadores_label", jugadores_label));
+
     }
 
     
@@ -127,10 +138,18 @@ export class  Aplicacion {
     private handlePosicionJugadores(posicionesDeLosJugadores: any[]) {
         
         for (let i = 0; i < posicionesDeLosJugadores.length; i++) {
-            let x = posicionesDeLosJugadores[i].x;
-            let y = posicionesDeLosJugadores[i].y;
-            this.jugadores[i].setPosicion(this.graficos, x, y, posicionesDeLosJugadores[i].estaCaminando, posicionesDeLosJugadores[i].tieneGravedadInvertida);
+            const x = posicionesDeLosJugadores[i].x;
+            const y = posicionesDeLosJugadores[i].y;
+            console.log(posicionesDeLosJugadores[i].estaMuerto);
+            this.jugadores[i].setPosicion(this.graficos, x, y, posicionesDeLosJugadores[i].estaCaminando, posicionesDeLosJugadores[i].tieneGravedadInvertida, posicionesDeLosJugadores[i].estaMuerto);
         }
+    }
+
+    
+    private handleTerminoCarrera(resultado: number[]) {
+        this.CentrarLabels();
+        this.SetLabelGrafico("Carrera Terminada", "Ganador: " + resultado[0]);
+                
     }
 
     private handleCamara(camaraX: number) {

@@ -2,7 +2,7 @@ import { io, Socket } from "socket.io-client";
 
 interface ServerToClientEvents {
     inicioJuego: () => void;
-    salaIniciada: (id: string) => void;
+    salaIniciada: (id: string, mapa: string) => void;
     tick: (posiciones: PosicionJugador[], camaraX: number) => void;
     carreraTerminada: (resultado: number[]) => void;
 }
@@ -37,11 +37,16 @@ export class Client {
     public setIniciarJuegoHandler(handler: () => void) {
         this.IniciarJuegoHandler = handler;
     }
-
     private SalaIniciadaHandler?: (id: string, mapa: string) => void;
 
     public setSalaIniciadaHandler(handler: (id: string, mapa: string) => void) {
         this.SalaIniciadaHandler = handler;
+    }
+
+    private carreraTerminadaHandler?: (resultado: number[]) => void;
+
+    public setCarreraTerminadaHandler(handler: (resultado: number[]) => void) {
+        this.carreraTerminadaHandler = handler;
     }
 
     private posicionJugadoresHandler?: (posiciones: PosicionJugador[]) => void;
@@ -104,6 +109,7 @@ export class Client {
 
             socket.on("carreraTerminada", (resultado) => {
                 console.log("carreraTerminada received %s", resultado)
+                this.carreraTerminadaHandler?.(resultado);
             });
 
             socket.on("inicioJuego", () => {

@@ -44,6 +44,25 @@ export class AccionGraficaCambiarVelovidad extends AccionGrafica {
     }
 }
 
+export class AccionGraficaSetPosicionTexto extends AccionGrafica {
+    grafico: graficoJuego;
+    entidad: string;
+    x: number;
+    y: number;
+
+    constructor(grafico: graficoJuego, entidad: string, x: number, y: number) {
+        super(); // Llama al constructor de la clase base si es necesario
+        this.entidad = entidad;
+        this.grafico = grafico;
+        this.x = x;
+        this.y = y;
+    }
+
+    ejecutar(): void {
+        this.grafico.GetTexto(this.entidad)?.setPosicion(this.x, this.y);
+    }
+}
+
 export class AccionGraficaSetPosicion extends AccionGrafica {
     grafico: graficoJuego;
     entidad: string;

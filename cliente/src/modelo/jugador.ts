@@ -11,13 +11,16 @@ export class Jugador {
     x: number;
     y: number;
     entidad: EntidadGrafica | undefined;
-    esta_caminando: boolean = true;
-    tieneGravedadInvertida: boolean = true;
+    animacion: string;
+    rotacion: number;
+
     constructor(id: string,color: number, x: number, y: number) {
         this.id = id;
         this.color = color;        
         this.x = x;
-        this.y = y;        
+        this.y = y;
+        this.animacion = ""        
+        this.rotacion = -1000;
     }
 
     dibujar(graficos: graficoJuego) {
@@ -28,13 +31,20 @@ export class Jugador {
     }
 
     animar(graficos: graficoJuego, animacion: string) {
-        const frame = graficos.agenda.getFrame();
-        graficos.agenda.agregarAccionGrafica(frame, new AccionGraficaAnimar(graficos, this.id, animacion) );
+        if (this.animacion != animacion) {
+            this.animacion = animacion;
+            const frame = graficos.agenda.getFrame();
+            graficos.agenda.agregarAccionGrafica(frame, new AccionGraficaAnimar(graficos, this.id, animacion));
+        }
     }
 
-    rotar(graficos: graficoJuego, rotacion: number) {
-        const frame = graficos.agenda.getFrame();
-        graficos.agenda.agregarAccionGrafica(frame, new AccionGraficaRotar(graficos, this.id, rotacion) );
+    rotar(graficos: graficoJuego, rotacion: number) 
+    {
+        if (this.rotacion != rotacion) {
+            this.rotacion = rotacion;
+            const frame = graficos.agenda.getFrame();
+            graficos.agenda.agregarAccionGrafica(frame, new AccionGraficaRotar(graficos, this.id, rotacion) );
+        }
     }
 
     
@@ -45,23 +55,23 @@ export class Jugador {
 
     
 
-    setPosicion(graficos: graficoJuego, x: number, y: number, esta_caminando: boolean, tieneGravedadInvertida: boolean) 
+    setPosicion(graficos: graficoJuego, x: number, y: number, esta_caminando: boolean, tieneGravedadInvertida: boolean, estaMuerto: boolean) 
     {
         const frame = graficos.agenda.getFrame();
-        console.log("compara", this.esta_caminando, esta_caminando);
-        if (this.esta_caminando != esta_caminando) 
+        if (!estaMuerto) 
         {
             
             this.esta_caminando = esta_caminando;
             if (esta_caminando) {
-                console.log("caminando");
                 this.animar(graficos, "animacioncaminando");
             } else {
-                console.log("volando");
                 this.animar(graficos, "animacionvolando");
             }
-
         }
+        else {
+            this.animar(graficos, "animacionvolando");
+        }
+
         if (this.tieneGravedadInvertida != tieneGravedadInvertida) 
         {
             this.tieneGravedadInvertida = tieneGravedadInvertida;
