@@ -4,6 +4,7 @@ import (
 	"log"
 	"net/http"
 	"sync"
+	"time"
 
 	"github.com/zishang520/socket.io/v2/socket"
 )
@@ -50,4 +51,7 @@ func main() {
 	world := NewWorld(gameMap, players)
 
 	gameLoop(world, playersMutex)
+	for {
+		time.Sleep(5 * time.Second)
+	}
 }
