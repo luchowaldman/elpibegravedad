@@ -124,6 +124,44 @@ function AgregarL(piso, desdeX) {
     piso.AgregarCaja(desdeX + 100);
     piso.AgregarCaja(desdeX + 100, 1);
 }
+
+function PartePorcentaje(desde, hasta, porcentaje) {
+    return desde + (((hasta - desde) / 100) * porcentaje);
+}
+
+function AgregarPisoModo1(y1, y2, desdeX, hastaX) {
+
+    let piso1 = new PlataformasHorizontales(y1, "piso");
+    let piso2 = new PlataformasHorizontales(y2, "techo");
+
+    
+    plataformas.push(piso1);
+    plataformas.push(piso2);
+    piso1.AgregarPlataforma(desdeX, hastaX);
+    piso2.AgregarPlataforma(desdeX, hastaX);
+    AgregarL(piso1, PartePorcentaje(desdeX, hastaX, 10));
+    piso2.AgregarCaja(PartePorcentaje(desdeX, hastaX, 13), -1);
+    zigzagCAJA(piso1, piso2, PartePorcentaje(desdeX, hastaX, 25), PartePorcentaje(desdeX, hastaX, 80), PartePorcentaje(desdeX, hastaX, 5));
+
+}
+function AgregarPisoModo2(y1, y2, y3, desdeX, hastaX) {
+    let piso1 = new PlataformasHorizontales(y1, "techo");
+    let piso2 = new PlataformasHorizontales(y2, "piso");
+    let piso3 = new PlataformasHorizontales(y3, "piso");
+
+    plataformas.push(piso1);
+    plataformas.push(piso2);
+    plataformas.push(piso3);
+
+    piso1.AgregarPlataforma(PartePorcentaje(desdeX, hastaX, 10), hastaX);
+    piso2.AgregarPlataforma(PartePorcentaje(desdeX, hastaX, 5), hastaX);
+    piso3.AgregarPlataforma(desdeX, hastaX);
+
+    zigzagCAJA(piso2, piso1, PartePorcentaje(desdeX, hastaX, 13), PartePorcentaje(desdeX, hastaX, 83), PartePorcentaje(desdeX, hastaX, 10));
+    zigzagCAJA(piso3, piso2, PartePorcentaje(desdeX, hastaX, 10), PartePorcentaje(desdeX, hastaX, 85), PartePorcentaje(desdeX, hastaX, 5.5));
+
+}
+
 async function main() {
     const mapa = {
         nombre: "Mapa de ejemplo",
@@ -140,44 +178,9 @@ async function main() {
         }
     };
 
+    AgregarPisoModo1(490, 120, 0, 2400);
+    AgregarPisoModo2(20, 300, 540, 2100, 6000);
 
-    let piso1 = new PlataformasHorizontales(490, "piso");
-    let piso2 = new PlataformasHorizontales(120, "techo");
-    plataformas.push(piso1);
-    plataformas.push(piso2);
-
-
-
-    piso1.AgregarPlataforma(0, 2400);
-    piso2.AgregarPlataforma(0, 2400);
-    
-    AgregarL(piso1, 400);
-    piso2.AgregarCaja(300, -1);
-    zigzagCAJA(piso1, piso2, 700, 1600, 230);
-
-    // Agrego pozos
-    piso1.QuitarPlataforma(1200, 1400);
-    piso2.QuitarPlataforma(1700, 2000);
-
-    
-
-    let piso_par1_1 = new PlataformasHorizontales(20, "techo");
-    let piso_par1_2 = new PlataformasHorizontales(300, "piso");
-    let piso_par1_3 = new PlataformasHorizontales(540, "piso");
-    plataformas.push(piso_par1_1);
-    plataformas.push(piso_par1_2);
-    plataformas.push(piso_par1_3);
-
-    piso_par1_1.AgregarPlataforma(2700, 6000);
-    piso_par1_2.AgregarPlataforma(2400, 6000);
-    piso_par1_3.AgregarPlataforma(2100, 6000);
-    
-    zigzagCAJA(piso_par1_2, piso_par1_1, 2900, 5000, 600);    
-    zigzagCAJA(piso_par1_3, piso_par1_2, 2700, 5100, 330);
-    
-    piso_par1_2.QuitarPlataforma(3600, 3800);
-    piso_par1_2.QuitarPlataforma(4240, 4400);
-    piso_par1_1.QuitarPlataforma(4540, 4600);
 
     plataformas.forEach(p => {
         mapa.plataformas.push(...p.getPlataformas());
