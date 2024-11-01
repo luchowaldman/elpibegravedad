@@ -8,21 +8,26 @@ import (
 )
 
 const (
-	cellSize             = 1
-	solidTag             = "solid"
-	playerTag            = "player"
-	playerHeight         = 50
-	playerWidth          = 35
-	playerSpeedX float64 = 30 / TicksPerSecond
-	playerSpeedY         = playerSpeedX
+	cellSize                 = 5
+	solidTag                 = "solid"
+	worldLimitTag            = "worldLimit"
+	raceFinishTag            = "raceFinish"
+	playerTag                = "player"
+	playerHeight             = 50
+	playerWidth              = 35
+	playerSpeedX     float64 = float64(60) / TicksPerSecond
+	playerSpeedY             = float64(90) / TicksPerSecond
+	cameraLimitWidth         = cellSize
 )
 
 type World struct {
-	Space *resolv.Space
+	space *resolv.Space
 
 	// playersMutex *sync.Mutex
 	// players := map[socket.SocketId]Player{}
 	Players *[]*Player
+
+	cameraLimit *resolv.Object
 }
 
 func NewWorld(gameMap Map, players *[]*Player) *World {
@@ -45,21 +50,36 @@ func (world *World) Init(gameMap Map) {
 	// Define the world's Space. Here, a Space is essentially a grid (the game's width and height, or 640x360), made up of 16x16 cells. Each cell can have 0 or more Objects within it,
 	// and collisions can be found by checking the Space to see if the Cells at specific positions contain (or would contain) Objects. This is a broad, simplified approach to collision
 	// detection.
-	world.Space = resolv.NewSpace(int(gameWidth), int(gameHeight), cellSize, cellSize)
+	world.space = resolv.NewSpace(int(gameWidth), int(gameHeight), cellSize, cellSize)
 
 	// Add world limits
-	world.Space.Add(
+	world.space.Add(
 		resolv.NewObject(
 			gameWidth-cellSize, 0, cellSize, gameHeight,
-			solidTag,
+			worldLimitTag,
 		),
 		resolv.NewObject(
 			0, 0, gameWidth, cellSize,
-			solidTag,
+			worldLimitTag,
 		),
 		resolv.NewObject(
 			0, gameHeight-cellSize, gameWidth, cellSize,
-			solidTag,
+			worldLimitTag,
+		),
+	)
+
+	// Add camera limit
+	world.cameraLimit = resolv.NewObject(
+		toCameraLimitX(0), 0, cameraLimitWidth, gameHeight, // initially outside the world
+		worldLimitTag,
+	)
+	world.space.Add(world.cameraLimit)
+
+	// Add race finish
+	world.space.Add(
+		resolv.NewObject(
+			float64(gameMap.RaceFinish.X), float64(gameMap.RaceFinish.Y), cellSize, float64(gameMap.RaceFinish.Height),
+			raceFinishTag,
 		),
 	)
 
@@ -69,7 +89,7 @@ func (world *World) Init(gameMap Map) {
 
 		log.Println("Adding solid: ", x, y, w, h)
 
-		world.Space.Add(
+		world.space.Add(
 			resolv.NewObject(
 				x, y, w, h,
 				solidTag,
@@ -88,18 +108,64 @@ func (world *World) Init(gameMap Map) {
 		player.Object = playerObject
 		player.SetSpeed(playerSpeedX, -playerSpeedY)
 
-		world.Space.Add(playerObject)
+		world.space.Add(playerObject)
 	}
 }
 
-func (world *World) Update() {
-	for _, player := range *world.Players {
-		// TODO aca tener cuidado con colisiones entre los mismos players, calcular antes de avanzar
-		world.updatePlayer(player)
+// Update updates the world with the new position of each player
+//
+// Returns:
+//   - finishedPlayers: list of the players that finished the race this tick
+//   - diedPlayers: list of the players that died this tick
+func (world *World) Update() (finishedPlayers []int, diedPlayers []int) {
+	for i, player := range *world.Players {
+		if !player.IsDead {
+			// TODO aca tener cuidado con colisiones entre los mismos players, calcular antes de avanzar
+			world.updatePlayerPosition(player)
+
+			playerFinished := world.checkIfPlayerFinishedRace(player)
+
+			if playerFinished {
+				finishedPlayers = append(finishedPlayers, i+1)
+			} else {
+				playerDied := world.checkIfPlayerHasDied(player)
+				if playerDied {
+					diedPlayers = append(diedPlayers, i+1)
+				}
+			}
+		}
 	}
+
+	return
 }
 
-func (world *World) updatePlayer(player *Player) {
+// checkIfPlayerHasDied updates player's IsDead if the player touched a world limit
+func (world *World) checkIfPlayerHasDied(player *Player) bool {
+	if collision := player.Object.Check(0, 0, worldLimitTag); collision != nil {
+		log.Println("Player is dead")
+
+		player.IsDead = true
+
+		return true
+	}
+
+	return false
+}
+
+// checkIfPlayerFinishedRace updates player's IsDead if the player touched the race finish
+func (world *World) checkIfPlayerFinishedRace(player *Player) bool {
+	if collision := player.Object.Check(0, 0, raceFinishTag); collision != nil {
+		log.Println("Player finished race")
+
+		player.IsDead = true
+
+		return true
+	}
+
+	return false
+}
+
+func (world *World) updatePlayerPosition(player *Player) {
 	// we update the Player's movement. This is the real bread-and-butter of this example, naturally.
 
 	// We handle horizontal movement separately from vertical movement. This is, conceptually, decomposing movement into two phases / axes.
@@ -155,4 +221,18 @@ func (world *World) updatePlayer(player *Player) {
 	player.Object.Position.Y += dy
 
 	player.Object.Update() // Update the player's position in the space.
+}
+
+// UpdateCameraLimitPosition updates the position of the camera limit that is used in the world
+// to detect is a player is fully outside the camera
+func (world *World) UpdateCameraLimitPosition(x int) {
+	world.cameraLimit.Position.X = toCameraLimitX(x)
+
+	world.cameraLimit.Update()
+}
+
+// toCameraLimitX transforms the position x where the camera finished to the position the camera limit object must have
+// in order to allow the camera limit to have cameraLimitWidth and to the player not collide with it until is fully outside the camera
+func toCameraLimitX(cameraX int) float64 {
+	return float64(cameraX - cameraLimitWidth - playerWidth)
 }

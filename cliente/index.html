@@ -2,25 +2,46 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/" href="/img/icono.png" />
+    <link rel="stylesheet" href="/css/site.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <title>El pibe gravedad</title>
-  </head>
-  <body>
-    <div>
-      <div id="juego-container"></div>
-      Camara <input id="camarainput" type="range" value="0" min="0" max="3800">
-      <div>
-        
-        <input type="button" id="btnCargarMapa" value="Cargar Mapa">
-        <input type="button" id="btnIniciarCliente" value="Iniciar cliente">
-        <input type="button" id="btnIniciarAgenda" value="Iniciar Agenda">
-        <input type="button" id="btnCambirGravedad" value="Cambiar gravedad">
-        <input type="button" id="btnMover" value="Mover">
-        <input type="button" id="btnAstronauta" value="Astronauta rotando">
-        <input type="button" id="btnLazo" value="Tirar Lazo">
+  </head> 
+  <header>
+    <nav id="barranavegacion">
+      <p id="titulonav">El pibe gravedad</a>
+
+        <form id="formCompartirPartida" style="display: none;" class="enheader">
+          <label id="labelpartida">http://localhost:5173/?partida=IDPARTIDA</label>
+          <button id="btnCopiarPartida_Partida" type="button">Copiar</button>
+        </form>
+        <form id="formUnirsePartida"  class="enheader">
+          <input id="partida_id" type="text" placeholder="Unirse a partida" aria-label="Search">
+          <button  id="btnUnirse_Partida" type="button">Unirse</button>
+        </form>
+      </div>
+    </nav>
+  </header>
+    <body class="body">
+
+
+    <div id="pagina1" class="pagina" style="display: none;">
+      <h1>Nueva Partida:</h1>
+      <div id="mapas" class="row">
       </div>
     </div>
-    <script type="module" src="/src/main.ts"></script>
-  </body>
+    <div id="pagina2" class="pagina" style="display: none;">
+      <div id="juego-container"></div>
+    </div>
+    
+    <div id="paginaError"  class="pagina" style="display: none;">
+        <h2 style="color: red;">Error</h2>
+        <p id="lblError" style="color: red;">Lo sentimos, ha ocurrido un error inesperado. Por favor, inténtelo de nuevo más tarde.</p>
+    </div>
+
+    </body>
+    <script type="module" src="/src/menu.ts"></script>
+
+      
+      
 </html>

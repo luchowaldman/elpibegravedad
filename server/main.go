@@ -4,6 +4,7 @@ import (
 	"log"
 	"net/http"
 	"sync"
+	"time"
 
 	"github.com/zishang520/socket.io/v2/socket"
 )
@@ -24,11 +25,11 @@ func main() {
 
 	gameStarted := false
 	gameStart := make(chan bool)
-	expectedPlayers := 1
+	expectedPlayers := 2
 
 	err := io.On("connection", func(clients ...any) {
 		// TODO manejar conexiones de mas
-		manageClientConnection(clients, playersMutex, players)
+		manageClientConnection(clients, playersMutex, players, gameStart)
 
 		if !gameStarted && len((*players)) >= expectedPlayers {
 			gameStarted = true
@@ -50,4 +51,7 @@ func main() {
 	world := NewWorld(gameMap, players)
 
 	gameLoop(world, playersMutex)
+	for {
+		time.Sleep(5 * time.Second)
+	}
 }

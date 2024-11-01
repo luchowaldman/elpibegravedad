@@ -50,5 +50,9 @@ export class Texto {
         this.text?.setText(contenido);
     }
     
+    setPosicion(x: number, y: number) {
+        this.text?.setX(x);
+        this.text?.setY(y);
+    }
 
 }

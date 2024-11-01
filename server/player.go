@@ -13,6 +13,7 @@ type Player struct {
 
 	HasGravityInverted bool
 	IsWalking          bool
+	IsDead             bool
 }
 
 func (player *Player) SetSpeed(x, y float64) {
@@ -21,7 +22,9 @@ func (player *Player) SetSpeed(x, y float64) {
 }
 
 func (player *Player) InvertGravity() {
-	player.HasGravityInverted = !player.HasGravityInverted
+	if player.IsWalking {
+		player.HasGravityInverted = !player.HasGravityInverted
 
-	player.SetSpeed(player.Speed.X, -player.Speed.Y)
+		player.SetSpeed(player.Speed.X, -player.Speed.Y)
+	}
 }

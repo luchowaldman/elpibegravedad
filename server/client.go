@@ -7,7 +7,7 @@ import (
 	"github.com/zishang520/socket.io/v2/socket"
 )
 
-func manageClientConnection(clients []any, playersMutex *sync.Mutex, players *[]*Player) {
+func manageClientConnection(clients []any, playersMutex *sync.Mutex, players *[]*Player, gameStart chan bool) {
 	newClient := clients[0].(*socket.Socket)
 	newClientID := newClient.Id()
 
@@ -24,6 +24,54 @@ func manageClientConnection(clients []any, playersMutex *sync.Mutex, players *[]
 	})
 	if err != nil {
 		log.Println("failed to register on changeGravity message", "err", err)
+		newClient.Disconnect(true)
+	}
+
+	err = newClient.On("iniciarJuego", func(datas ...any) {
+		log.Println("iniciarJuego event received")
+		err = newClient.Emit("inicioJuego")
+		if err != nil {
+			log.Println("failed to send inicioJuego", "err", err)
+		}
+
+		gameStart <- true
+	})
+	if err != nil {
+		log.Println("failed to register on iniciarJuego message", "err", err)
+		newClient.Disconnect(true)
+	}
+
+	err = newClient.On("unirSala", func(datas ...any) {
+		nombresala, ok := datas[0].(string)
+		if ok {
+			log.Println("unirSala event received with sala name:", nombresala)
+			newClient.Emit("salaIniciada", nombresala, "mapa1")
+		} else {
+			log.Println("unirSala event received but map name is not a string")
+		}
+
+	})
+	if err != nil {
+		log.Println("failed to register on unirSala message", "err", err)
+		newClient.Disconnect(true)
+	}
+
+	err = newClient.On("initSala", func(datas ...any) {
+		if len(datas) > 0 {
+			mapName, ok := datas[0].(string)
+			if ok {
+				log.Println("initSala event received with sala name:", mapName)
+				newClient.Emit("salaIniciada", "IDSALA", mapName)
+			} else {
+				log.Println("initSala event received but map name is not a string")
+			}
+		} else {
+			log.Println("initSala event received but no map name provided")
+		}
+	})
+
+	if err != nil {
+		log.Println("Fallo iniciando la sala", "err", err)
 		newClient.Disconnect(true)
 	}
 

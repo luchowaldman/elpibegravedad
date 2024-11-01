@@ -1,9 +1,12 @@
 import { InicioJugadores } from "./InicioJugadores";
 import { Obstaculo } from "./Obstaculo";
 import { Plataforma } from "./Plataforma";
+import { Meta } from "./meta";
+
 
 import { graficoJuego } from "./graficoJuego";
 import TipoPlataformaFactory from "./tiposplataforma/tipoplataformafactory";
+import { EntidadGrafica } from "./entidadgrafica";
 
 export class Mapa {
     nombre: string = '';
@@ -13,12 +16,12 @@ export class Mapa {
     plataformas: Plataforma[] = [];
     obstaculos: Obstaculo[] = [];
     inicio_jugadores: InicioJugadores =  new InicioJugadores(0, 0);
+    meta: Meta = new Meta(0, 0, 0);
     
     async cargarMapa(rutaArchivo: string) {
       try {
         const response = await fetch(rutaArchivo);
         const mapaData = await response.json();
-        
       this.nombre = mapaData.nombre;
       this.largo = mapaData.largo;
       this.fondo = mapaData.fondo;
@@ -26,6 +29,7 @@ export class Mapa {
       this.plataformas = mapaData.plataformas.map((plataforma: Plataforma) => TipoPlataformaFactory.Crear(plataforma.tipo, plataforma.desdeX, plataforma.desdeY, plataforma.hastaX, plataforma.hastaY, plataforma.alto));
       this.obstaculos = mapaData.obstaculos.map((obstaculo: Obstaculo) => new Obstaculo(obstaculo.tipo, obstaculo.id, obstaculo.desdeX, obstaculo.desdeY, obstaculo.largo, obstaculo.alto));
       this.inicio_jugadores = new InicioJugadores(mapaData.inicio_jugadores.x, mapaData.inicio_jugadores.y);
+      this.meta = new Meta(mapaData.meta.x, mapaData.meta.y, mapaData.meta.alto);
       
       } catch (error) {
         console.error('Error al cargar el mapa:', error);
@@ -42,7 +46,7 @@ export class Mapa {
           obstaculo.dibujar(graficos);
           
         });
-        
+        graficos.AdddEntidad(new EntidadGrafica("meta", "meta", this.meta.x, this.meta.y, 50, 600));
       }
 
       
@@ -50,6 +54,7 @@ export class Mapa {
       
       graficos.setLargo(this.largo);
       graficos.AddImagen(this.fondo);
+      graficos.AddImagen("meta");
       this.plataformas.forEach((plataforma) => {
         plataforma.cargarImagenes(graficos);
     });

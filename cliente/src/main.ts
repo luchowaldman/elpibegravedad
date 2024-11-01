@@ -17,6 +17,8 @@ const graficos: graficoJuego = new graficoJuego();
 document.addEventListener('DOMContentLoaded', () => {
 
     console.log("DOM Caragado");
+
+    console.log("DOM Caragado");
     const rangeInput = document.getElementById('camarainput') as HTMLInputElement;
     if (rangeInput) {
         console.log("rangeInput", rangeInput);
@@ -37,25 +39,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-
-    const btnIniciarAgenda = document.getElementById('btnIniciarAgenda') as HTMLInputElement;
-    if (btnIniciarAgenda) {
-        btnIniciarAgenda.addEventListener('click', async () => {
-
-            graficos.agenda.iniciar();
-
-
-        });
-    };
-
-
-
-    const btnCargarMapa = document.getElementById('btnCargarMapa') as HTMLInputElement;
-    if (btnCargarMapa) {
-        btnCargarMapa.addEventListener('click', async () => {
-
-        });
-    };
 
     const btnCambiarGravedad = document.getElementById('btnCambirGravedad') as HTMLInputElement;
     if (btnCambiarGravedad) {
@@ -157,8 +140,6 @@ graficos.controles.setOnKeyPressCallback((key: string) => {
     }
     console.log(key);
 });
-
-
 client.setPosicionJugadoresHandler((posicionesDeLosJugadores) => {
 
     console.log(posicionesDeLosJugadores)
@@ -168,7 +149,6 @@ client.setPosicionJugadoresHandler((posicionesDeLosJugadores) => {
         jugadores[i].setPosicion(graficos, x, y);
     }
 });
-
 client.setCamaraHandler((camaraX) => {
     graficos.setPosicionCamara(camaraX);
 });
@@ -195,8 +175,6 @@ setTimeout(() => {
     mapa.dibujarMapa(graficos);
 
     graficos.agenda.agregarAccionGrafica(0, new AccionGraficaModificarTexto(graficos, "texto1", "Conectando con servidor..."));
-
-
     jugadores[0].dibujar(graficos);
     jugadores[1].dibujar(graficos);
     graficos.agenda.agregarAccionGrafica(200, new AccionGraficaModificarTexto(graficos, "texto1", ""));
@@ -204,8 +182,6 @@ setTimeout(() => {
 
 
 }, 100);
-
-
 setTimeout(() => {
     jugadores[1].animar(graficos, "animacionvolando");
 }, 2000);
