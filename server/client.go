@@ -3,9 +3,12 @@ package main
 import (
 	"log"
 	"sync"
+	"sync/atomic"
 
 	"github.com/zishang520/socket.io/v2/socket"
 )
+
+var gameStarted atomic.Bool
 
 func manageClientConnection(clients []any, playersMutex *sync.Mutex, players *[]*Player, gameStart chan bool) {
 	newClient := clients[0].(*socket.Socket)
@@ -15,6 +18,12 @@ func manageClientConnection(clients []any, playersMutex *sync.Mutex, players *[]
 
 	err := newClient.On("changeGravity", func(datas ...any) {
 		log.Println("changeGravity event received")
+
+		if !gameStarted.Load() {
+			log.Println("changeGravity event received when the game has not yet started, ignoring message")
+
+			return
+		}
 
 		// TODO: mutex for each player, not only for the list
 		playersMutex.Lock()
@@ -29,9 +38,20 @@ func manageClientConnection(clients []any, playersMutex *sync.Mutex, players *[]
 
 	err = newClient.On("iniciarJuego", func(datas ...any) {
 		log.Println("iniciarJuego event received")
-		err = newClient.Emit("inicioJuego")
-		if err != nil {
-			log.Println("failed to send inicioJuego", "err", err)
+
+		if gameStarted.Load() {
+			log.Println("iniciarJuego event received when the game has already begun, ignoring message")
+
+			return
+		}
+
+		gameStarted.Store(true)
+
+		for _, player := range *players {
+			err = player.SendInicioJuego()
+			if err != nil {
+				log.Println("failed to send inicioJuego", "err", err)
+			}
 		}
 
 		gameStart <- true

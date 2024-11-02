@@ -12,3 +12,7 @@ type Player struct {
 func (player *Player) SendTick(playersPositions []any, cameraX int) error {
 	return player.Socket.Emit("tick", playersPositions, cameraX)
 }
+
+func (player *Player) SendInicioJuego() error {
+	return player.Socket.Emit("inicioJuego")
+}
