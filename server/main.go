@@ -48,7 +48,7 @@ func main() {
 	<-gameStart
 
 	log.Println("Creating world")
-	world := NewWorld(gameMap, players)
+	world := NewWorld(gameMap, *players)
 
 	gameLoop(world, playersMutex)
 	for {

@@ -25,12 +25,12 @@ type World struct {
 
 	// playersMutex *sync.Mutex
 	// players := map[socket.SocketId]Player{}
-	Players *[]*Player
+	Players []*Player
 
 	cameraLimit *resolv.Object
 }
 
-func NewWorld(gameMap Map, players *[]*Player) *World {
+func NewWorld(gameMap Map, players []*Player) *World {
 	w := &World{
 		Players: players,
 	}
@@ -98,7 +98,7 @@ func (world *World) Init(gameMap Map) {
 	}
 
 	// Create Players' objects and add it to the world's Space.
-	for _, player := range *world.Players {
+	for _, player := range world.Players {
 		// TODO mover posicion inicial de aca uno
 		playerObject := resolv.NewObject(
 			float64(gameMap.PlayersStart.X), float64(gameMap.PlayersStart.Y), playerWidth, playerHeight,
@@ -118,7 +118,7 @@ func (world *World) Init(gameMap Map) {
 //   - finishedPlayers: list of the players that finished the race this tick
 //   - diedPlayers: list of the players that died this tick
 func (world *World) Update() (finishedPlayers []int, diedPlayers []int) {
-	for i, player := range *world.Players {
+	for i, player := range world.Players {
 		if !player.IsDead {
 			// TODO aca tener cuidado con colisiones entre los mismos players, calcular antes de avanzar
 			world.updatePlayerPosition(player)
