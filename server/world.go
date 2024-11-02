@@ -18,6 +18,7 @@ const (
 	playerSpeedX     float64 = float64(60) / TicksPerSecond
 	playerSpeedY             = float64(90) / TicksPerSecond
 	cameraLimitWidth         = cellSize
+	raceFinishWidth          = 50
 )
 
 type World struct {
@@ -78,7 +79,8 @@ func (world *World) Init(gameMap Map) {
 	// Add race finish
 	world.space.Add(
 		resolv.NewObject(
-			float64(gameMap.RaceFinish.X), float64(gameMap.RaceFinish.Y), cellSize, float64(gameMap.RaceFinish.Height),
+			float64(gameMap.RaceFinish.X+raceFinishWidth+playerWidth), // add raceFinishWidth+playerWidth to the x position so the collision in when the player cross the race finish completely
+			float64(gameMap.RaceFinish.Y), cellSize, float64(gameMap.RaceFinish.Height),
 			raceFinishTag,
 		),
 	)
