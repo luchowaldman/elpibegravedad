@@ -19,7 +19,7 @@ func manageClientConnection(clients []any, playersMutex *sync.Mutex, players *[]
 		// TODO: mutex for each player, not only for the list
 		playersMutex.Lock()
 		// players[newClient.Id()].InvertGravity()
-		(*players)[0].InvertGravity()
+		(*players)[0].Character.InvertGravity()
 		playersMutex.Unlock()
 	})
 	if err != nil {

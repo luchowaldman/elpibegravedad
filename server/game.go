@@ -81,11 +81,11 @@ func gameLoop(world *World, playersMutex *sync.Mutex) {
 				return
 			} else {
 				for _, player := range world.Players {
-					posX := player.Object.Position.X
-					posY := player.Object.Position.Y
-					hasGravityInverted := player.HasGravityInverted
-					isWalking := player.IsWalking
-					isDead := player.IsDead
+					posX := player.Character.Object.Position.X
+					posY := player.Character.Object.Position.Y
+					hasGravityInverted := player.Character.HasGravityInverted
+					isWalking := player.Character.IsWalking
+					isDead := player.Character.IsDead
 
 					point := Point{
 						X: int(posX),
@@ -113,7 +113,7 @@ func gameLoop(world *World, playersMutex *sync.Mutex) {
 				}
 
 				for _, player := range world.Players {
-					err := player.Socket.Emit("tick", playersPositionsProtocol, cameraX)
+					err := player.SendTick(playersPositionsProtocol, cameraX)
 					if err != nil {
 						log.Println("failed to send tick", "err", err)
 					}
