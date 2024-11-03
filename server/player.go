@@ -9,7 +9,7 @@ type Player struct {
 	ID        int
 	Name      string
 	Socket    *socket.Socket
-	Character Character
+	Character *Character
 }
 
 func NewPlayer(socket *socket.Socket) *Player {

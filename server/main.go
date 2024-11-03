@@ -37,7 +37,7 @@ func main() {
 	log.Println("Creating world")
 	world := NewWorld(gameMap, room.Players)
 
-	gameLoop(world, room.Mutex)
+	gameLoop(world, room)
 	for {
 		time.Sleep(5 * time.Second)
 	}

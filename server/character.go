@@ -13,6 +13,12 @@ type Character struct {
 	IsDead             bool
 }
 
+func NewCharacter(object *resolv.Object) *Character {
+	return &Character{
+		Object: object,
+	}
+}
+
 func (character *Character) SetSpeed(x, y float64) {
 	character.Speed.X = x
 	character.Speed.Y = y
