@@ -49,12 +49,14 @@ func manageClientConnection(clients []any, playersMutex *sync.Mutex, players *[]
 
 		gameStarted.Store(true)
 
+		playersMutex.Lock()
 		for _, player := range *players {
 			err = player.SendInicioJuego()
 			if err != nil {
 				log.Println("failed to send inicioJuego", "err", err)
 			}
 		}
+		playersMutex.Unlock()
 
 		gameStart <- true
 	})
