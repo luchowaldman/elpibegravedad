@@ -8,17 +8,18 @@ import (
 )
 
 const (
-	cellSize                 = 5
-	solidTag                 = "solid"
-	worldLimitTag            = "worldLimit"
-	raceFinishTag            = "raceFinish"
-	playerTag                = "player"
-	playerHeight             = 50
-	playerWidth              = 35
-	playerSpeedX     float64 = float64(60) / TicksPerSecond
-	playerSpeedY             = float64(90) / TicksPerSecond
-	cameraLimitWidth         = cellSize
-	raceFinishWidth          = 50
+	cellSize                              = 5
+	solidTag                              = "solid"
+	worldLimitTag                         = "worldLimit"
+	raceFinishTag                         = "raceFinish"
+	playerTag                             = "player"
+	playerHeight                          = 50
+	playerWidth                           = 35
+	playerSpeedX                  float64 = float64(60) / TicksPerSecond
+	playerSpeedY                          = float64(90) / TicksPerSecond
+	cameraLimitWidth                      = cellSize
+	raceFinishWidth                       = 50
+	playerInitialPositionDistance         = 20
 )
 
 type World struct {
@@ -100,10 +101,12 @@ func (world *World) Init(gameMap Map) {
 	}
 
 	// Create Players' objects and add it to the world's Space.
-	for _, player := range world.Players {
-		// TODO mover posicion inicial de aca uno
+	playerInitialX := float64(gameMap.PlayersStart.X)
+	playerInitialY := float64(gameMap.PlayersStart.Y)
+
+	for i, player := range world.Players {
 		playerObject := resolv.NewObject(
-			float64(gameMap.PlayersStart.X), float64(gameMap.PlayersStart.Y), playerWidth, playerHeight,
+			playerInitialX, playerInitialY, playerWidth, playerHeight,
 			playerTag,
 		)
 
@@ -111,6 +114,13 @@ func (world *World) Init(gameMap Map) {
 		player.Character.SetSpeed(playerSpeedX, -playerSpeedY)
 
 		world.space.Add(playerObject)
+
+		if i%2 == 0 {
+			playerInitialX = playerInitialX - playerWidth - playerInitialPositionDistance
+			playerInitialY = playerInitialY - playerHeight - playerInitialPositionDistance
+		} else {
+			playerInitialY = playerInitialY + playerHeight + playerInitialPositionDistance
+		}
 	}
 }
 
