@@ -130,7 +130,7 @@ func (world *World) Init(gameMap Map) {
 //   - finishedPlayers: list of the players that finished the race this tick
 //   - diedPlayers: list of the players that died this tick
 func (world *World) Update() (finishedPlayers []int, diedPlayers []int) {
-	for i, player := range world.Players {
+	for _, player := range world.Players {
 		if !player.Character.IsDead {
 			// TODO aca tener cuidado con colisiones entre los mismos players, calcular antes de avanzar
 			world.updatePlayerPosition(player)
@@ -138,11 +138,11 @@ func (world *World) Update() (finishedPlayers []int, diedPlayers []int) {
 			playerFinished := world.checkIfPlayerFinishedRace(player)
 
 			if playerFinished {
-				finishedPlayers = append(finishedPlayers, i+1)
+				finishedPlayers = append(finishedPlayers, player.ID)
 			} else {
 				playerDied := world.checkIfPlayerHasDied(player)
 				if playerDied {
-					diedPlayers = append(diedPlayers, i+1)
+					diedPlayers = append(diedPlayers, player.ID)
 				}
 			}
 		}

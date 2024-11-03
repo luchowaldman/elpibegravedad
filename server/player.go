@@ -6,25 +6,46 @@ import (
 )
 
 type Player struct {
+	ID        int
+	Name      string
 	Socket    *socket.Socket
 	Character Character
 }
 
+func NewPlayer(socket *socket.Socket) *Player {
+	return &Player{
+		Socket: socket,
+		Name:   "Franco",
+	}
+}
+
 func (player *Player) SendTick(playersPositions []any, cameraX int) error {
-	return player.Socket.Emit("tick", playersPositions, cameraX)
+	return player.emit("tick", playersPositions, cameraX)
 }
 
 func (player *Player) SendInicioJuego() error {
-	return player.Socket.Emit("inicioJuego")
+	return player.emit("inicioJuego")
 }
 
 func (player *Player) SendInformacionSala(roomUUID uuid.UUID, mapName string, players []map[string]any) error {
-	return player.Socket.Emit("informacionSala", roomUUID.String(), mapName, players)
+	return player.emit("informacionSala", roomUUID.String(), mapName, players)
 }
 
 func (player *Player) ToInformacionSalaInfo() map[string]any {
 	return map[string]any{
-		"numeroJugador": 1,
-		"nombre":        "Franco",
+		"numeroJugador": player.ID,
+		"nombre":        player.Name,
 	}
+}
+
+func (player *Player) SendCarreraTerminada(raceResult []int) error {
+	return player.emit("carreraTerminada", raceResult)
+}
+
+func (player *Player) emit(ev string, args ...any) error {
+	if player.Socket == nil {
+		return nil
+	}
+
+	return player.Socket.Emit(ev, args...)
 }

@@ -62,7 +62,7 @@ func gameLoop(world *World, playersMutex *sync.Mutex) {
 				raceResult := append(playersThatFinished, playersThatDied...)
 
 				for _, player := range world.Players {
-					err := player.Socket.Emit("carreraTerminada", raceResult)
+					err := player.SendCarreraTerminada(raceResult)
 					if err != nil {
 						log.Println("failed to send carreraTerminada", "err", err)
 					}
@@ -84,7 +84,7 @@ func gameLoop(world *World, playersMutex *sync.Mutex) {
 					}.FromServerToClient(mapHeight, playerWidth, playerHeight)
 
 					playersPositions = append(playersPositions, PlayerInfo{
-						playerNumber:       1, // TODO send more players
+						playerNumber:       player.ID,
 						posX:               point.X,
 						posY:               point.Y,
 						hasGravityInverted: hasGravityInverted,
