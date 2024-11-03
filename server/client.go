@@ -5,10 +5,16 @@ import (
 	"sync"
 	"sync/atomic"
 
+	"github.com/google/uuid"
 	"github.com/zishang520/socket.io/v2/socket"
 )
 
-var gameStarted atomic.Bool
+var (
+	gameStarted atomic.Bool
+	roomUUID    = uuid.New()
+)
+
+const mapName = "mapa1"
 
 func manageClientConnection(clients []any, playersMutex *sync.Mutex, players *[]*Player, gameStart chan bool) {
 	newClient := clients[0].(*socket.Socket)
@@ -67,42 +73,44 @@ func manageClientConnection(clients []any, playersMutex *sync.Mutex, players *[]
 		return
 	}
 
-	err = newClient.On("unirSala", func(datas ...any) {
-		nombresala, ok := datas[0].(string)
-		if ok {
-			log.Println("unirSala event received with sala name:", nombresala)
-			newClient.Emit("salaIniciada", nombresala, "mapa1")
-		} else {
-			log.Println("unirSala event received but map name is not a string")
-		}
+	// TODO sprint 5, manage unirSala message
+	// err = newClient.On("unirSala", func(datas ...any) {
+	// 	nombresala, ok := datas[0].(string)
+	// 	if ok {
+	// 		log.Println("unirSala event received with sala name:", nombresala)
+	// 		newClient.Emit("salaIniciada", nombresala, "mapa1")
+	// 	} else {
+	// 		log.Println("unirSala event received but map name is not a string")
+	// 	}
 
-	})
-	if err != nil {
-		log.Println("failed to register on unirSala message", "err", err)
-		newClient.Disconnect(true)
+	// })
+	// if err != nil {
+	// 	log.Println("failed to register on unirSala message", "err", err)
+	// 	newClient.Disconnect(true)
 
-		return
-	}
+	// 	return
+	// }
 
-	err = newClient.On("initSala", func(datas ...any) {
-		if len(datas) > 0 {
-			mapName, ok := datas[0].(string)
-			if ok {
-				log.Println("initSala event received with sala name:", mapName)
-				newClient.Emit("salaIniciada", "IDSALA", mapName)
-			} else {
-				log.Println("initSala event received but map name is not a string")
-			}
-		} else {
-			log.Println("initSala event received but no map name provided")
-		}
-	})
-	if err != nil {
-		log.Println("failed to register on initSala message", "err", err)
-		newClient.Disconnect(true)
+	// TODO sprint 5, manage initSala message
+	// err = newClient.On("initSala", func(datas ...any) {
+	// 	if len(datas) > 0 {
+	// 		mapName, ok := datas[0].(string)
+	// 		if ok {
+	// 			log.Println("initSala event received with sala name:", mapName)
+	// 			newClient.Emit("salaIniciada", "IDSALA", mapName)
+	// 		} else {
+	// 			log.Println("initSala event received but map name is not a string")
+	// 		}
+	// 	} else {
+	// 		log.Println("initSala event received but no map name provided")
+	// 	}
+	// })
+	// if err != nil {
+	// 	log.Println("failed to register on initSala message", "err", err)
+	// 	newClient.Disconnect(true)
 
-		return
-	}
+	// 	return
+	// }
 
 	err = newClient.On("disconnect", func(...any) {
 		log.Println("client disconnected", newClient.Id())
@@ -129,7 +137,21 @@ func manageClientConnection(clients []any, playersMutex *sync.Mutex, players *[]
 	if len(*players) == 0 {
 		*players = []*Player{newPlayer}
 	} else {
-		(*players)[0] = newPlayer
+		(*players) = append((*players), newPlayer)
 	}
+
+	playersInfo := make([]map[string]any, 0, len(*players))
+
+	for _, player := range *players {
+		playersInfo = append(playersInfo, player.ToInformacionSalaInfo())
+	}
+
+	for _, player := range *players {
+		err := player.SendInformacionSala(roomUUID, mapName, playersInfo)
+		if err != nil {
+			log.Println("failed to send informacionSala", "err", err)
+		}
+	}
+
 	playersMutex.Unlock()
 }

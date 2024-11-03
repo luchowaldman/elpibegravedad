@@ -2,9 +2,14 @@ import { io, Socket } from "socket.io-client";
 
 interface ServerToClientEvents {
     inicioJuego: () => void;
-    salaIniciada: (id: string, mapa: string) => void;
     tick: (posiciones: PosicionJugador[], camaraX: number) => void;
     carreraTerminada: (resultado: number[]) => void;
+    informacionSala: (salaID: string, mapa: string, listaJugadores: InformacionJugador[]) => void;
+}
+
+interface InformacionJugador {
+    numeroJugador: number,
+    nombre: string,
 }
 
 interface PosicionJugador {
@@ -117,14 +122,11 @@ export class Client {
                 this.IniciarJuegoHandler?.();
             });
 
-            socket.on("salaIniciada", (id, mapa) => {
-                console.log("salaIniciada received", id, mapa);
-                this.SalaIniciadaHandler?.(id, mapa);
+            socket.on("informacionSala", (salaID, mapa, listaJugadores) => {
+                console.log("informacionSala received", salaID, mapa, listaJugadores);
+
+                this.SalaIniciadaHandler?.(salaID, mapa);
             });
-
-
-
-
         }
 
         this.socket = socket;
