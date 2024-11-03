@@ -20,6 +20,13 @@ func manageClientConnection(clients []any, gameStart chan *Room) {
 
 	log.Println("connection established. new client: ", newClientID)
 
+	if gameStarted.Load() {
+		log.Println("connection established received when the game has already begun, rejecting client")
+		newClient.Disconnect(true)
+
+		return
+	}
+
 	err := newClient.On("changeGravity", func(datas ...any) {
 		log.Println("changeGravity event received")
 
