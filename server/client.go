@@ -2,21 +2,19 @@ package main
 
 import (
 	"log"
-	"sync"
 	"sync/atomic"
 
-	"github.com/google/uuid"
 	"github.com/zishang520/socket.io/v2/socket"
 )
 
 var (
 	gameStarted atomic.Bool
-	roomUUID    = uuid.New()
+	room        = NewRoom()
 )
 
 const mapName = "mapa1"
 
-func manageClientConnection(clients []any, playersMutex *sync.Mutex, players *[]*Player, gameStart chan bool) {
+func manageClientConnection(clients []any, gameStart chan *Room) {
 	newClient := clients[0].(*socket.Socket)
 	newClientID := newClient.Id()
 
@@ -32,10 +30,10 @@ func manageClientConnection(clients []any, playersMutex *sync.Mutex, players *[]
 		}
 
 		// TODO: mutex for each player, not only for the list
-		playersMutex.Lock()
+		room.Mutex.Lock()
 		// players[newClient.Id()].InvertGravity()
-		(*players)[0].Character.InvertGravity()
-		playersMutex.Unlock()
+		room.Players[0].Character.InvertGravity()
+		room.Mutex.Unlock()
 	})
 	if err != nil {
 		log.Println("failed to register on changeGravity message", "err", err)
@@ -55,16 +53,16 @@ func manageClientConnection(clients []any, playersMutex *sync.Mutex, players *[]
 
 		gameStarted.Store(true)
 
-		playersMutex.Lock()
-		for _, player := range *players {
+		room.Mutex.Lock()
+		for _, player := range room.Players {
 			err = player.SendInicioJuego()
 			if err != nil {
 				log.Println("failed to send inicioJuego", "err", err)
 			}
 		}
-		playersMutex.Unlock()
+		room.Mutex.Unlock()
 
-		gameStart <- true
+		gameStart <- room
 	})
 	if err != nil {
 		log.Println("failed to register on iniciarJuego message", "err", err)
@@ -115,9 +113,9 @@ func manageClientConnection(clients []any, playersMutex *sync.Mutex, players *[]
 	err = newClient.On("disconnect", func(...any) {
 		log.Println("client disconnected", newClient.Id())
 		// delete(players, newClientID)
-		playersMutex.Lock()
-		*players = []*Player{}
-		playersMutex.Unlock()
+		room.Mutex.Lock()
+		room.Players = []*Player{}
+		room.Mutex.Unlock()
 	})
 	if err != nil {
 		log.Println("failed to register on disconnect message", "err", err)
@@ -130,28 +128,21 @@ func manageClientConnection(clients []any, playersMutex *sync.Mutex, players *[]
 		Socket: newClient,
 	}
 
-	playersMutex.Lock()
-	// players[newClientID] = Player{
-	// 	Socket: newClient,
-	// }
-	if len(*players) == 0 {
-		*players = []*Player{newPlayer}
-	} else {
-		(*players) = append((*players), newPlayer)
-	}
+	room.Mutex.Lock()
+	room.AddPlayer(newPlayer)
 
-	playersInfo := make([]map[string]any, 0, len(*players))
+	playersInfo := make([]map[string]any, 0, len(room.Players))
 
-	for _, player := range *players {
+	for _, player := range room.Players {
 		playersInfo = append(playersInfo, player.ToInformacionSalaInfo())
 	}
 
-	for _, player := range *players {
-		err := player.SendInformacionSala(roomUUID, mapName, playersInfo)
+	for _, player := range room.Players {
+		err := player.SendInformacionSala(room.ID, mapName, playersInfo)
 		if err != nil {
 			log.Println("failed to send informacionSala", "err", err)
 		}
 	}
 
-	playersMutex.Unlock()
+	room.Mutex.Unlock()
 }
