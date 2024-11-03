@@ -125,42 +125,56 @@ function AgregarL(piso, desdeX) {
     piso.AgregarCaja(desdeX + 100, 1);
 }
 
-function PartePorcentaje(desde, hasta, porcentaje) {
-    return desde + (((hasta - desde) / 100) * porcentaje);
-}
+function AgregarPisoTecho(y1, y2, desdeX, hastaX) {
 
-function AgregarPisoModo1(y1, y2, desdeX, hastaX) {
+    let piso_par1_1 = new PlataformasHorizontales(20, "techo");
+    let piso_par1_2 = new PlataformasHorizontales(300, "piso");
+    let piso_par1_3 = new PlataformasHorizontales(540, "piso");
+    plataformas.push(piso_par1_1);
+    plataformas.push(piso_par1_2);
+    plataformas.push(piso_par1_3);
 
-    let piso1 = new PlataformasHorizontales(y1, "piso");
-    let piso2 = new PlataformasHorizontales(y2, "techo");
-
+    piso_par1_1.AgregarPlataforma(2700, 6000);
+    piso_par1_2.AgregarPlataforma(2400, 6000);
+    piso_par1_3.AgregarPlataforma(2100, 6000);
     
-    plataformas.push(piso1);
-    plataformas.push(piso2);
-    piso1.AgregarPlataforma(desdeX, hastaX);
-    piso2.AgregarPlataforma(desdeX, hastaX);
-    AgregarL(piso1, PartePorcentaje(desdeX, hastaX, 10));
-    piso2.AgregarCaja(PartePorcentaje(desdeX, hastaX, 13), -1);
-    zigzagCAJA(piso1, piso2, PartePorcentaje(desdeX, hastaX, 25), PartePorcentaje(desdeX, hastaX, 80), PartePorcentaje(desdeX, hastaX, 5));
+    zigzagCAJA(piso_par1_2, piso_par1_1, 2900, 5000, 600);    
+    zigzagCAJA(piso_par1_3, piso_par1_2, 2700, 5100, 330);
+    
+    piso_par1_2.QuitarPlataforma(3600, 3800);
+    piso_par1_2.QuitarPlataforma(4240, 4400);
+    piso_par1_1.QuitarPlataforma(4540, 4600);
+
+
 
 }
-function AgregarPisoModo2(y1, y2, y3, desdeX, hastaX) {
+
+function AgregarPiso_2Techo(y1, y2, y3, desdeX, hastaX) {
     let piso1 = new PlataformasHorizontales(y1, "techo");
     let piso2 = new PlataformasHorizontales(y2, "piso");
     let piso3 = new PlataformasHorizontales(y3, "piso");
+
+    const por10 = PartePorcentaje(desdeX, hastaX, 10);
+    const por5 = PartePorcentaje(desdeX, hastaX, 5);
+    const por13 = PartePorcentaje(desdeX, hastaX, 13);
+    const por83 = PartePorcentaje(desdeX, hastaX, 83);
+    const por85 = PartePorcentaje(desdeX, hastaX, 85);
+    const por5_5 = PartePorcentaje(desdeX, hastaX, 5.5);
 
     plataformas.push(piso1);
     plataformas.push(piso2);
     plataformas.push(piso3);
 
-    piso1.AgregarPlataforma(PartePorcentaje(desdeX, hastaX, 10), hastaX);
-    piso2.AgregarPlataforma(PartePorcentaje(desdeX, hastaX, 5), hastaX);
+    piso1.AgregarPlataforma(por10, hastaX);
+    piso2.AgregarPlataforma(por5, hastaX);
     piso3.AgregarPlataforma(desdeX, hastaX);
 
-    zigzagCAJA(piso2, piso1, PartePorcentaje(desdeX, hastaX, 13), PartePorcentaje(desdeX, hastaX, 83), PartePorcentaje(desdeX, hastaX, 10));
-    zigzagCAJA(piso3, piso2, PartePorcentaje(desdeX, hastaX, 10), PartePorcentaje(desdeX, hastaX, 85), PartePorcentaje(desdeX, hastaX, 5.5));
-
+    zigzagCAJA(piso2, piso1, por13, por83, por10);
+    zigzagCAJA(piso3, piso2, por10, por85, por5_5);
 }
+
+
+
 
 async function main() {
     const mapa = {
@@ -170,18 +184,36 @@ async function main() {
         cancion: "cancion",
         plataformas: [],
         obstaculos: [],
-        inicio_jugadores: { x: 50, y: 50 }, 
+        inicio_jugadores: { x: 50, y: 350 }, 
         meta: {
-          x: 2500,
+          x: 12500,
           y: 0,
           alto: 600
         }
     };
 
-    AgregarPisoModo1(490, 120, 0, 2400);
-    AgregarPisoModo2(20, 300, 540, 2100, 6000);
+
+    /* COMIENZO */
+    let piso_principal = new PlataformasHorizontales(400, "piso");
+    let techo_principal = new PlataformasHorizontales(230, "techo");
+
+    piso_principal.AgregarPlataforma(0, 3000);
+    techo_principal.AgregarPlataforma(1000, 2600);
+
+    piso_principal.AgregarCaja(1200);
+    techo_principal.AgregarCaja(1400, -1);
+    piso_principal.AgregarCaja(1600);
+    techo_principal.AgregarCaja(1800, -1);
+    piso_principal.AgregarCaja(2000);
+    piso_principal.AgregarCaja(2200);
+    techo_principal.AgregarCaja(2400, -1);
+    piso_principal.AgregarCaja(2600);
+
+    plataformas.push(piso_principal);
+    plataformas.push(techo_principal);
 
 
+    
     plataformas.forEach(p => {
         mapa.plataformas.push(...p.getPlataformas());
         mapa.obstaculos.push(...p.obstaculos);
