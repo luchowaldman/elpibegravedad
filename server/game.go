@@ -32,15 +32,6 @@ func (playerInfo PlayerInfo) ToMap() map[string]any {
 	}
 }
 
-func initGame(world *World) {
-	for _, player := range world.Players {
-		err := player.Socket.Emit("juegoIniciado")
-		if err != nil {
-			log.Println("failed to send juegoIniciado", "err", err)
-		}
-	}
-}
-
 func gameLoop(world *World, playersMutex *sync.Mutex) {
 	ticker := time.NewTicker(time.Second / TicksPerSecond)
 	quit := make(chan struct{})

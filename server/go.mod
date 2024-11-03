@@ -5,6 +5,7 @@ go 1.23.1
 require (
 	github.com/solarlune/resolv v0.7.0
 	github.com/zishang520/socket.io/v2 v2.3.0
+	github.com/google/uuid v1.6.0
 )
 
 require (
