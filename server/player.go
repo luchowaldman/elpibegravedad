@@ -1,6 +1,7 @@
 package main
 
 import (
+	"github.com/google/uuid"
 	"github.com/zishang520/socket.io/v2/socket"
 )
 
@@ -15,4 +16,15 @@ func (player *Player) SendTick(playersPositions []any, cameraX int) error {
 
 func (player *Player) SendInicioJuego() error {
 	return player.Socket.Emit("inicioJuego")
+}
+
+func (player *Player) SendInformacionSala(roomUUID uuid.UUID, mapName string, players []map[string]any) error {
+	return player.Socket.Emit("informacionSala", roomUUID.String(), mapName, players)
+}
+
+func (player *Player) ToInformacionSalaInfo() map[string]any {
+	return map[string]any{
+		"numeroJugador": 1,
+		"nombre":        "Franco",
+	}
 }
