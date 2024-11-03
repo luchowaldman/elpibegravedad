@@ -8,39 +8,35 @@ import (
 )
 
 const (
-	cellSize                 = 5
-	solidTag                 = "solid"
-	worldLimitTag            = "worldLimit"
-	raceFinishTag            = "raceFinish"
-	playerTag                = "player"
-	playerHeight             = 50
-	playerWidth              = 35
-	playerSpeedX     float64 = float64(60) / TicksPerSecond
-	playerSpeedY             = float64(90) / TicksPerSecond
-	cameraLimitWidth         = cellSize
-	raceFinishWidth          = 50
+	cellSize                                 = 5
+	solidTag                                 = "solid"
+	worldLimitTag                            = "worldLimit"
+	raceFinishTag                            = "raceFinish"
+	characterTag                             = "character"
+	characterHeight                          = 50
+	characterWidth                           = 35
+	characterSpeedX                  float64 = float64(60) / TicksPerSecond
+	characterSpeedY                  float64 = float64(90) / TicksPerSecond
+	cameraLimitWidth                         = cellSize
+	raceFinishWidth                          = 50
+	characterInitialPositionDistance         = 20
 )
 
 type World struct {
 	space *resolv.Space
 
-	// playersMutex *sync.Mutex
-	// players := map[socket.SocketId]Player{}
-	Players []*Player
-
 	cameraLimit *resolv.Object
 }
 
 func NewWorld(gameMap Map, players []*Player) *World {
-	w := &World{
-		Players: players,
-	}
-	w.Init(gameMap)
+	w := &World{}
+
+	w.Init(gameMap, players)
 
 	return w
 }
 
-func (world *World) Init(gameMap Map) {
+func (world *World) Init(gameMap Map, players []*Player) {
 	// Initialize the world.
 
 	log.Println("starting world with dimensions: ", gameMap.Width, gameMap.Height)
@@ -79,7 +75,7 @@ func (world *World) Init(gameMap Map) {
 	// Add race finish
 	world.space.Add(
 		resolv.NewObject(
-			float64(gameMap.RaceFinish.X+raceFinishWidth+playerWidth), // add raceFinishWidth+playerWidth to the x position so the collision in when the player cross the race finish completely
+			float64(gameMap.RaceFinish.X+raceFinishWidth+characterWidth), // add raceFinishWidth+characterWidth to the x position so the collision in when the character cross the race finish completely
 			float64(gameMap.RaceFinish.Y), cellSize, float64(gameMap.RaceFinish.Height),
 			raceFinishTag,
 		),
@@ -99,54 +95,56 @@ func (world *World) Init(gameMap Map) {
 		)
 	}
 
-	// Create Players' objects and add it to the world's Space.
-	for _, player := range world.Players {
-		// TODO mover posicion inicial de aca uno
-		playerObject := resolv.NewObject(
-			float64(gameMap.PlayersStart.X), float64(gameMap.PlayersStart.Y), playerWidth, playerHeight,
-			playerTag,
+	// Create Characters' objects and add it to the world's Space.
+	characterInitialX := float64(gameMap.PlayersStart.X)
+	characterInitialY := float64(gameMap.PlayersStart.Y)
+
+	for i, player := range players {
+		characterObject := resolv.NewObject(
+			characterInitialX, characterInitialY, characterWidth, characterHeight,
+			characterTag,
 		)
 
-		player.Character.Object = playerObject
-		player.Character.SetSpeed(playerSpeedX, -playerSpeedY)
+		player.Character = NewCharacter(characterObject)
+		player.Character.SetSpeed(characterSpeedX, -characterSpeedY)
 
-		world.space.Add(playerObject)
-	}
-}
+		world.space.Add(characterObject)
 
-// Update updates the world with the new position of each player
-//
-// Returns:
-//   - finishedPlayers: list of the players that finished the race this tick
-//   - diedPlayers: list of the players that died this tick
-func (world *World) Update() (finishedPlayers []int, diedPlayers []int) {
-	for i, player := range world.Players {
-		if !player.Character.IsDead {
-			// TODO aca tener cuidado con colisiones entre los mismos players, calcular antes de avanzar
-			world.updatePlayerPosition(player)
-
-			playerFinished := world.checkIfPlayerFinishedRace(player)
-
-			if playerFinished {
-				finishedPlayers = append(finishedPlayers, i+1)
-			} else {
-				playerDied := world.checkIfPlayerHasDied(player)
-				if playerDied {
-					diedPlayers = append(diedPlayers, i+1)
-				}
-			}
+		if i%2 == 0 {
+			characterInitialX = characterInitialX - characterWidth - characterInitialPositionDistance
+			characterInitialY = characterInitialY - characterHeight - characterInitialPositionDistance
+		} else {
+			characterInitialY = characterInitialY + characterHeight + characterInitialPositionDistance
 		}
 	}
-
-	return
 }
 
-// checkIfPlayerHasDied updates player's IsDead if the player touched a world limit
-func (world *World) checkIfPlayerHasDied(player *Player) bool {
-	if collision := player.Character.Object.Check(0, 0, worldLimitTag); collision != nil {
-		log.Println("Player is dead")
+// Update updates the world with the new position of the character
+//
+// Returns:
+//   - finished: true if the character finished the race this tick
+//   - died: true if the character died this tick
+func (world *World) Update(character *Character) (bool, bool) {
+	if !character.IsDead {
+		// TODO aca tener cuidado con colisiones entre los mismos players, calcular antes de avanzar
+		world.updateCharacterPosition(character)
 
-		player.Character.IsDead = true
+		if world.checkIfCharacterFinishedRace(character) {
+			return true, false
+		}
+
+		return false, world.checkIfCharacterHasDied(character)
+	}
+
+	return false, false
+}
+
+// checkIfCharacterHasDied updates character's IsDead if the character touched a world limit
+func (world *World) checkIfCharacterHasDied(character *Character) bool {
+	if collision := character.Object.Check(0, 0, worldLimitTag); collision != nil {
+		log.Println("Character is dead")
+
+		character.IsDead = true
 
 		return true
 	}
@@ -154,12 +152,12 @@ func (world *World) checkIfPlayerHasDied(player *Player) bool {
 	return false
 }
 
-// checkIfPlayerFinishedRace updates player's IsDead if the player touched the race finish
-func (world *World) checkIfPlayerFinishedRace(player *Player) bool {
-	if collision := player.Character.Object.Check(0, 0, raceFinishTag); collision != nil {
-		log.Println("Player finished race")
+// checkIfCharacterFinishedRace updates character's IsDead if the character touched the race finish
+func (world *World) checkIfCharacterFinishedRace(character *Character) bool {
+	if collision := character.Object.Check(0, 0, raceFinishTag); collision != nil {
+		log.Println("Character finished race")
 
-		player.Character.IsDead = true
+		character.IsDead = true
 
 		return true
 	}
@@ -167,31 +165,31 @@ func (world *World) checkIfPlayerFinishedRace(player *Player) bool {
 	return false
 }
 
-func (world *World) updatePlayerPosition(player *Player) {
-	// we update the Player's movement. This is the real bread-and-butter of this example, naturally.
+func (world *World) updateCharacterPosition(character *Character) {
+	// we update the Character's movement
 
 	// We handle horizontal movement separately from vertical movement. This is, conceptually, decomposing movement into two phases / axes.
 	// By decomposing movement in this manner, we can handle each case properly (i.e. stop movement horizontally separately from vertical movement, as
 	// necessary). More can be seen on this topic over on this blog post on higherorderfun.com:
 	// http://higherorderfun.com/blog/2012/05/20/the-guide-to-implementing-2d-platformers/
 
-	// dx is the horizontal delta movement variable (which is the Player's horizontal speed). If we come into contact with something, then it will
+	// dx is the horizontal delta movement variable (which is the Character's horizontal speed). If we come into contact with something, then it will
 	// be that movement instead.
-	dx := player.Character.Speed.X
+	dx := character.Speed.X
 
-	log.Println(player.Character.Object.Position)
+	log.Println(character.Object.Position)
 
 	// Moving horizontally is done fairly simply;
 	// we just check to see if something solid is in front of us. If so, we move into contact with it
 	// and stop horizontal movement speed. If not, then we can just move forward.
 
-	if collision := player.Character.Object.Check(dx, 0, solidTag); collision != nil {
+	if collision := character.Object.Check(dx, 0, solidTag); collision != nil {
 		log.Println("Colision en x")
 		dx = collision.ContactWithCell(collision.Cells[0]).X
 	}
 
-	// Then we just apply the horizontal movement to the Player's Object. Easy-peasy.
-	player.Character.Object.Position.X += dx
+	// Then we just apply the horizontal movement to the Character's Object. Easy-peasy.
+	character.Object.Position.X += dx
 
 	// Now for the vertical movement; it's the most complicated because we can land on different types of objects and need
 	// to treat them all differently, but overall, it's not bad.
@@ -200,33 +198,33 @@ func (world *World) updatePlayerPosition(player *Player) {
 	// if we come into contact with
 	// something, this will be changed to move to contact instead.
 
-	dy := player.Character.Speed.Y
+	dy := character.Speed.Y
 
 	// We want to be sure to lock vertical movement to a maximum of the size of the Cells within the Space
 	// so we don't miss any collisions by tunneling through.
 
 	dy = math.Max(math.Min(dy, cellSize), -cellSize)
 
-	player.Character.IsWalking = false
+	character.IsWalking = false
 
 	// We check for any solid / stand-able objects. In actuality, there aren't any other Objects
 	// with other tags in this Space, so we don't -have- to specify any tags, but it's good to be specific for clarity in this example.
-	if collision := player.Character.Object.Check(0, dy, solidTag); collision != nil {
+	if collision := character.Object.Check(0, dy, solidTag); collision != nil {
 		log.Println("Colision en y")
 
 		dy = collision.ContactWithCell(collision.Cells[0]).Y
 
-		player.Character.IsWalking = true
+		character.IsWalking = true
 	}
 
 	// Move the object on dy.
-	player.Character.Object.Position.Y += dy
+	character.Object.Position.Y += dy
 
-	player.Character.Object.Update() // Update the player's position in the space.
+	character.Object.Update() // Update the character's position in the space.
 }
 
 // UpdateCameraLimitPosition updates the position of the camera limit that is used in the world
-// to detect is a player is fully outside the camera
+// to detect is a character is fully outside the camera
 func (world *World) UpdateCameraLimitPosition(x int) {
 	world.cameraLimit.Position.X = toCameraLimitX(x)
 
@@ -234,7 +232,7 @@ func (world *World) UpdateCameraLimitPosition(x int) {
 }
 
 // toCameraLimitX transforms the position x where the camera finished to the position the camera limit object must have
-// in order to allow the camera limit to have cameraLimitWidth and to the player not collide with it until is fully outside the camera
+// in order to allow the camera limit to have cameraLimitWidth and to the character not collide with it until is fully outside the camera
 func toCameraLimitX(cameraX int) float64 {
-	return float64(cameraX - cameraLimitWidth - playerWidth)
+	return float64(cameraX - cameraLimitWidth - characterWidth)
 }
