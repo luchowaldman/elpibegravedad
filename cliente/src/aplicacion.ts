@@ -1,6 +1,6 @@
 import { ControladorDOM } from './ControladorDOM';
 import { AccionGraficaModificarTexto, AccionGraficaMostrarTexto, AccionGraficaSetPosicion, AccionGraficaSetPosicionTexto } from './modelo/AccionGrafica';
-import { Client } from './modelo/client_socketio';
+import { Client, InformacionJugador } from './modelo/client_socketio';
 import { divMapa } from './modelo/divMapa';
 import { graficoJuego } from './modelo/graficoJuego';
 import { Jugador } from './modelo/jugador';
@@ -17,8 +17,13 @@ export class  Aplicacion {
 
                                 
     private jugadores: Jugador[] = [
-        new Jugador("Play1",0x0000ff, 330, 450),
-        new Jugador("Play2",0xff0000, 330, 500)
+        new Jugador("Play1",0x0000ff, -100, -100),
+        new Jugador("Play2",0xff0000, -100, -100),
+        new Jugador("Play3",0x00ff00, -100, -100),
+        new Jugador("Play5", 0xffff00, -100, -100),
+        new Jugador("Play6", 0xff00ff, -100, -100),
+        new Jugador("Play7", 0x00ffff, -100, -100),
+        new Jugador("Play8", 0xffa500, -100, -100)
     ];
 
     private client: Client; 
@@ -45,7 +50,7 @@ export class  Aplicacion {
         
         this.client.setPosicionJugadoresHandler(this.handlePosicionJugadores.bind(this));
         this.client.setIniciarJuegoHandler(this.handleIniciarJuego.bind(this));
-        this.client.setSalaIniciadaHandler(this.handleSalaIniciada.bind(this));
+        this.client.setInformacionSalaHandler(this.handleInformacionSala.bind(this));
         this.client.setConnectHandler(this.handleConnect.bind(this));
         this.client.setDisconnectHandler(this.handleDisconnect.bind(this));
         this.client.setConnectErrorHandler(this.handleConnectError.bind(this));
@@ -140,7 +145,12 @@ export class  Aplicacion {
         for (let i = 0; i < posicionesDeLosJugadores.length; i++) {
             const x = posicionesDeLosJugadores[i].x;
             const y = posicionesDeLosJugadores[i].y;
-            console.log(posicionesDeLosJugadores[i].estaMuerto);
+            console.log("Jugador", posicionesDeLosJugadores[i]);
+            if (posicionesDeLosJugadores[i].estaMuerto) {
+                console.log("Jugador Muerto", i);
+
+            }
+
             this.jugadores[i].setPosicion(this.graficos, x, y, posicionesDeLosJugadores[i].estaCaminando, posicionesDeLosJugadores[i].tieneGravedadInvertida, posicionesDeLosJugadores[i].estaMuerto);
         }
     }
@@ -163,20 +173,27 @@ export class  Aplicacion {
         console.log("Iniciar Juego");
         this.SetLabelGrafico("", "");
         this.mapa.dibujarMapa(this.graficos);    
-        this.jugadores[0].dibujar(this.graficos);
+        this.jugadores.forEach(jugador => jugador.dibujar(this.graficos));
     }
-g
-    private async handleSalaIniciada(id: string, mapa: string) {
+
+    private cargado: boolean = false;
+    private async handleInformacionSala(id: string, mapa: string, listaJugadores: InformacionJugador[]) {
         console.log("sala iniciada", id, mapa);
-        this.controladorDOM.mostrar_compartirpagina(id);
-        
-        await this.mapa.cargarMapa(this.getMapaJSON(mapa));       
-        this.mapa.cargarImagenes(this.graficos);
-        await this.graficos.init();
-        this.graficos.agenda.iniciar();        
-        this.controladorDOM.mostrar_pagina('pagina2');        
-        this.SetLabelGrafico("En la sala", "Total de Jugadores: 1");
+        if (!this.cargado) {
+
+            this.cargado = true;
+            
+            this.controladorDOM.mostrar_compartirpagina(id);
+            await this.mapa.cargarMapa(this.getMapaJSON(mapa));       
+            this.mapa.cargarImagenes(this.graficos);
+            await this.graficos.init();
+            this.graficos.agenda.iniciar();        
+            this.controladorDOM.mostrar_pagina('pagina2');        
+        }
+        const numerosJugadores = listaJugadores.map(jugador => jugador.nombre).join(', ');
+        this.SetLabelGrafico("En la sala [Franco]", `${listaJugadores.length} Jugadores: ${numerosJugadores}`);
     }
+    
 
     private handleKeyPress(key: string) {
         console.log("Tecla", key);

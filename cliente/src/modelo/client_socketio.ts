@@ -7,12 +7,12 @@ interface ServerToClientEvents {
     informacionSala: (salaID: string, mapa: string, listaJugadores: InformacionJugador[]) => void;
 }
 
-interface InformacionJugador {
+export interface InformacionJugador {
     numeroJugador: number,
     nombre: string,
 }
 
-interface PosicionJugador {
+export interface PosicionJugador {
     numeroJugador: number,
     x: number,
     y: number,
@@ -21,7 +21,7 @@ interface PosicionJugador {
     estaMuerto: boolean,
 }
 
-interface ClientToServerEvents {
+export interface ClientToServerEvents {
     changeGravity: () => void;
 }
 
@@ -42,10 +42,10 @@ export class Client {
     public setIniciarJuegoHandler(handler: () => void) {
         this.IniciarJuegoHandler = handler;
     }
-    private SalaIniciadaHandler?: (id: string, mapa: string) => void;
+    private InformacionSalaHandler?: (id: string, mapa: string, listaJugadores: InformacionJugador) => void;
 
-    public setSalaIniciadaHandler(handler: (id: string, mapa: string) => void) {
-        this.SalaIniciadaHandler = handler;
+    public setInformacionSalaHandler(handler: (id: string, mapa: string, listaJugadores: InformacionJugador) => void) {
+        this.InformacionSalaHandler = handler;
     }
 
     private carreraTerminadaHandler?: (resultado: number[]) => void;
@@ -122,10 +122,12 @@ export class Client {
                 this.IniciarJuegoHandler?.();
             });
 
+
+            
             socket.on("informacionSala", (salaID, mapa, listaJugadores) => {
                 console.log("informacionSala received", salaID, mapa, listaJugadores);
 
-                this.SalaIniciadaHandler?.(salaID, mapa);
+                this.InformacionSalaHandler?.(salaID, mapa, listaJugadores);
             });
         }
 
