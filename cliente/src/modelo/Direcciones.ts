@@ -19,7 +19,10 @@ export class Direcciones {
       player_volando: '/img/player_volando.png',
       player_muriendo: '/img/player_muriendo.png',
       meta: '/img/meta.png',
-      lazo: '/img/lazo.png'
+      lazo: '/img/lazo.png',
+      caminorapidonotomar: '/img/caminorapidonotomar.png'
+
+      
     };
   
     public static obtenerConstante(nombre: string): string | undefined {

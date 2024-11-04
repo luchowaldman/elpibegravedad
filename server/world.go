@@ -15,7 +15,7 @@ const (
 	playerTag                = "player"
 	playerHeight             = 50
 	playerWidth              = 35
-	playerSpeedX     float64 = float64(60) / TicksPerSecond
+	playerSpeedX     float64 = float64(160) / TicksPerSecond
 	playerSpeedY             = float64(90) / TicksPerSecond
 	cameraLimitWidth         = cellSize
 )
