@@ -15,7 +15,7 @@ const (
 	characterTag                             = "character"
 	characterHeight                          = 50
 	characterWidth                           = 35
-	characterSpeedX                  float64 = float64(60) / TicksPerSecond
+	characterSpeedX                  float64 = float64(160) / TicksPerSecond
 	characterSpeedY                  float64 = float64(90) / TicksPerSecond
 	cameraLimitWidth                         = cellSize
 	raceFinishWidth                          = 50
