@@ -28,6 +28,16 @@ class Obstaculo {
     }
 }
 
+class Imagen {
+    constructor(imagen, desdeX, desdeY, largo, alto) {
+        this.imagen = imagen;
+        this.desdeX = desdeX;
+        this.desdeY = desdeY;
+        this.largo = largo;
+        this.alto = alto;
+    }
+}
+
 class PlataformasHorizontales {
     y = 0;
     largo = 0;
@@ -114,4 +124,4 @@ class PlataformasHorizontales {
 
 
 
-module.exports = { PlataformasHorizontales, LargoPlataforma, Plataforma, Obstaculo };
+module.exports = { PlataformasHorizontales, LargoPlataforma, Plataforma, Obstaculo, Imagen };

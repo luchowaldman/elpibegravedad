@@ -83,16 +83,46 @@
       "hastaX": 7200,
       "hastaY": 330,
       "alto": 10
-    }
-  ],
-  
-  "imagenes": [
+    },
     {
-      "imagen": "caminorapidonotomar",
-      "desdeX": 1200,
-      "desdeY": 350,
-      "largo": 50,
-      "alto": 50
+      "tipo": "piso",
+      "desdeX": 7200,
+      "desdeY": 460,
+      "hastaX": 7800,
+      "hastaY": 460,
+      "alto": 10
+    },
+    {
+      "tipo": "piso",
+      "desdeX": 7700,
+      "desdeY": 500,
+      "hastaX": 8400,
+      "hastaY": 500,
+      "alto": 10
+    },
+    {
+      "tipo": "piso",
+      "desdeX": 8300,
+      "desdeY": 550,
+      "hastaX": 9600,
+      "hastaY": 550,
+      "alto": 10
+    },
+    {
+      "tipo": "techo",
+      "desdeX": 7200,
+      "desdeY": 210,
+      "hastaX": 7800,
+      "hastaY": 210,
+      "alto": 10
+    },
+    {
+      "tipo": "techo",
+      "desdeX": 7700,
+      "desdeY": 180,
+      "hastaX": 8400,
+      "hastaY": 180,
+      "alto": 10
     }
   ],
   "obstaculos": [
@@ -195,7 +225,7 @@
     {
       "tipo": "caja",
       "id": "caja_5",
-      "desdeX": 8000,
+      "desdeX": 6930,
       "desdeY": 430,
       "largo": 50,
       "alto": 50
@@ -223,6 +253,30 @@
       "desdeY": 340,
       "largo": 50,
       "alto": 50
+    },
+    {
+      "tipo": "caja",
+      "id": "caja_4",
+      "desdeX": 7000,
+      "desdeY": 280,
+      "largo": 50,
+      "alto": 50
+    }
+  ],
+  "imagenes": [
+    {
+      "imagen": "carteltunel",
+      "desdeX": 600,
+      "desdeY": 180,
+      "largo": 200,
+      "alto": 200
+    },
+    {
+      "imagen": "caminorapidonotomar",
+      "desdeX": 5420,
+      "desdeY": 130,
+      "largo": 200,
+      "alto": 200
     }
   ],
   "inicio_jugadores": {
@@ -230,7 +284,7 @@
     "y": 350
   },
   "meta": {
-    "x": 7200,
+    "x": 9600,
     "y": 0,
     "alto": 600
   }

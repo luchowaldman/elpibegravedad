@@ -1,7 +1,7 @@
 const fs = require('fs');
 
 // index.js
-const { PlataformasHorizontales, LargoPlataforma, Plataforma, Obstaculo } = require('./plataforma');
+const { PlataformasHorizontales, LargoPlataforma, Plataforma, Obstaculo, Imagen } = require('./plataforma');
 
 
 function SumarX(plataformas, x) {
@@ -42,10 +42,19 @@ function AgregarModeloCajas1(plataformas, desdeX = 1200) {
     piso_principal.AgregarCaja(desdeX + 800);
     piso_principal.AgregarCaja(desdeX + 1000);
     techo_principal.AgregarCaja(desdeX + 1200, -1);
-    piso_principal.AgregarCaja(2600);
+    piso_principal.AgregarCaja(desdeX + 1400);
     return plataformas;
 
 }
+
+function AgregarCajaFinal(plataforma, final_menos = 0, altura = 0) {
+    let ultimox = plataforma.UltimoX();
+    plataforma.AgregarCaja(ultimox - final_menos, altura);
+    return plataforma;
+
+}
+
+
 function Inicio1(y_piso = 400, y_techo = 230) {   
     
     let plataformas = [];
@@ -114,6 +123,7 @@ async function main() {
         cancion: "cancion",
         plataformas: [],
         obstaculos: [],
+        imagenes: [],
         inicio_jugadores: { x: 50, y: 350 }, 
         meta: {
           x: 12500,
@@ -125,12 +135,26 @@ async function main() {
 
     /* COMIENZO */
     let plataformas = [];
-    //let inicio = Inicio1();
-    plataformas.push(...Inicio1());
-    plataformas.push(...SumarX(EmbudoAcendente1(), UltimoX(plataformas)));
-    let ultimoX = UltimoX(plataformas);
-    plataformas.push(...SumarX(AgregarModeloCajas1(PistoYTecho(480,330, 100, 1800, -100, 1800), 130), UltimoX(plataformas)));
     
+    
+    plataformas.push(...Inicio1());
+    mapa.imagenes.push(new Imagen("carteltunel", 600, 180, 200, 200));
+
+
+    plataformas.push(...SumarX(EmbudoAcendente1(), UltimoX(plataformas)));
+
+
+    let ultimoX = UltimoX(plataformas);
+    let cajas_trapa1 = SumarX(AgregarModeloCajas1(PistoYTecho(480, 330, 100, 1800, -100, 1800), 130), ultimoX);
+    cajas_trapa1[1] = AgregarCajaFinal(cajas_trapa1[1], 200, 0);
+    plataformas.push(...cajas_trapa1);
+    mapa.imagenes.push(new Imagen("caminorapidonotomar", ultimoX + 20, 130, 200, 200));
+
+
+    let embudosinpsio = EmbudoAcendente1();
+    embudosinpsio.pop();
+    plataformas.push(...SumarX(embudosinpsio, UltimoX(plataformas)));
+
     mapa.meta.x = UltimoX(plataformas);
     plataformas.forEach(p => {
         mapa.plataformas.push(...p.getPlataformas());
@@ -139,7 +163,7 @@ async function main() {
 
 
     const jsonContent = JSON.stringify(mapa, null, 2);
-    const archivo_mapa = "mapa_sej";
+    const archivo_mapa = "mapa1";
     fs.writeFileSync(`..\\cliente\\public\\mapas\\${archivo_mapa}.json`, jsonContent, 'utf8');
 
     console.log(`Archivo ${archivo_mapa}.json creado con éxito`);

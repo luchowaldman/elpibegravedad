@@ -20,7 +20,8 @@ export class Direcciones {
       player_muriendo: '/img/player_muriendo.png',
       meta: '/img/meta.png',
       lazo: '/img/lazo.png',
-      caminorapidonotomar: '/img/caminorapidonotomar.png'
+      caminorapidonotomar: '/img/caminorapidonotomar.png',
+      carteltunel: 'img/carteltunel.png'
 
       
     };
