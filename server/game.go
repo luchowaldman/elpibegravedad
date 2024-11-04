@@ -3,7 +3,6 @@ package main
 import (
 	"log"
 	"slices"
-	"sync"
 	"time"
 )
 
@@ -32,20 +31,11 @@ func (playerInfo PlayerInfo) ToMap() map[string]any {
 	}
 }
 
-func initGame(world *World) {
-	for _, player := range *world.Players {
-		err := player.Socket.Emit("juegoIniciado")
-		if err != nil {
-			log.Println("failed to send juegoIniciado", "err", err)
-		}
-	}
-}
-
-func gameLoop(world *World, playersMutex *sync.Mutex) {
+func gameLoop(world *World, room *Room) {
 	ticker := time.NewTicker(time.Second / TicksPerSecond)
 	quit := make(chan struct{})
 
-	amountOfPlayers := len(*world.Players)
+	amountOfPlayers := len(room.Players)
 
 	playersThatFinished := make([]int, 0, amountOfPlayers)
 	playersThatDied := make([]int, 0, amountOfPlayers)
@@ -56,12 +46,19 @@ func gameLoop(world *World, playersMutex *sync.Mutex) {
 		case <-ticker.C:
 			playersPositions := []PlayerInfo{}
 
-			playersMutex.Lock()
-			playersThatFinishedThisTick, playersThatDiedThisTick := world.Update()
-			playersMutex.Unlock()
+			room.Mutex.Lock()
 
-			playersThatFinished = append(playersThatFinished, playersThatFinishedThisTick...)
-			playersThatDied = append(playersThatDied, playersThatDiedThisTick...)
+			for _, player := range room.Players {
+				finished, died := world.Update(player.Character)
+
+				if finished {
+					playersThatFinished = append(playersThatFinished, player.ID)
+				} else if died {
+					playersThatDied = append(playersThatDied, player.ID)
+				}
+			}
+
+			room.Mutex.Unlock()
 
 			if len(playersThatFinished)+len(playersThatDied) == amountOfPlayers {
 				log.Println("race finished")
@@ -70,8 +67,8 @@ func gameLoop(world *World, playersMutex *sync.Mutex) {
 
 				raceResult := append(playersThatFinished, playersThatDied...)
 
-				for _, player := range *world.Players {
-					err := player.Socket.Emit("carreraTerminada", raceResult)
+				for _, player := range room.Players {
+					err := player.SendCarreraTerminada(raceResult)
 					if err != nil {
 						log.Println("failed to send carreraTerminada", "err", err)
 					}
@@ -80,20 +77,20 @@ func gameLoop(world *World, playersMutex *sync.Mutex) {
 				ticker.Stop()
 				return
 			} else {
-				for _, player := range *world.Players {
-					posX := player.Object.Position.X
-					posY := player.Object.Position.Y
-					hasGravityInverted := player.HasGravityInverted
-					isWalking := player.IsWalking
-					isDead := player.IsDead
+				for _, player := range room.Players {
+					posX := player.Character.Object.Position.X
+					posY := player.Character.Object.Position.Y
+					hasGravityInverted := player.Character.HasGravityInverted
+					isWalking := player.Character.IsWalking
+					isDead := player.Character.IsDead
 
 					point := Point{
 						X: int(posX),
 						Y: int(posY),
-					}.FromServerToClient(mapHeight, playerWidth, playerHeight)
+					}.FromServerToClient(mapHeight, characterWidth, characterHeight)
 
 					playersPositions = append(playersPositions, PlayerInfo{
-						playerNumber:       1, // TODO send more players
+						playerNumber:       player.ID,
 						posX:               point.X,
 						posY:               point.Y,
 						hasGravityInverted: hasGravityInverted,
@@ -112,8 +109,8 @@ func gameLoop(world *World, playersMutex *sync.Mutex) {
 					playersPositionsProtocol = append(playersPositionsProtocol, playersPosition.ToMap())
 				}
 
-				for _, player := range *world.Players {
-					err := player.Socket.Emit("tick", playersPositionsProtocol, cameraX)
+				for _, player := range room.Players {
+					err := player.SendTick(playersPositionsProtocol, cameraX)
 					if err != nil {
 						log.Println("failed to send tick", "err", err)
 					}

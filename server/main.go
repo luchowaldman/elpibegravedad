@@ -3,7 +3,6 @@ package main
 import (
 	"log"
 	"net/http"
-	"sync"
 	"time"
 
 	"github.com/zishang520/socket.io/v2/socket"
@@ -19,25 +18,13 @@ func main() {
 	io := socket.NewServer(nil, nil)
 	http.Handle("/socket.io/", io.ServeHandler(nil))
 
-	playersMutex := &sync.Mutex{}
-	// players := map[socket.SocketId]Player{}
-	players := &[]*Player{}
-
-	gameStarted := false
-	gameStart := make(chan bool)
-	expectedPlayers := 2
+	gameStart := make(chan *Room)
 
 	err := io.On("connection", func(clients ...any) {
-		// TODO manejar conexiones de mas
-		manageClientConnection(clients, playersMutex, players, gameStart)
-
-		if !gameStarted && len((*players)) >= expectedPlayers {
-			gameStarted = true
-			gameStart <- gameStarted
-		}
+		manageClientConnection(clients, gameStart)
 	})
 	if err != nil {
-		log.Fatalln("Error setting sockert.io on connection", "err", err)
+		log.Fatalln("Error setting socket.io on connection", "err", err)
 	}
 
 	go func() {
@@ -45,12 +32,12 @@ func main() {
 	}()
 
 	log.Println("Waiting for players")
-	<-gameStart
+	room := <-gameStart
 
 	log.Println("Creating world")
-	world := NewWorld(gameMap, players)
+	world := NewWorld(gameMap, room.Players)
 
-	gameLoop(world, playersMutex)
+	gameLoop(world, room)
 	for {
 		time.Sleep(5 * time.Second)
 	}
