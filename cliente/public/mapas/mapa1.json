@@ -613,6 +613,134 @@
       "desdeY": 200,
       "largo": 50,
       "alto": 50
+    },
+    {
+      "tipo": "caja",
+      "id": "caja_15",
+      "desdeX": 10890,
+      "desdeY": 350,
+      "largo": 50,
+      "alto": 50
+    },
+    {
+      "tipo": "caja",
+      "id": "caja_16",
+      "desdeX": 10890,
+      "desdeY": 300,
+      "largo": 50,
+      "alto": 50
+    },
+    {
+      "tipo": "caja",
+      "id": "caja_17",
+      "desdeX": 10890,
+      "desdeY": 250,
+      "largo": 50,
+      "alto": 50
+    },
+    {
+      "tipo": "caja",
+      "id": "caja_18",
+      "desdeX": 10890,
+      "desdeY": 200,
+      "largo": 50,
+      "alto": 50
+    },
+    {
+      "tipo": "caja",
+      "id": "caja_19",
+      "desdeX": 11590,
+      "desdeY": 350,
+      "largo": 50,
+      "alto": 50
+    },
+    {
+      "tipo": "caja",
+      "id": "caja_20",
+      "desdeX": 11590,
+      "desdeY": 300,
+      "largo": 50,
+      "alto": 50
+    },
+    {
+      "tipo": "caja",
+      "id": "caja_21",
+      "desdeX": 11590,
+      "desdeY": 250,
+      "largo": 50,
+      "alto": 50
+    },
+    {
+      "tipo": "caja",
+      "id": "caja_22",
+      "desdeX": 11590,
+      "desdeY": 200,
+      "largo": 50,
+      "alto": 50
+    },
+    {
+      "tipo": "caja",
+      "id": "caja_23",
+      "desdeX": 12290,
+      "desdeY": 350,
+      "largo": 50,
+      "alto": 50
+    },
+    {
+      "tipo": "caja",
+      "id": "caja_24",
+      "desdeX": 12290,
+      "desdeY": 300,
+      "largo": 50,
+      "alto": 50
+    },
+    {
+      "tipo": "caja",
+      "id": "caja_25",
+      "desdeX": 12290,
+      "desdeY": 250,
+      "largo": 50,
+      "alto": 50
+    },
+    {
+      "tipo": "caja",
+      "id": "caja_26",
+      "desdeX": 12290,
+      "desdeY": 200,
+      "largo": 50,
+      "alto": 50
+    },
+    {
+      "tipo": "caja",
+      "id": "caja_27",
+      "desdeX": 13190,
+      "desdeY": 350,
+      "largo": 50,
+      "alto": 50
+    },
+    {
+      "tipo": "caja",
+      "id": "caja_28",
+      "desdeX": 13190,
+      "desdeY": 300,
+      "largo": 50,
+      "alto": 50
+    },
+    {
+      "tipo": "caja",
+      "id": "caja_29",
+      "desdeX": 13190,
+      "desdeY": 250,
+      "largo": 50,
+      "alto": 50
+    },
+    {
+      "tipo": "caja",
+      "id": "caja_30",
+      "desdeX": 13190,
+      "desdeY": 200,
+      "largo": 50,
+      "alto": 50
     }
   ],
   "imagenes": [

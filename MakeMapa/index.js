@@ -218,6 +218,10 @@ async function main() {
     caminoseguro[1] = AgregarPilaCajas(caminoseguro[1], 2600, -1, -2);
     //Pilas seguridad camino del medio
     caminoseguro[1] = AgregarPilaCajas(caminoseguro[1], 590, 0, 3);
+    caminoseguro[1] = AgregarPilaCajas(caminoseguro[1], 1090, 0, 3);
+    caminoseguro[1] = AgregarPilaCajas(caminoseguro[1], 1790, 0, 3);
+    caminoseguro[1] = AgregarPilaCajas(caminoseguro[1], 2490, 0, 3);
+    caminoseguro[1] = AgregarPilaCajas(caminoseguro[1], 3390, 0, 3);
     plataformas.push(...SumarX(caminoseguro, ultimoX));
 
 
