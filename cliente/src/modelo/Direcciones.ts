@@ -28,6 +28,8 @@ export class Direcciones {
       texto_porquenoteanimasadespegar: 'img/texto_porquenoteanimasadespegar.png',
       yoseporque: 'img/yoseporque.png',
       carteldescarrilados: 'img/carteldescarrilados.png',
+      tequededasenlapuerta: 'img/tequededasenlapuerta.png',
+      tapasui: 'img/tapasui.png',
 
       
     };

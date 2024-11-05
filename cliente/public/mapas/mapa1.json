@@ -131,6 +131,14 @@
       "hastaX": 6200,
       "hastaY": 400,
       "alto": 10
+    },
+    {
+      "tipo": "piso",
+      "desdeX": 6200,
+      "desdeY": 590,
+      "hastaX": 7200,
+      "hastaY": 590,
+      "alto": 10
     }
   ],
   "obstaculos": [
@@ -492,11 +500,32 @@
       "alto": 200
     },
     {
-      "imagen": "cartelseguro",
+      "imagen": "tequededasenlapuerta",
       "desdeX": 3030,
       "desdeY": 340,
       "largo": 200,
       "alto": 200
+    },
+    {
+      "imagen": "texto_porquetequedasenviamuerta",
+      "desdeX": 6210,
+      "desdeY": 460,
+      "largo": 500,
+      "alto": 50
+    },
+    {
+      "imagen": "texto_porquenoteanimasadespegar",
+      "desdeX": 6600,
+      "desdeY": 480,
+      "largo": 460,
+      "alto": 50
+    },
+    {
+      "imagen": "yoseporque",
+      "desdeX": 7000,
+      "desdeY": 300,
+      "largo": 460,
+      "alto": 50
     }
   ],
   "inicio_jugadores": {
@@ -504,7 +533,7 @@
     "y": 350
   },
   "meta": {
-    "x": 6200,
+    "x": 7200,
     "y": 0,
     "alto": 600
   }
