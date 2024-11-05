@@ -205,17 +205,8 @@ function HacerMapaModo1(archivo_mapa) {
     // CAMINO seguro
     let caminoseguro = PistoYTecho(590, 400, 0, 3500, 600, 3500);
     mapa.imagenes.push(new Imagen("cartelseguro", ultimoX + 330, 340, 200, 200));
-    caminoseguro[0] = AgregarPilaCajas(caminoseguro[0], 800, 0, 1);
-    caminoseguro[1] = AgregarPilaCajas(caminoseguro[1], 1000, -1, -2);
-    caminoseguro[0] = AgregarPilaCajas(caminoseguro[0], 1200, 0, 1);
-    caminoseguro[1] = AgregarPilaCajas(caminoseguro[1], 1400, -1, -2);
-    caminoseguro[0] = AgregarPilaCajas(caminoseguro[0], 1600, 0, 1);
-    caminoseguro[1] = AgregarPilaCajas(caminoseguro[1], 1800, -1, -2);
-    caminoseguro[0] = AgregarPilaCajas(caminoseguro[0], 2000, 0, 1);
-    caminoseguro[1] = AgregarPilaCajas(caminoseguro[1], 2200, -1, -2);
-    caminoseguro[0] = AgregarPilaCajas(caminoseguro[0], 2400, 0, 1);
-    caminoseguro[1] = AgregarPilaCajas(caminoseguro[1], 2600, -1, -2);
-    //Pilas seguridad camino del medio
+    caminoseguro = HacerSerruchoDePilas(caminoseguro, 800, 3000, 520, 0, 1, -1, -2);
+    
     caminoseguro[1] = AgregarPilaCajas(caminoseguro[1], 590, 0, 3);
     caminoseguro[1] = AgregarPilaCajas(caminoseguro[1], 1090, 0, 3);
     caminoseguro[1] = AgregarPilaCajas(caminoseguro[1], 1790, 0, 3);
@@ -259,20 +250,6 @@ function HacerSerruchoDePilas(plataformas, desdeX = 800, hastaX = 2600, espacio 
         plataformas[0] = AgregarPilaCajas(plataformas[0], x, desde, hasta);
         plataformas[1] = AgregarPilaCajas(plataformas[1], x + (espacio / 2), desde_techo, hasta_techo);
     }
-/*
-    plataformas[0] = AgregarPilaCajas(plataformas[0], 800, 0, 1);
-    plataformas[1] = AgregarPilaCajas(plataformas[1], 1000, -1, -2);
-    plataformas[0] = AgregarPilaCajas(plataformas[0], 1200, 0, 1);
-    plataformas[1] = AgregarPilaCajas(plataformas[1], 1400, -1, -2);
-    plataformas[0] = AgregarPilaCajas(plataformas[0], 1600, 0, 1);
-    plataformas[1] = AgregarPilaCajas(plataformas[1], 1800, -1, -2);
-    plataformas[0] = AgregarPilaCajas(plataformas[0], 2000, 0, 1);
-    plataformas[1] = AgregarPilaCajas(plataformas[1], 2200, -1, -2);
-    plataformas[0] = AgregarPilaCajas(plataformas[0], 2400, 0, 1);
-    plataformas[1] = AgregarPilaCajas(plataformas[1], 2600, -1, -2);
-
-*/
-
     return plataformas;
 }
 
