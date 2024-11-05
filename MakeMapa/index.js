@@ -206,7 +206,7 @@ function HacerMapaModo1(archivo_mapa) {
     let caminoseguro = PistoYTecho(590, 400, 0, 3500, 600, 3500);
     mapa.imagenes.push(new Imagen("cartelseguro", ultimoX + 330, 340, 200, 200));
     caminoseguro = HacerSerruchoDePilas(caminoseguro, 800, 3000, 520, 0, 1, -1, -2);
-    
+
     caminoseguro[1] = AgregarPilaCajas(caminoseguro[1], 590, 0, 3);
     caminoseguro[1] = AgregarPilaCajas(caminoseguro[1], 1090, 0, 3);
     caminoseguro[1] = AgregarPilaCajas(caminoseguro[1], 1790, 0, 3);
@@ -246,7 +246,6 @@ function HacerPila(plataforma) {
 function HacerSerruchoDePilas(plataformas, desdeX = 800, hastaX = 2600, espacio = 200, desde = 0, hasta = 1, desde_techo = 0, hasta_techo = 1) {
     
     for (let x = desdeX; x < hastaX; x += espacio) {
-        console.log(x);
         plataformas[0] = AgregarPilaCajas(plataformas[0], x, desde, hasta);
         plataformas[1] = AgregarPilaCajas(plataformas[1], x + (espacio / 2), desde_techo, hasta_techo);
     }
@@ -333,7 +332,7 @@ function HacerMapaModo2(archivo_mapa) {
 
 async function main() {
 
-    HacerMapaModo1("mapa1");
+    HacerMapaModo2("mapa1");
 }
 
 main();
