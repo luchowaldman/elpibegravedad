@@ -24,6 +24,10 @@ export class Direcciones {
       carteltunel: 'img/carteltunel.png',
       cartelpeligro: 'img/cartelpeligro.png',
       cartelseguro: 'img/cartelseguro.png',
+      texto_porquetequedasenviamuerta: 'img/texto_porquetequedasenviamuerta.png',
+      texto_porquenoteanimasadespegar: 'img/texto_porquenoteanimasadespegar.png',
+      yoseporque: 'img/yoseporque.png',
+      carteldescarrilados: 'img/carteldescarrilados.png',
 
       
     };

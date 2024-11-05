@@ -136,9 +136,7 @@ function ZigZagAgujeros(plataforma, desdeX = 600, hastaX = 1800, agujero = 20, e
     return plataforma;   
 
 }
-
-async function main() {
-
+function HacerMapaModo1(archivo_mapa) {
 
     const mapa = {
         nombre: "Mapa de ejemplo",
@@ -161,13 +159,14 @@ async function main() {
     let plataformas = [];   
     
     // Piso inicial
+    let ultimoX = UltimoX(plataformas);
     let solopiso = SoloPiso(400, 0, 1000);
-    plataformas.push(...SumarX(solopiso, UltimoX(plataformas)));
+    plataformas.push(...SumarX(solopiso, ultimoX));
 
 
     // INICIO    
-    let ultimoX = UltimoX(plataformas);
     let inicio = PistoYTecho(400, 200, 0, 2200, 250, 2000)
+    ultimoX = UltimoX(plataformas);
     inicio = AgregarModeloCajas1(inicio, 400);
     plataformas.push(...SumarX(inicio, ultimoX));
     mapa.imagenes.push(new Imagen("carteltunel", ultimoX + 10, 180, 200, 200));
@@ -243,11 +242,121 @@ async function main() {
     
 
     const jsonContent = JSON.stringify(mapa, null, 2);
-    const archivo_mapa = "mapa1";
     fs.writeFileSync(`..\\cliente\\public\\mapas\\${archivo_mapa}.json`, jsonContent, 'utf8');
     fs.writeFileSync(`..\\server\\mapas\\${archivo_mapa}.json`, jsonContent, 'utf8');
 
     console.log(`Archivo ${archivo_mapa}.json creado con éxito`);
+}
+
+
+function HacerPila(plataforma) {
+
+}
+function HacerSerruchoDePilas(plataformas, desdeX = 800, hastaX = 2600, espacio = 200, desde = 0, hasta = 1, desde_techo = 0, hasta_techo = 1) {
+    
+    for (let x = desdeX; x < hastaX; x += espacio) {
+        console.log(x);
+        plataformas[0] = AgregarPilaCajas(plataformas[0], x, desde, hasta);
+        plataformas[1] = AgregarPilaCajas(plataformas[1], x + (espacio / 2), desde_techo, hasta_techo);
+    }
+/*
+    plataformas[0] = AgregarPilaCajas(plataformas[0], 800, 0, 1);
+    plataformas[1] = AgregarPilaCajas(plataformas[1], 1000, -1, -2);
+    plataformas[0] = AgregarPilaCajas(plataformas[0], 1200, 0, 1);
+    plataformas[1] = AgregarPilaCajas(plataformas[1], 1400, -1, -2);
+    plataformas[0] = AgregarPilaCajas(plataformas[0], 1600, 0, 1);
+    plataformas[1] = AgregarPilaCajas(plataformas[1], 1800, -1, -2);
+    plataformas[0] = AgregarPilaCajas(plataformas[0], 2000, 0, 1);
+    plataformas[1] = AgregarPilaCajas(plataformas[1], 2200, -1, -2);
+    plataformas[0] = AgregarPilaCajas(plataformas[0], 2400, 0, 1);
+    plataformas[1] = AgregarPilaCajas(plataformas[1], 2600, -1, -2);
+
+*/
+
+    return plataformas;
+}
+
+
+function HacerMapaModo2(archivo_mapa) {
+
+    const mapa = {
+        nombre: "Mapa de ejemplo",
+        largo: 20000,
+        fondo: "sky",
+        cancion: "cancion",
+        plataformas: [],
+        obstaculos: [],
+        imagenes: [],
+        inicio_jugadores: { x: 50, y: 350 }, 
+        meta: {
+          x: 12500,
+          y: 0,
+          alto: 600
+        }
+    };
+
+
+    /* COMIENZO */
+    let plataformas = [];   
+    
+    let ultimoX = UltimoX(plataformas);
+    
+    
+    // Piso inicial
+    let solopiso = SoloPiso(500, 0, 2700);
+    plataformas.push(...SumarX(solopiso, ultimoX));
+    mapa.imagenes.push(new Imagen("texto_porquetequedasenviamuerta", ultimoX + 210, 460, 500, 50));
+    mapa.imagenes.push(new Imagen("texto_porquetequedasenviamuerta", ultimoX + 910, 460, 500, 50));
+    mapa.imagenes.push(new Imagen("texto_porquenoteanimasadespegar", ultimoX + 1610, 300, 460, 50));
+    mapa.imagenes.push(new Imagen("yoseporque", ultimoX + 2210, 300, 460, 50));
+
+
+    // CaminoPeligroso
+    ultimoX = UltimoX(plataformas);
+    let caminopeligroso = PistoYTecho(200, 50, 400, 3500, 0, 3500);
+    mapa.imagenes.push(new Imagen("carteldescarrilados", ultimoX + 10, 40, 200, 200));
+    caminopeligroso[0] = ZigZagAgujeros(caminopeligroso[0], 800, 3500, 130, 600);
+    caminopeligroso[1] = ZigZagAgujeros(caminopeligroso[1], 600, 3500, 70, 400);
+    plataformas.push(...SumarX(caminopeligroso, ultimoX));
+
+
+    // CAMINO seguro
+    let caminoseguro = PistoYTecho(590, 400, 0, 3500, 600, 3500);
+    mapa.imagenes.push(new Imagen("cartelseguro", ultimoX + 330, 340, 200, 200));
+    caminoseguro = HacerSerruchoDePilas(caminoseguro, 800, 3000, 520, 0, 1, -1, -2);
+
+    //Pilas seguridad camino del medio
+    caminoseguro[1] = AgregarPilaCajas(caminoseguro[1], 590, 0, 3);
+    caminoseguro[1] = AgregarPilaCajas(caminoseguro[1], 1090, 0, 3);
+    caminoseguro[1] = AgregarPilaCajas(caminoseguro[1], 1790, 0, 3);
+    caminoseguro[1] = AgregarPilaCajas(caminoseguro[1], 2490, 0, 3);
+    caminoseguro[1] = AgregarPilaCajas(caminoseguro[1], 3390, 0, 3);
+    plataformas.push(...SumarX(caminoseguro, ultimoX));
+
+
+
+
+    mapa.meta.x = UltimoX(plataformas);
+    plataformas.forEach(p => {
+        mapa.plataformas.push(...p.getPlataformas());
+        mapa.obstaculos.push(...p.obstaculos);
+    });
+
+
+    
+
+    const jsonContent = JSON.stringify(mapa, null, 2);
+    fs.writeFileSync(`..\\cliente\\public\\mapas\\${archivo_mapa}.json`, jsonContent, 'utf8');
+    fs.writeFileSync(`..\\server\\mapas\\${archivo_mapa}.json`, jsonContent, 'utf8');
+
+    console.log(`Archivo ${archivo_mapa}.json creado con éxito`);
+}
+
+
+
+async function main() {
+
+    HacerMapaModo1("mapa1");
 }
 
 main();
