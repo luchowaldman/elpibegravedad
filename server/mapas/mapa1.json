@@ -136,8 +136,136 @@
       "tipo": "piso",
       "desdeX": 6200,
       "desdeY": 590,
-      "hastaX": 7200,
+      "hastaX": 7700,
       "hastaY": 590,
+      "alto": 10
+    },
+    {
+      "tipo": "piso",
+      "desdeX": 7700,
+      "desdeY": 560,
+      "hastaX": 8700,
+      "hastaY": 560,
+      "alto": 10
+    },
+    {
+      "tipo": "piso",
+      "desdeX": 9100,
+      "desdeY": 200,
+      "hastaX": 9500,
+      "hastaY": 200,
+      "alto": 10
+    },
+    {
+      "tipo": "piso",
+      "desdeX": 9630,
+      "desdeY": 200,
+      "hastaX": 10230,
+      "hastaY": 200,
+      "alto": 10
+    },
+    {
+      "tipo": "piso",
+      "desdeX": 10360,
+      "desdeY": 200,
+      "hastaX": 10960,
+      "hastaY": 200,
+      "alto": 10
+    },
+    {
+      "tipo": "piso",
+      "desdeX": 11090,
+      "desdeY": 200,
+      "hastaX": 11690,
+      "hastaY": 200,
+      "alto": 10
+    },
+    {
+      "tipo": "piso",
+      "desdeX": 11820,
+      "desdeY": 200,
+      "hastaX": 12200,
+      "hastaY": 200,
+      "alto": 10
+    },
+    {
+      "tipo": "techo",
+      "desdeX": 8700,
+      "desdeY": 50,
+      "hastaX": 9300,
+      "hastaY": 50,
+      "alto": 10
+    },
+    {
+      "tipo": "techo",
+      "desdeX": 9370,
+      "desdeY": 50,
+      "hastaX": 9770,
+      "hastaY": 50,
+      "alto": 10
+    },
+    {
+      "tipo": "techo",
+      "desdeX": 9840,
+      "desdeY": 50,
+      "hastaX": 10240,
+      "hastaY": 50,
+      "alto": 10
+    },
+    {
+      "tipo": "techo",
+      "desdeX": 10310,
+      "desdeY": 50,
+      "hastaX": 10710,
+      "hastaY": 50,
+      "alto": 10
+    },
+    {
+      "tipo": "techo",
+      "desdeX": 10780,
+      "desdeY": 50,
+      "hastaX": 11180,
+      "hastaY": 50,
+      "alto": 10
+    },
+    {
+      "tipo": "techo",
+      "desdeX": 11250,
+      "desdeY": 50,
+      "hastaX": 11650,
+      "hastaY": 50,
+      "alto": 10
+    },
+    {
+      "tipo": "techo",
+      "desdeX": 11720,
+      "desdeY": 50,
+      "hastaX": 12120,
+      "hastaY": 50,
+      "alto": 10
+    },
+    {
+      "tipo": "techo",
+      "desdeX": 12190,
+      "desdeY": 50,
+      "hastaX": 12200,
+      "hastaY": 50,
+      "alto": 10
+    },
+    {
+      "tipo": "piso",
+      "desdeX": 8700,
+      "desdeY": 590,
+      "hastaX": 12200,
+      "hastaY": 590,
+      "alto": 10
+    },
+    {
+      "tipo": "techo",
+      "desdeX": 9300,
+      "desdeY": 400,
+      "hastaX": 12200,
+      "hastaY": 400,
       "alto": 10
     }
   ],
@@ -461,6 +589,166 @@
       "desdeY": 200,
       "largo": 50,
       "alto": 50
+    },
+    {
+      "tipo": "caja",
+      "id": "caja_1",
+      "desdeX": 9500,
+      "desdeY": 540,
+      "largo": 50,
+      "alto": 50
+    },
+    {
+      "tipo": "caja",
+      "id": "caja_2",
+      "desdeX": 9500,
+      "desdeY": 490,
+      "largo": 50,
+      "alto": 50
+    },
+    {
+      "tipo": "caja",
+      "id": "caja_3",
+      "desdeX": 10020,
+      "desdeY": 540,
+      "largo": 50,
+      "alto": 50
+    },
+    {
+      "tipo": "caja",
+      "id": "caja_4",
+      "desdeX": 10020,
+      "desdeY": 490,
+      "largo": 50,
+      "alto": 50
+    },
+    {
+      "tipo": "caja",
+      "id": "caja_5",
+      "desdeX": 10540,
+      "desdeY": 540,
+      "largo": 50,
+      "alto": 50
+    },
+    {
+      "tipo": "caja",
+      "id": "caja_6",
+      "desdeX": 10540,
+      "desdeY": 490,
+      "largo": 50,
+      "alto": 50
+    },
+    {
+      "tipo": "caja",
+      "id": "caja_7",
+      "desdeX": 11060,
+      "desdeY": 540,
+      "largo": 50,
+      "alto": 50
+    },
+    {
+      "tipo": "caja",
+      "id": "caja_8",
+      "desdeX": 11060,
+      "desdeY": 490,
+      "largo": 50,
+      "alto": 50
+    },
+    {
+      "tipo": "caja",
+      "id": "caja_9",
+      "desdeX": 11580,
+      "desdeY": 540,
+      "largo": 50,
+      "alto": 50
+    },
+    {
+      "tipo": "caja",
+      "id": "caja_10",
+      "desdeX": 11580,
+      "desdeY": 490,
+      "largo": 50,
+      "alto": 50
+    },
+    {
+      "tipo": "caja",
+      "id": "caja_1",
+      "desdeX": 9760,
+      "desdeY": 410,
+      "largo": 50,
+      "alto": 50
+    },
+    {
+      "tipo": "caja",
+      "id": "caja_2",
+      "desdeX": 9760,
+      "desdeY": 460,
+      "largo": 50,
+      "alto": 50
+    },
+    {
+      "tipo": "caja",
+      "id": "caja_3",
+      "desdeX": 10280,
+      "desdeY": 410,
+      "largo": 50,
+      "alto": 50
+    },
+    {
+      "tipo": "caja",
+      "id": "caja_4",
+      "desdeX": 10280,
+      "desdeY": 460,
+      "largo": 50,
+      "alto": 50
+    },
+    {
+      "tipo": "caja",
+      "id": "caja_5",
+      "desdeX": 10800,
+      "desdeY": 410,
+      "largo": 50,
+      "alto": 50
+    },
+    {
+      "tipo": "caja",
+      "id": "caja_6",
+      "desdeX": 10800,
+      "desdeY": 460,
+      "largo": 50,
+      "alto": 50
+    },
+    {
+      "tipo": "caja",
+      "id": "caja_7",
+      "desdeX": 11320,
+      "desdeY": 410,
+      "largo": 50,
+      "alto": 50
+    },
+    {
+      "tipo": "caja",
+      "id": "caja_8",
+      "desdeX": 11320,
+      "desdeY": 460,
+      "largo": 50,
+      "alto": 50
+    },
+    {
+      "tipo": "caja",
+      "id": "caja_9",
+      "desdeX": 11840,
+      "desdeY": 410,
+      "largo": 50,
+      "alto": 50
+    },
+    {
+      "tipo": "caja",
+      "id": "caja_10",
+      "desdeX": 11840,
+      "desdeY": 460,
+      "largo": 50,
+      "alto": 50
     }
   ],
   "imagenes": [
@@ -526,6 +814,27 @@
       "desdeY": 300,
       "largo": 460,
       "alto": 50
+    },
+    {
+      "imagen": "tapasui",
+      "desdeX": 7710,
+      "desdeY": 200,
+      "largo": 460,
+      "alto": 50
+    },
+    {
+      "imagen": "texto_tacuhelas",
+      "desdeX": 8710,
+      "desdeY": 40,
+      "largo": 200,
+      "alto": 200
+    },
+    {
+      "imagen": "texto_aprendiaserformalycortes",
+      "desdeX": 9030,
+      "desdeY": 340,
+      "largo": 200,
+      "alto": 200
     }
   ],
   "inicio_jugadores": {
@@ -533,7 +842,7 @@
     "y": 350
   },
   "meta": {
-    "x": 7200,
+    "x": 12200,
     "y": 0,
     "alto": 600
   }
