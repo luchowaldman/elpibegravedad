@@ -21,7 +21,9 @@ export class Direcciones {
       meta: '/img/meta.png',
       lazo: '/img/lazo.png',
       caminorapidonotomar: '/img/caminorapidonotomar.png',
-      carteltunel: 'img/carteltunel.png'
+      carteltunel: 'img/carteltunel.png',
+      cartelpeligro: 'img/cartelpeligro.png',
+      cartelseguro: 'img/cartelseguro.png',
 
       
     };
