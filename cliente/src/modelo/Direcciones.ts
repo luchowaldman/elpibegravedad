@@ -30,9 +30,11 @@ export class Direcciones {
       carteldescarrilados: 'img/carteldescarrilados.png',
       tequededasenlapuerta: 'img/tequededasenlapuerta.png',
       tapasui: 'img/tapasui.png',
+      tapaseru: 'img/tapaseru.png',
+      tapamaquina: 'img/tapamaquina.png',
       texto_aprendiaserformalycortes: 'img/texto_aprendiaserformalycortes.png',
       texto_tacuhelas: 'img/texto_tacuhelas.png',
-      
+
 
       
     };

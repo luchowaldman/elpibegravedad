@@ -277,12 +277,12 @@ function HacerMapaModo2(archivo_mapa) {
 
     ultimoX = UltimoX(plataformas);
     // Piso inicial
-    let solopiso = SoloPiso(500, 0, 2700);
+    let solopiso = SoloPiso(200, 0, 2700);
     plataformas.push(...SumarX(solopiso, ultimoX));
-    mapa.imagenes.push(new Imagen("texto_porquetequedasenviamuerta", ultimoX + 210, 460, 500, 50));
-    mapa.imagenes.push(new Imagen("texto_porquetequedasenviamuerta", ultimoX + 910, 460, 500, 50));
-    mapa.imagenes.push(new Imagen("texto_porquenoteanimasadespegar", ultimoX + 1610, 300, 460, 50));
-    mapa.imagenes.push(new Imagen("yoseporque", ultimoX + 2210, 300, 460, 50));
+    mapa.imagenes.push(new Imagen("texto_porquetequedasenviamuerta", ultimoX + 210, 260, 500, 50));
+    mapa.imagenes.push(new Imagen("texto_porquetequedasenviamuerta", ultimoX + 910, 260, 500, 50));
+    mapa.imagenes.push(new Imagen("texto_porquenoteanimasadespegar", ultimoX + 1610, 200, 500, 50));
+    mapa.imagenes.push(new Imagen("yoseporque", ultimoX + 2210, 200, 460, 50));
 
 
     // CaminoPeligroso
@@ -295,7 +295,7 @@ function HacerMapaModo2(archivo_mapa) {
 
 
     // CAMINO seguro
-    let caminoseguro = PistoYTecho(590, 400, 0, 3500, 600, 3500);
+    let caminoseguro = PistoYTecho(580, 400, 0, 3500, 600, 3500);
     mapa.imagenes.push(new Imagen("tequededasenlapuerta", ultimoX + 330, 340, 200, 200));
     caminoseguro = HacerSerruchoDePilas(caminoseguro, 800, 3000, 520, 0, 1, -1, -2);
 
@@ -321,8 +321,18 @@ function HacerMapaModo2(archivo_mapa) {
     mapa.imagenes.push(new Imagen("tapasui", ultimoX + 10, 200, 460, 50));
     plataformas.push(...SumarX(solopiso, ultimoX));
     
-
+    ultimoX = UltimoX(plataformas);
+    solopiso = SoloPiso(560, 0, 1000);
+    mapa.imagenes.push(new Imagen("tapamaquina", ultimoX + 10, 200, 460, 50));
+    plataformas.push(...SumarX(solopiso, ultimoX));
     
+    ultimoX = UltimoX(plataformas);
+    solopiso = SoloPiso(560, 0, 1000);
+    mapa.imagenes.push(new Imagen("tapaseru", ultimoX + 10, 200, 460, 50));
+    plataformas.push(...SumarX(solopiso, ultimoX));
+    
+
+    /*
     // CaminoPeligroso
     ultimoX = UltimoX(plataformas);
     caminopeligroso = PistoYTecho(200, 50, 400, 3500, 0, 3500);
@@ -337,10 +347,7 @@ function HacerMapaModo2(archivo_mapa) {
     mapa.imagenes.push(new Imagen("texto_aprendiaserformalycortes", ultimoX + 330, 340, 200, 200));
     caminoseguro = HacerSerruchoDePilas(caminoseguro, 800, 3000, 520, 0, 1, -1, -2);
     plataformas.push(...SumarX(caminoseguro, ultimoX));
-
-
-
-
+*/
 
     mapa.meta.x = UltimoX(plataformas);
     plataformas.forEach(p => {
