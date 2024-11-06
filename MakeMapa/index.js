@@ -129,6 +129,36 @@ function EmbudoAcendente1() {
     return plataformas;
 }
 
+function EmbudoDendente1(piso1, techo1, tam_escalon, tam_plata = 600, tam_salto = -100) {
+    
+    let plataformas = [];
+    
+    let piso_1 = new PlataformasHorizontales(piso1, "piso");
+    let piso_2 = new PlataformasHorizontales(piso1 - tam_escalon, "piso");
+    let piso_3 = new PlataformasHorizontales(piso1 - (2 * tam_escalon), "piso");
+
+    let techo_3 = new PlataformasHorizontales(techo1 + (2 * tam_escalon), "techo");
+    let techo_2 = new PlataformasHorizontales(techo1 + tam_escalon, "techo");
+    let techo_1 = new PlataformasHorizontales(techo1, "techo");
+
+    piso_1.AgregarPlataforma(0, tam_plata);
+    techo_1.AgregarPlataforma(0, tam_plata);
+    piso_2.AgregarPlataforma(tam_plata + tam_salto, tam_plata * 2);
+    techo_2.AgregarPlataforma(tam_plata + tam_salto, tam_plata * 2);
+    piso_3.AgregarPlataforma((tam_plata * 2) + tam_salto, tam_plata * 3 );
+    techo_3.AgregarPlataforma((tam_plata * 2) + tam_salto, tam_plata * 3);
+
+
+    plataformas.push(piso_1);
+    plataformas.push(piso_2);
+    plataformas.push(piso_3);
+    plataformas.push(techo_1);
+    plataformas.push(techo_2);
+    plataformas.push(techo_3);
+
+    return plataformas;
+}
+
 function ZigZagAgujeros(plataforma, desdeX = 600, hastaX = 1800, agujero = 20, espacio = 200) {
     for (let x = desdeX; x < hastaX; x += espacio + agujero) {
         plataforma.QuitarPlataforma(x, x + agujero);
@@ -136,6 +166,21 @@ function ZigZagAgujeros(plataforma, desdeX = 600, hastaX = 1800, agujero = 20, e
     return plataforma;   
 
 }
+
+
+function HacerPila(plataforma) {
+
+}
+function HacerSerruchoDePilas(plataformas, desdeX = 800, hastaX = 2600, espacio = 200, desde = 0, hasta = 1, desde_techo = 0, hasta_techo = 1) {
+    
+    for (let x = desdeX; x < hastaX; x += espacio) {
+        plataformas[0] = AgregarPilaCajas(plataformas[0], x, desde, hasta);
+        plataformas[1] = AgregarPilaCajas(plataformas[1], x + (espacio / 2), desde_techo, hasta_techo);
+    }
+    return plataformas;
+}
+
+
 function HacerMapaModo1(archivo_mapa) {
 
     const mapa = {
@@ -239,24 +284,12 @@ function HacerMapaModo1(archivo_mapa) {
 }
 
 
-function HacerPila(plataforma) {
-
-}
-function HacerSerruchoDePilas(plataformas, desdeX = 800, hastaX = 2600, espacio = 200, desde = 0, hasta = 1, desde_techo = 0, hasta_techo = 1) {
-    
-    for (let x = desdeX; x < hastaX; x += espacio) {
-        plataformas[0] = AgregarPilaCajas(plataformas[0], x, desde, hasta);
-        plataformas[1] = AgregarPilaCajas(plataformas[1], x + (espacio / 2), desde_techo, hasta_techo);
-    }
-    return plataformas;
-}
-
 
 function HacerMapaModo2(archivo_mapa) {
 
     const mapa = {
         nombre: "Mapa de ejemplo",
-        largo: 20000,
+        largo: 40000,
         fondo: "sky",
         cancion: "cancion",
         plataformas: [],
@@ -274,17 +307,14 @@ function HacerMapaModo2(archivo_mapa) {
     
     let plataformas = [];   
     let ultimoX = 0;
-
     ultimoX = UltimoX(plataformas);
     // Piso inicial
-    let solopiso = SoloPiso(200, 0, 2700);
+    let solopiso = SoloPiso(500, 0, 2700);
     plataformas.push(...SumarX(solopiso, ultimoX));
-    mapa.imagenes.push(new Imagen("texto_porquetequedasenviamuerta", ultimoX + 210, 260, 500, 50));
-    mapa.imagenes.push(new Imagen("texto_porquetequedasenviamuerta", ultimoX + 910, 260, 500, 50));
-    mapa.imagenes.push(new Imagen("texto_porquenoteanimasadespegar", ultimoX + 1610, 200, 500, 50));
+    mapa.imagenes.push(new Imagen("texto_porquetequedasenviamuerta", ultimoX + 210, 450, 500, 50));
+    mapa.imagenes.push(new Imagen("texto_porquetequedasenviamuerta", ultimoX + 910, 450, 500, 50));
+    mapa.imagenes.push(new Imagen("texto_porquenoteanimasadespegar", ultimoX + 1610, 380, 500, 50));
     mapa.imagenes.push(new Imagen("yoseporque", ultimoX + 2210, 200, 460, 50));
-
-
     // CaminoPeligroso
     ultimoX = UltimoX(plataformas);
     let caminopeligroso = PistoYTecho(200, 50, 400, 3500, 0, 3500);
@@ -292,13 +322,10 @@ function HacerMapaModo2(archivo_mapa) {
     caminopeligroso[0] = ZigZagAgujeros(caminopeligroso[0], 800, 3500, 130, 600);
     caminopeligroso[1] = ZigZagAgujeros(caminopeligroso[1], 600, 3500, 70, 400);
     plataformas.push(...SumarX(caminopeligroso, ultimoX));
-
-
     // CAMINO seguro
     let caminoseguro = PistoYTecho(580, 400, 0, 3500, 600, 3500);
     mapa.imagenes.push(new Imagen("tequededasenlapuerta", ultimoX + 330, 340, 200, 200));
     caminoseguro = HacerSerruchoDePilas(caminoseguro, 800, 3000, 520, 0, 1, -1, -2);
-
     //Pilas seguridad camino del medio
     caminoseguro[1] = AgregarPilaCajas(caminoseguro[1], 590, 0, 3);
     caminoseguro[1] = AgregarPilaCajas(caminoseguro[1], 1090, 0, 3);
@@ -309,30 +336,17 @@ function HacerMapaModo2(archivo_mapa) {
 
     ultimoX = UltimoX(plataformas);
     solopiso = SoloPiso(590, 0, 1500);
-    mapa.imagenes.push(new Imagen("texto_porquetequedasenviamuerta", ultimoX + 10, 460, 500, 50));
-    mapa.imagenes.push(new Imagen("texto_porquenoteanimasadespegar", ultimoX + 400, 480, 460, 50));
-    mapa.imagenes.push(new Imagen("yoseporque", ultimoX + 800, 300, 460, 50));
+    mapa.imagenes.push(new Imagen("texto_porquetequedasenviamuerta", ultimoX + 210, 540, 500, 50));
+    mapa.imagenes.push(new Imagen("texto_porquenoteanimasadespegar", ultimoX + 910, 540, 500, 50));
+    mapa.imagenes.push(new Imagen("tapasui", ultimoX + 510, 200, 460, 50));
     plataformas.push(...SumarX(solopiso, ultimoX));
-    ultimoX = UltimoX(plataformas);
 
-    // Mas piso, dibujo Sui Generis
+
     ultimoX = UltimoX(plataformas);
-    solopiso = SoloPiso(560, 0, 1000);
-    mapa.imagenes.push(new Imagen("tapasui", ultimoX + 10, 200, 460, 50));
-    plataformas.push(...SumarX(solopiso, ultimoX));
-    
-    ultimoX = UltimoX(plataformas);
-    solopiso = SoloPiso(560, 0, 1000);
-    mapa.imagenes.push(new Imagen("tapamaquina", ultimoX + 10, 200, 460, 50));
-    plataformas.push(...SumarX(solopiso, ultimoX));
-    
-    ultimoX = UltimoX(plataformas);
-    solopiso = SoloPiso(560, 0, 1000);
-    mapa.imagenes.push(new Imagen("tapaseru", ultimoX + 10, 200, 460, 50));
-    plataformas.push(...SumarX(solopiso, ultimoX));
+    embudodecendente = EmbudoDendente1(590, 0, 80);
+    plataformas.push(...SumarX(embudodecendente, ultimoX));
     
 
-    /*
     // CaminoPeligroso
     ultimoX = UltimoX(plataformas);
     caminopeligroso = PistoYTecho(200, 50, 400, 3500, 0, 3500);
@@ -340,16 +354,93 @@ function HacerMapaModo2(archivo_mapa) {
     caminopeligroso[0] = ZigZagAgujeros(caminopeligroso[0], 800, 3500, 130, 600);
     caminopeligroso[1] = ZigZagAgujeros(caminopeligroso[1], 600, 3500, 70, 400);
     plataformas.push(...SumarX(caminopeligroso, ultimoX));
-
-
     // CAMINO seguro
     caminoseguro = PistoYTecho(590, 400, 0, 3500, 600, 3500);
-    mapa.imagenes.push(new Imagen("texto_aprendiaserformalycortes", ultimoX + 330, 340, 200, 200));
+    mapa.imagenes.push(new Imagen("texto_aprendiaserformalycortes", ultimoX + 330, 370, 200, 200));
     caminoseguro = HacerSerruchoDePilas(caminoseguro, 800, 3000, 520, 0, 1, -1, -2);
+    //Pilas seguridad camino del medio
+    caminoseguro[1] = AgregarPilaCajas(caminoseguro[1], 590, 0, 3);
+    caminoseguro[1] = AgregarPilaCajas(caminoseguro[1], 1090, 0, 3);
+    caminoseguro[1] = AgregarPilaCajas(caminoseguro[1], 1790, 0, 3);
+    caminoseguro[1] = AgregarPilaCajas(caminoseguro[1], 2490, 0, 3);
+    caminoseguro[1] = AgregarPilaCajas(caminoseguro[1], 3390, 0, 3);
     plataformas.push(...SumarX(caminoseguro, ultimoX));
-*/
 
-    mapa.meta.x = UltimoX(plataformas);
+
+
+    ultimoX = UltimoX(plataformas);
+    solopiso = SoloPiso(360, 0, 1000);
+    mapa.imagenes.push(new Imagen("tapamaquina", ultimoX + 400, 10, 500, 500));
+    plataformas.push(...SumarX(solopiso, ultimoX));
+    
+    ultimoX = UltimoX(plataformas);
+    let camino = PistoYTecho(500, 160, -200, 3000, -200, 2600);
+    
+    camino[0] = AgregarPilaCajas(camino[0], 470, 0, 4);
+    camino[1] = AgregarPilaCajas(camino[1], 870, -1, -3);    
+    camino[0] = AgregarPilaCajas(camino[0], 1300, 0, 4);
+    camino[1] = AgregarPilaCajas(camino[1], 1570, -1, -4);    
+    camino[0] = AgregarPilaCajas(camino[0], 2070, 0, 4);
+    camino[1] = AgregarPilaCajas(camino[1], 2370, -1, -4);
+    mapa.imagenes.push(new Imagen("tapaseru", ultimoX + 3000, 10, 500, 500));
+    plataformas.push(...SumarX(camino, ultimoX));
+
+
+//    ultimoX = UltimoX(plataformas);
+//    solopiso = SoloPiso(500, 0, 300);
+//    plataformas.push(...SumarX(solopiso, ultimoX));
+    
+    ultimoX = UltimoX(plataformas);
+    embudodecendente = EmbudoDendente1(590, 10, 70, 800, 0);
+    embudodecendente[1].AgregarCaja(700, -1)
+    embudodecendente[2].AgregarCaja(800, -1)
+    embudodecendente[4].AgregarCaja(900, 0)
+    embudodecendente[5].AgregarCaja(1000, 0)
+    plataformas.push(...SumarX(embudodecendente, ultimoX));
+
+
+    ultimoX = UltimoX(plataformas);
+    solopiso = SoloPiso(360, -100, 1000);
+    solopiso[0].AgregarCaja(-150, -1);
+    solopiso[0].AgregarCaja(-150, -2);
+    mapa.imagenes.push(new Imagen("tapaclicks", ultimoX + 200, 10, 500, 500));
+    plataformas.push(...SumarX(solopiso, ultimoX));
+
+    // CaminoPeligroso
+    ultimoX = UltimoX(plataformas);
+    caminopeligroso = PistoYTecho(360, 1, 0, 2020, 0, 2400);
+    caminopeligroso[0] = ZigZagAgujeros(caminopeligroso[0], 300, 1500, 230, 550);
+    caminopeligroso[1] = ZigZagAgujeros(caminopeligroso[1], 100, 1500, 70, 370);
+    
+    caminopeligroso[0] = AgregarPilaCajas(caminopeligroso[0], 1800, 0, 0);
+    caminopeligroso[0] = AgregarPilaCajas(caminopeligroso[0], 1850, 0, 1);
+    caminopeligroso[0] = AgregarPilaCajas(caminopeligroso[0], 1900, 0, 2);
+    caminopeligroso[0] = AgregarPilaCajas(caminopeligroso[0], 1950, 0, 3);
+    caminopeligroso[1] = AgregarPilaCajas(caminopeligroso[1], 2310, -1, -1);
+    plataformas.push(...SumarX(caminopeligroso, ultimoX));
+
+
+    
+    ultimoX = UltimoX(plataformas);
+    solopiso = SoloPiso(180, -200, 1700);
+    solopiso[0].AgregarCaja(-150, -1);
+    mapa.imagenes.push(new Imagen("tapalagrima", ultimoX + 300, 260, 500, 500));
+    mapa.imagenes.push(new Imagen("saynomore", ultimoX + 900, 270, 200, 200));
+    plataformas.push(...SumarX(solopiso, ultimoX));
+
+
+    
+    
+    ultimoX = UltimoX(plataformas);
+    solopiso = SoloPiso(580, 0, 1500);
+    solopiso[0].AgregarCaja(-150, -1);
+    mapa.imagenes.push(new Imagen("charlypileta", ultimoX + 100, 100, 200, 220));
+    plataformas.push(...SumarX(solopiso, ultimoX));
+
+
+    ultimoX = UltimoX(plataformas);
+    mapa.largo = ultimoX + 200;
+    mapa.meta.x = ultimoX - 100;
     plataformas.forEach(p => {
         mapa.plataformas.push(...p.getPlataformas());
         mapa.obstaculos.push(...p.obstaculos);
@@ -357,6 +448,7 @@ function HacerMapaModo2(archivo_mapa) {
 
 
     
+
 
     const jsonContent = JSON.stringify(mapa, null, 2);
     fs.writeFileSync(`..\\cliente\\public\\mapas\\${archivo_mapa}.json`, jsonContent, 'utf8');

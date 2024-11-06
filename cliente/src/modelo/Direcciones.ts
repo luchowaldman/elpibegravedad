@@ -34,7 +34,10 @@ export class Direcciones {
       tapamaquina: 'img/tapamaquina.png',
       texto_aprendiaserformalycortes: 'img/texto_aprendiaserformalycortes.png',
       texto_tacuhelas: 'img/texto_tacuhelas.png',
-
+      tapaclicks: 'img/tapaclicks.png',
+      tapalagrima: 'img/tapalagrima.png',
+      charlypileta: 'img/charlypileta.png',
+      saynomore: 'img/saynomore.png',
 
       
     };
