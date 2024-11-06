@@ -15,7 +15,7 @@ const (
 	characterTag                             = "character"
 	characterHeight                          = 50
 	characterWidth                           = 35
-	characterSpeedX                  float64 = float64(160) / TicksPerSecond
+	characterSpeedX                  float64 = float64(100) / TicksPerSecond
 	characterSpeedY                  float64 = float64(90) / TicksPerSecond
 	cameraLimitWidth                         = cellSize
 	raceFinishWidth                          = 50
@@ -175,8 +175,8 @@ func (world *World) updateCharacterPosition(character *Character) {
 
 	// dx is the horizontal delta movement variable (which is the Character's horizontal speed). If we come into contact with something, then it will
 	// be that movement instead.
-	dx := character.Speed.X
 
+	dx := character.Speed.X
 	log.Println(character.Object.Position)
 
 	// Moving horizontally is done fairly simply;
@@ -186,6 +186,10 @@ func (world *World) updateCharacterPosition(character *Character) {
 	if collision := character.Object.Check(dx, 0, solidTag); collision != nil {
 		log.Println("Colision en x")
 		dx = collision.ContactWithCell(collision.Cells[0]).X
+	}
+
+	if character.IsWalking {
+		dx *= 2
 	}
 
 	// Then we just apply the horizontal movement to the Character's Object. Easy-peasy.
