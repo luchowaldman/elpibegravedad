@@ -314,6 +314,10 @@ function HacerMapaModo2(archivo_mapa) {
     mapa.imagenes.push(new Imagen("texto_porquetequedasenviamuerta", ultimoX + 210, 450, 500, 50));
     mapa.imagenes.push(new Imagen("texto_porquetequedasenviamuerta", ultimoX + 910, 450, 500, 50));
     mapa.imagenes.push(new Imagen("texto_porquenoteanimasadespegar", ultimoX + 1610, 380, 500, 50));
+    mapa.imagenes.push(new Imagen("partitura", ultimoX + 910, 180, 100, 100));
+    mapa.imagenes.push(new Imagen("partitura", ultimoX + 1710, 120, 100, 100));
+    mapa.imagenes.push(new Imagen("partitura", ultimoX + 1960, 240, 100, 100));
+    
     mapa.imagenes.push(new Imagen("yoseporque", ultimoX + 2210, 200, 460, 50));
     // CaminoPeligroso
     ultimoX = UltimoX(plataformas);

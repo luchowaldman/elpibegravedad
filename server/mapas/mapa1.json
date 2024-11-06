@@ -1494,6 +1494,27 @@
       "alto": 50
     },
     {
+      "imagen": "partitura",
+      "desdeX": 610,
+      "desdeY": 180,
+      "largo": 100,
+      "alto": 100
+    },
+    {
+      "imagen": "partitura",
+      "desdeX": 1410,
+      "desdeY": 120,
+      "largo": 100,
+      "alto": 100
+    },
+    {
+      "imagen": "partitura",
+      "desdeX": 1360,
+      "desdeY": 240,
+      "largo": 100,
+      "alto": 100
+    },
+    {
       "imagen": "yoseporque",
       "desdeX": 2210,
       "desdeY": 200,
@@ -1597,7 +1618,7 @@
     "y": 350
   },
   "meta": {
-    "x": 26000,
+    "x": 25900,
     "y": 0,
     "alto": 600
   }

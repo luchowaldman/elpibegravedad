@@ -38,6 +38,7 @@ export class Direcciones {
       tapalagrima: 'img/tapalagrima.png',
       charlypileta: 'img/charlypileta.png',
       saynomore: 'img/saynomore.png',
+      partitura: 'img/partitura.png',
 
       
     };
