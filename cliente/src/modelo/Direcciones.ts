@@ -19,7 +19,29 @@ export class Direcciones {
       player_volando: '/img/player_volando.png',
       player_muriendo: '/img/player_muriendo.png',
       meta: '/img/meta.png',
-      lazo: '/img/lazo.png'
+      lazo: '/img/lazo.png',
+      caminorapidonotomar: '/img/caminorapidonotomar.png',
+      carteltunel: 'img/carteltunel.png',
+      cartelpeligro: 'img/cartelpeligro.png',
+      cartelseguro: 'img/cartelseguro.png',
+      texto_porquetequedasenviamuerta: 'img/texto_porquetequedasenviamuerta.png',
+      texto_porquenoteanimasadespegar: 'img/texto_porquenoteanimasadespegar.png',
+      yoseporque: 'img/yoseporque.png',
+      carteldescarrilados: 'img/carteldescarrilados.png',
+      tequededasenlapuerta: 'img/tequededasenlapuerta.png',
+      tapasui: 'img/tapasui.png',
+      tapaseru: 'img/tapaseru.png',
+      tapamaquina: 'img/tapamaquina.png',
+      texto_aprendiaserformalycortes: 'img/texto_aprendiaserformalycortes.png',
+      texto_tacuhelas: 'img/texto_tacuhelas.png',
+      tapaclicks: 'img/tapaclicks.png',
+      tapalagrima: 'img/tapalagrima.png',
+      charlypileta: 'img/charlypileta.png',
+      saynomore: 'img/saynomore.png',
+      partitura: 'img/partitura.png',
+      texto_hace4anios: 'img/texto_hace4anios.png',
+
+      
     };
   
     public static obtenerConstante(nombre: string): string | undefined {

@@ -1,0 +1,27 @@
+
+version: '3.9'
+name: pibegrabedad
+
+services:
+
+  vite_docker:
+    image: node:alpine
+    container_name: vite_docker
+    command: sh -c "npm i && npm run dev"
+    entrypoint: /bin/sh
+    ports:
+      - 8000:8000
+    working_dir: /srv/app
+    volumes:
+      - type: bind
+        source: ./cliente/
+        target: /srv/app
+    tty: true
+
+
+networks:
+  gravedad_net:
+    ipam:
+      driver: default
+      config:
+        - subnet: 128.25.125.0/24
