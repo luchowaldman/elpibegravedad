@@ -336,6 +336,8 @@ function HacerMapaModo2(archivo_mapa) {
     caminoseguro[1] = AgregarPilaCajas(caminoseguro[1], 1790, 0, 3);
     caminoseguro[1] = AgregarPilaCajas(caminoseguro[1], 2490, 0, 3);
     caminoseguro[1] = AgregarPilaCajas(caminoseguro[1], 3390, 0, 3);
+    
+    mapa.imagenes.push(new Imagen("texto_hace4anios", ultimoX + 2560, 340, 500, 50));
     plataformas.push(...SumarX(caminoseguro, ultimoX));
 
     ultimoX = UltimoX(plataformas);
@@ -439,6 +441,8 @@ function HacerMapaModo2(archivo_mapa) {
     solopiso = SoloPiso(580, 0, 1500);
     solopiso[0].AgregarCaja(-150, -1);
     mapa.imagenes.push(new Imagen("charlypileta", ultimoX + 100, 100, 200, 220));
+    mapa.imagenes.push(new Imagen("charlypileta", ultimoX + 300, 300, 200, 220));
+    mapa.imagenes.push(new Imagen("charlypileta", ultimoX + 400, 400, 200, 220));
     plataformas.push(...SumarX(solopiso, ultimoX));
 
 

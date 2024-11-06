@@ -1495,21 +1495,21 @@
     },
     {
       "imagen": "partitura",
-      "desdeX": 610,
+      "desdeX": 910,
       "desdeY": 180,
       "largo": 100,
       "alto": 100
     },
     {
       "imagen": "partitura",
-      "desdeX": 1410,
+      "desdeX": 1710,
       "desdeY": 120,
       "largo": 100,
       "alto": 100
     },
     {
       "imagen": "partitura",
-      "desdeX": 1360,
+      "desdeX": 1960,
       "desdeY": 240,
       "largo": 100,
       "alto": 100
@@ -1534,6 +1534,13 @@
       "desdeY": 340,
       "largo": 200,
       "alto": 200
+    },
+    {
+      "imagen": "texto_hace4anios",
+      "desdeX": 5260,
+      "desdeY": 340,
+      "largo": 500,
+      "alto": 50
     },
     {
       "imagen": "texto_porquetequedasenviamuerta",
@@ -1609,6 +1616,20 @@
       "imagen": "charlypileta",
       "desdeX": 24600,
       "desdeY": 100,
+      "largo": 200,
+      "alto": 220
+    },
+    {
+      "imagen": "charlypileta",
+      "desdeX": 24800,
+      "desdeY": 300,
+      "largo": 200,
+      "alto": 220
+    },
+    {
+      "imagen": "charlypileta",
+      "desdeX": 24900,
+      "desdeY": 400,
       "largo": 200,
       "alto": 220
     }

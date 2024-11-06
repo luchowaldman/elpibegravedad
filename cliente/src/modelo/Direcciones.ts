@@ -39,6 +39,7 @@ export class Direcciones {
       charlypileta: 'img/charlypileta.png',
       saynomore: 'img/saynomore.png',
       partitura: 'img/partitura.png',
+      texto_hace4anios: 'img/texto_hace4anios.png',
 
       
     };
