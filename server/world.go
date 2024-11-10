@@ -22,6 +22,8 @@ const (
 	characterInitialPositionDistance         = 20
 )
 
+var collisionTags = []string{solidTag, characterTag}
+
 type World struct {
 	space *resolv.Space
 
@@ -111,10 +113,10 @@ func (world *World) Init(gameMap Map, players []*Player) {
 		world.space.Add(characterObject)
 
 		if i%2 == 0 {
+			characterInitialY = characterInitialY + characterHeight + characterInitialPositionDistance
+		} else {
 			characterInitialX = characterInitialX - characterWidth - characterInitialPositionDistance
 			characterInitialY = characterInitialY - characterHeight - characterInitialPositionDistance
-		} else {
-			characterInitialY = characterInitialY + characterHeight + characterInitialPositionDistance
 		}
 	}
 }
@@ -126,7 +128,6 @@ func (world *World) Init(gameMap Map, players []*Player) {
 //   - died: true if the character died this tick
 func (world *World) Update(character *Character) (bool, bool) {
 	if !character.IsDead {
-		// TODO aca tener cuidado con colisiones entre los mismos players, calcular antes de avanzar
 		world.updateCharacterPosition(character)
 
 		if world.checkIfCharacterFinishedRace(character) {
@@ -185,8 +186,7 @@ func (world *World) updateCharacterPosition(character *Character) {
 	// we just check to see if something solid is in front of us. If so, we move into contact with it
 	// and stop horizontal movement speed. If not, then we can just move forward.
 
-	if collision := character.Object.Check(dx, 0, solidTag); collision != nil {
-		log.Println("Colision en x")
+	if collision := character.Object.Check(dx, 0, collisionTags...); collision != nil {
 		dx = collision.ContactWithCell(collision.Cells[0]).X
 	}
 
@@ -211,9 +211,7 @@ func (world *World) updateCharacterPosition(character *Character) {
 
 	// We check for any solid / stand-able objects. In actuality, there aren't any other Objects
 	// with other tags in this Space, so we don't -have- to specify any tags, but it's good to be specific for clarity in this example.
-	if collision := character.Object.Check(0, dy, solidTag); collision != nil {
-		log.Println("Colision en y")
-
+	if collision := character.Object.Check(0, dy, collisionTags...); collision != nil {
 		dy = collision.ContactWithCell(collision.Cells[0]).Y
 
 		character.IsWalking = true
