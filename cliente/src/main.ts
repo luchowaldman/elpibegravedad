@@ -77,10 +77,10 @@ document.addEventListener('DOMContentLoaded', () => {
             graficos.AdddEntidad(ent2);
 
             /*          
-                      graficos.agenda.agregarAccionGrafica(0 ,new  AccionGraficaAgregarEntidad(graficos, "bala_1", "player", 90, 90));
-                      graficos.agenda.agregarAccionGrafica(0 ,new  AccionGraficaAgregarEntidad(graficos, "bala_1", "player", 90, 90));
-                      graficos.agenda.agregarAccionGrafica(0 ,new  AccionGraficaAgregarEntidad(graficos, "bala_1", "player", 90, 90));
-                      graficos.agenda.agregarAccionGrafica(0 ,new  AccionGraficaAgregarEntidad(graficos, "bala_1", "player", 90, 90));
+            graficos.agenda.agregarAccionGrafica(0 ,new  AccionGraficaAgregarEntidad(graficos, "bala_1", "player", 90, 90));
+            graficos.agenda.agregarAccionGrafica(0 ,new  AccionGraficaAgregarEntidad(graficos, "bala_1", "player", 90, 90));
+            graficos.agenda.agregarAccionGrafica(0 ,new  AccionGraficaAgregarEntidad(graficos, "bala_1", "player", 90, 90));
+            graficos.agenda.agregarAccionGrafica(0 ,new  AccionGraficaAgregarEntidad(graficos, "bala_1", "player", 90, 90));
           */
             graficos.agenda.agregarAccionGrafica(1, new AccionGraficaCambiarVelovidad(graficos, "player", 50, 0));
             graficos.agenda.agregarAccionGrafica(1, new AccionGraficaAnimar(graficos, "player", "animacioncaminando"));

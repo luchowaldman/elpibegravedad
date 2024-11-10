@@ -1,6 +1,6 @@
 import { ControladorDOM } from './ControladorDOM';
 import { AccionGraficaModificarTexto, AccionGraficaMostrarTexto, AccionGraficaSetPosicion, AccionGraficaSetPosicionTexto } from './modelo/AccionGrafica';
-import { Client, InformacionJugador } from './modelo/client_socketio';
+import { Client, InformacionJugador, PosicionJugador } from './modelo/client_socketio';
 import { divMapa } from './modelo/divMapa';
 import { graficoJuego } from './modelo/graficoJuego';
 import { Jugador } from './modelo/jugador';
@@ -140,18 +140,13 @@ export class  Aplicacion {
         console.log("Error en la conexion");
         this.controladorDOM.mostrar_error("Error en la conexion");
     }
-    private handlePosicionJugadores(posicionesDeLosJugadores: any[]) {
+    private handlePosicionJugadores(posicionesDeLosJugadores: PosicionJugador[]) {
         
         for (let i = 0; i < posicionesDeLosJugadores.length; i++) {
             const x = posicionesDeLosJugadores[i].x;
             const y = posicionesDeLosJugadores[i].y;
             console.log("Jugador", posicionesDeLosJugadores[i]);
-            if (posicionesDeLosJugadores[i].estaMuerto) {
-                console.log("Jugador Muerto", i);
-
-            }
-
-            this.jugadores[i].setPosicion(this.graficos, x, y, posicionesDeLosJugadores[i].estaCaminando, posicionesDeLosJugadores[i].tieneGravedadInvertida, posicionesDeLosJugadores[i].estaMuerto);
+            this.jugadores[i].setPosicion(this.graficos, x, y, posicionesDeLosJugadores[i].estaCaminando, posicionesDeLosJugadores[i].tieneGravedadInvertida, posicionesDeLosJugadores[i].estado);
         }
     }
 

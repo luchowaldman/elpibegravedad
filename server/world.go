@@ -56,11 +56,11 @@ func (world *World) Init(gameMap Map, players []*Player) {
 			worldLimitTag,
 		),
 		resolv.NewObject(
-			0, 0, gameWidth, cellSize,
+			80, 0, gameWidth, cellSize,
 			worldLimitTag,
 		),
 		resolv.NewObject(
-			0, gameHeight-cellSize, gameWidth, cellSize,
+			80, gameHeight-cellSize, gameWidth, cellSize,
 			worldLimitTag,
 		),
 	)
