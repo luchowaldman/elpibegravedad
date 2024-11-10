@@ -80,7 +80,12 @@ export class Jugador {
                 this.estado = estado;                   
                 if (this.estado == "muerto") {
                     this.animar(graficos, "animacionmuriendo");
+                }    
+                if (this.estado == "cruzoMeta") {
+                    this.animar(graficos, "animacionfestejando");
                 }
+
+                
             }
 
         if (this.tieneGravedadInvertida != tieneGravedadInvertida) 

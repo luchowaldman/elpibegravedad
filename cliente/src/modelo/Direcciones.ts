@@ -21,6 +21,8 @@ export class Direcciones {
       player_caminando: '/img/player_caminando.png',
       player_volando: '/img/player_volando.png',
       player_muriendo: '/img/player_muriendo.png',
+      player_festejando: '/img/player_festejando.png',
+      
       meta: '/img/meta.png',
       lazo: '/img/lazo.png',
       caminorapidonotomar: '/img/caminorapidonotomar.png',
