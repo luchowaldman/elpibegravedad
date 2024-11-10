@@ -124,7 +124,7 @@ func (world *World) Init(gameMap Map, players []*Player) {
 //   - finished: true if the character finished the race this tick
 //   - died: true if the character died this tick
 func (world *World) Update(character *Character) (bool, bool) {
-	if !character.IsDead {
+	if !character.IsDead && !character.HasFinished {
 		world.updateCharacterPosition(character)
 
 		if world.checkIfCharacterFinishedRace(character) {
@@ -155,7 +155,7 @@ func (world *World) checkIfCharacterFinishedRace(character *Character) bool {
 	if collision := character.Object.Check(0, 0, raceFinishTag); collision != nil {
 		log.Println("Character finished race")
 
-		character.IsDead = true
+		character.HasFinished = true
 
 		return true
 	}
