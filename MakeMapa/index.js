@@ -76,8 +76,8 @@ function PistoYTecho(y_piso = 400,y_techo = 230, xdesde_piso = 230, xhasta_piso 
     
     let plataformas = [];
     
-    let piso_principal = new PlataformasHorizontales(y_piso, "piso");
-    let techo_principal = new PlataformasHorizontales(y_techo, "techo");
+    let piso_principal = new PlataformasHorizontales(y_piso, "pisodoble");
+    let techo_principal = new PlataformasHorizontales(y_techo, "pisodoble");
     
     plataformas.push(piso_principal);
     plataformas.push(techo_principal);
@@ -91,7 +91,7 @@ function PistoYTecho(y_piso = 400,y_techo = 230, xdesde_piso = 230, xhasta_piso 
 function SoloPiso(y_piso = 400, xdesde_piso = 230, xhasta_piso = 1000) {   
     
     let plataformas = [];    
-    let piso = new PlataformasHorizontales(y_piso, "piso");
+    let piso = new PlataformasHorizontales(y_piso, "pisodoble");
     plataformas.push(piso);
     piso.AgregarPlataforma(xdesde_piso, xhasta_piso);
     return plataformas;
@@ -104,12 +104,12 @@ function EmbudoAcendente1() {
     
     let plataformas = [];
     
-    let piso_1 = new PlataformasHorizontales(460, "piso");
-    let piso_2 = new PlataformasHorizontales(500, "piso");
-    let piso_3 = new PlataformasHorizontales(550, "piso");
-    let techo_1 = new PlataformasHorizontales(210, "techo");
-    let techo_2 = new PlataformasHorizontales(180, "techo");
-    let techo_3 = new PlataformasHorizontales(140, "techo");
+    let piso_1 = new PlataformasHorizontales(460, "pisodoble");
+    let piso_2 = new PlataformasHorizontales(500, "pisodoble");
+    let piso_3 = new PlataformasHorizontales(550, "pisodoble");
+    let techo_1 = new PlataformasHorizontales(210, "pisodoble");
+    let techo_2 = new PlataformasHorizontales(180, "pisodoble");
+    let techo_3 = new PlataformasHorizontales(140, "pisodoble");
 
     piso_1.AgregarPlataforma(0, 600);
     techo_1.AgregarPlataforma(0, 600);
@@ -133,13 +133,13 @@ function EmbudoDendente1(piso1, techo1, tam_escalon, tam_plata = 600, tam_salto 
     
     let plataformas = [];
     
-    let piso_1 = new PlataformasHorizontales(piso1, "piso");
-    let piso_2 = new PlataformasHorizontales(piso1 - tam_escalon, "piso");
-    let piso_3 = new PlataformasHorizontales(piso1 - (2 * tam_escalon), "piso");
+    let piso_1 = new PlataformasHorizontales(piso1, "pisodoble");
+    let piso_2 = new PlataformasHorizontales(piso1 - tam_escalon, "pisodoble");
+    let piso_3 = new PlataformasHorizontales(piso1 - (2 * tam_escalon), "pisodoble");
 
-    let techo_3 = new PlataformasHorizontales(techo1 + (2 * tam_escalon), "techo");
-    let techo_2 = new PlataformasHorizontales(techo1 + tam_escalon, "techo");
-    let techo_1 = new PlataformasHorizontales(techo1, "techo");
+    let techo_3 = new PlataformasHorizontales(techo1 + (2 * tam_escalon), "pisodoble");
+    let techo_2 = new PlataformasHorizontales(techo1 + tam_escalon, "pisodoble");
+    let techo_1 = new PlataformasHorizontales(techo1, "pisodoble");
 
     piso_1.AgregarPlataforma(0, tam_plata);
     techo_1.AgregarPlataforma(0, tam_plata);

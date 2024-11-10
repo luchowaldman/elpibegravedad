@@ -5,7 +5,7 @@
   "cancion": "cancion",
   "plataformas": [
     {
-      "tipo": "piso",
+      "tipo": "pisodoble",
       "desdeX": 0,
       "desdeY": 500,
       "hastaX": 2700,
@@ -13,7 +13,7 @@
       "alto": 10
     },
     {
-      "tipo": "piso",
+      "tipo": "pisodoble",
       "desdeX": 3100,
       "desdeY": 200,
       "hastaX": 3500,
@@ -21,7 +21,7 @@
       "alto": 10
     },
     {
-      "tipo": "piso",
+      "tipo": "pisodoble",
       "desdeX": 3630,
       "desdeY": 200,
       "hastaX": 4230,
@@ -29,7 +29,7 @@
       "alto": 10
     },
     {
-      "tipo": "piso",
+      "tipo": "pisodoble",
       "desdeX": 4360,
       "desdeY": 200,
       "hastaX": 4960,
@@ -37,7 +37,7 @@
       "alto": 10
     },
     {
-      "tipo": "piso",
+      "tipo": "pisodoble",
       "desdeX": 5090,
       "desdeY": 200,
       "hastaX": 5690,
@@ -45,7 +45,7 @@
       "alto": 10
     },
     {
-      "tipo": "piso",
+      "tipo": "pisodoble",
       "desdeX": 5820,
       "desdeY": 200,
       "hastaX": 6200,
@@ -53,7 +53,7 @@
       "alto": 10
     },
     {
-      "tipo": "techo",
+      "tipo": "pisodoble",
       "desdeX": 2700,
       "desdeY": 50,
       "hastaX": 3300,
@@ -61,7 +61,7 @@
       "alto": 10
     },
     {
-      "tipo": "techo",
+      "tipo": "pisodoble",
       "desdeX": 3370,
       "desdeY": 50,
       "hastaX": 3770,
@@ -69,7 +69,7 @@
       "alto": 10
     },
     {
-      "tipo": "techo",
+      "tipo": "pisodoble",
       "desdeX": 3840,
       "desdeY": 50,
       "hastaX": 4240,
@@ -77,7 +77,7 @@
       "alto": 10
     },
     {
-      "tipo": "techo",
+      "tipo": "pisodoble",
       "desdeX": 4310,
       "desdeY": 50,
       "hastaX": 4710,
@@ -85,7 +85,7 @@
       "alto": 10
     },
     {
-      "tipo": "techo",
+      "tipo": "pisodoble",
       "desdeX": 4780,
       "desdeY": 50,
       "hastaX": 5180,
@@ -93,7 +93,7 @@
       "alto": 10
     },
     {
-      "tipo": "techo",
+      "tipo": "pisodoble",
       "desdeX": 5250,
       "desdeY": 50,
       "hastaX": 5650,
@@ -101,7 +101,7 @@
       "alto": 10
     },
     {
-      "tipo": "techo",
+      "tipo": "pisodoble",
       "desdeX": 5720,
       "desdeY": 50,
       "hastaX": 6120,
@@ -109,7 +109,7 @@
       "alto": 10
     },
     {
-      "tipo": "techo",
+      "tipo": "pisodoble",
       "desdeX": 6190,
       "desdeY": 50,
       "hastaX": 6200,
@@ -117,7 +117,7 @@
       "alto": 10
     },
     {
-      "tipo": "piso",
+      "tipo": "pisodoble",
       "desdeX": 2700,
       "desdeY": 580,
       "hastaX": 6200,
@@ -125,7 +125,7 @@
       "alto": 10
     },
     {
-      "tipo": "techo",
+      "tipo": "pisodoble",
       "desdeX": 3300,
       "desdeY": 400,
       "hastaX": 6200,
@@ -133,7 +133,7 @@
       "alto": 10
     },
     {
-      "tipo": "piso",
+      "tipo": "pisodoble",
       "desdeX": 6200,
       "desdeY": 590,
       "hastaX": 7700,
@@ -141,7 +141,7 @@
       "alto": 10
     },
     {
-      "tipo": "piso",
+      "tipo": "pisodoble",
       "desdeX": 7700,
       "desdeY": 590,
       "hastaX": 8300,
@@ -149,7 +149,7 @@
       "alto": 10
     },
     {
-      "tipo": "piso",
+      "tipo": "pisodoble",
       "desdeX": 8200,
       "desdeY": 510,
       "hastaX": 8900,
@@ -157,7 +157,7 @@
       "alto": 10
     },
     {
-      "tipo": "piso",
+      "tipo": "pisodoble",
       "desdeX": 8800,
       "desdeY": 430,
       "hastaX": 9500,
@@ -165,7 +165,7 @@
       "alto": 10
     },
     {
-      "tipo": "techo",
+      "tipo": "pisodoble",
       "desdeX": 7700,
       "desdeY": 0,
       "hastaX": 8300,
@@ -173,7 +173,7 @@
       "alto": 10
     },
     {
-      "tipo": "techo",
+      "tipo": "pisodoble",
       "desdeX": 8200,
       "desdeY": 80,
       "hastaX": 8900,
@@ -181,7 +181,7 @@
       "alto": 10
     },
     {
-      "tipo": "techo",
+      "tipo": "pisodoble",
       "desdeX": 8800,
       "desdeY": 160,
       "hastaX": 9500,
@@ -189,7 +189,7 @@
       "alto": 10
     },
     {
-      "tipo": "piso",
+      "tipo": "pisodoble",
       "desdeX": 9900,
       "desdeY": 200,
       "hastaX": 10300,
@@ -197,7 +197,7 @@
       "alto": 10
     },
     {
-      "tipo": "piso",
+      "tipo": "pisodoble",
       "desdeX": 10430,
       "desdeY": 200,
       "hastaX": 11030,
@@ -205,7 +205,7 @@
       "alto": 10
     },
     {
-      "tipo": "piso",
+      "tipo": "pisodoble",
       "desdeX": 11160,
       "desdeY": 200,
       "hastaX": 11760,
@@ -213,7 +213,7 @@
       "alto": 10
     },
     {
-      "tipo": "piso",
+      "tipo": "pisodoble",
       "desdeX": 11890,
       "desdeY": 200,
       "hastaX": 12490,
@@ -221,7 +221,7 @@
       "alto": 10
     },
     {
-      "tipo": "piso",
+      "tipo": "pisodoble",
       "desdeX": 12620,
       "desdeY": 200,
       "hastaX": 13000,
@@ -229,7 +229,7 @@
       "alto": 10
     },
     {
-      "tipo": "techo",
+      "tipo": "pisodoble",
       "desdeX": 9500,
       "desdeY": 50,
       "hastaX": 10100,
@@ -237,7 +237,7 @@
       "alto": 10
     },
     {
-      "tipo": "techo",
+      "tipo": "pisodoble",
       "desdeX": 10170,
       "desdeY": 50,
       "hastaX": 10570,
@@ -245,7 +245,7 @@
       "alto": 10
     },
     {
-      "tipo": "techo",
+      "tipo": "pisodoble",
       "desdeX": 10640,
       "desdeY": 50,
       "hastaX": 11040,
@@ -253,7 +253,7 @@
       "alto": 10
     },
     {
-      "tipo": "techo",
+      "tipo": "pisodoble",
       "desdeX": 11110,
       "desdeY": 50,
       "hastaX": 11510,
@@ -261,7 +261,7 @@
       "alto": 10
     },
     {
-      "tipo": "techo",
+      "tipo": "pisodoble",
       "desdeX": 11580,
       "desdeY": 50,
       "hastaX": 11980,
@@ -269,7 +269,7 @@
       "alto": 10
     },
     {
-      "tipo": "techo",
+      "tipo": "pisodoble",
       "desdeX": 12050,
       "desdeY": 50,
       "hastaX": 12450,
@@ -277,7 +277,7 @@
       "alto": 10
     },
     {
-      "tipo": "techo",
+      "tipo": "pisodoble",
       "desdeX": 12520,
       "desdeY": 50,
       "hastaX": 12920,
@@ -285,7 +285,7 @@
       "alto": 10
     },
     {
-      "tipo": "techo",
+      "tipo": "pisodoble",
       "desdeX": 12990,
       "desdeY": 50,
       "hastaX": 13000,
@@ -293,7 +293,7 @@
       "alto": 10
     },
     {
-      "tipo": "piso",
+      "tipo": "pisodoble",
       "desdeX": 9500,
       "desdeY": 590,
       "hastaX": 13000,
@@ -301,7 +301,7 @@
       "alto": 10
     },
     {
-      "tipo": "techo",
+      "tipo": "pisodoble",
       "desdeX": 10100,
       "desdeY": 400,
       "hastaX": 13000,
@@ -309,7 +309,7 @@
       "alto": 10
     },
     {
-      "tipo": "piso",
+      "tipo": "pisodoble",
       "desdeX": 13000,
       "desdeY": 360,
       "hastaX": 14000,
@@ -317,7 +317,7 @@
       "alto": 10
     },
     {
-      "tipo": "piso",
+      "tipo": "pisodoble",
       "desdeX": 13800,
       "desdeY": 500,
       "hastaX": 17000,
@@ -325,7 +325,7 @@
       "alto": 10
     },
     {
-      "tipo": "techo",
+      "tipo": "pisodoble",
       "desdeX": 13800,
       "desdeY": 160,
       "hastaX": 16600,
@@ -333,7 +333,7 @@
       "alto": 10
     },
     {
-      "tipo": "piso",
+      "tipo": "pisodoble",
       "desdeX": 17000,
       "desdeY": 590,
       "hastaX": 17800,
@@ -341,7 +341,7 @@
       "alto": 10
     },
     {
-      "tipo": "piso",
+      "tipo": "pisodoble",
       "desdeX": 17800,
       "desdeY": 520,
       "hastaX": 18600,
@@ -349,7 +349,7 @@
       "alto": 10
     },
     {
-      "tipo": "piso",
+      "tipo": "pisodoble",
       "desdeX": 18600,
       "desdeY": 450,
       "hastaX": 19400,
@@ -357,7 +357,7 @@
       "alto": 10
     },
     {
-      "tipo": "techo",
+      "tipo": "pisodoble",
       "desdeX": 17000,
       "desdeY": 10,
       "hastaX": 17800,
@@ -365,7 +365,7 @@
       "alto": 10
     },
     {
-      "tipo": "techo",
+      "tipo": "pisodoble",
       "desdeX": 17800,
       "desdeY": 80,
       "hastaX": 18600,
@@ -373,7 +373,7 @@
       "alto": 10
     },
     {
-      "tipo": "techo",
+      "tipo": "pisodoble",
       "desdeX": 18600,
       "desdeY": 150,
       "hastaX": 19400,
@@ -381,7 +381,7 @@
       "alto": 10
     },
     {
-      "tipo": "piso",
+      "tipo": "pisodoble",
       "desdeX": 19300,
       "desdeY": 360,
       "hastaX": 20400,
@@ -389,7 +389,7 @@
       "alto": 10
     },
     {
-      "tipo": "piso",
+      "tipo": "pisodoble",
       "desdeX": 20400,
       "desdeY": 360,
       "hastaX": 20700,
@@ -397,7 +397,7 @@
       "alto": 10
     },
     {
-      "tipo": "piso",
+      "tipo": "pisodoble",
       "desdeX": 20930,
       "desdeY": 360,
       "hastaX": 21480,
@@ -405,7 +405,7 @@
       "alto": 10
     },
     {
-      "tipo": "piso",
+      "tipo": "pisodoble",
       "desdeX": 21710,
       "desdeY": 360,
       "hastaX": 22420,
@@ -413,7 +413,7 @@
       "alto": 10
     },
     {
-      "tipo": "techo",
+      "tipo": "pisodoble",
       "desdeX": 20400,
       "desdeY": 1,
       "hastaX": 20500,
@@ -421,7 +421,7 @@
       "alto": 10
     },
     {
-      "tipo": "techo",
+      "tipo": "pisodoble",
       "desdeX": 20570,
       "desdeY": 1,
       "hastaX": 20940,
@@ -429,7 +429,7 @@
       "alto": 10
     },
     {
-      "tipo": "techo",
+      "tipo": "pisodoble",
       "desdeX": 21010,
       "desdeY": 1,
       "hastaX": 21380,
@@ -437,7 +437,7 @@
       "alto": 10
     },
     {
-      "tipo": "techo",
+      "tipo": "pisodoble",
       "desdeX": 21450,
       "desdeY": 1,
       "hastaX": 21820,
@@ -445,7 +445,7 @@
       "alto": 10
     },
     {
-      "tipo": "techo",
+      "tipo": "pisodoble",
       "desdeX": 21890,
       "desdeY": 1,
       "hastaX": 22800,
@@ -453,7 +453,7 @@
       "alto": 10
     },
     {
-      "tipo": "piso",
+      "tipo": "pisodoble",
       "desdeX": 22600,
       "desdeY": 180,
       "hastaX": 24500,
@@ -461,7 +461,7 @@
       "alto": 10
     },
     {
-      "tipo": "piso",
+      "tipo": "pisodoble",
       "desdeX": 24500,
       "desdeY": 580,
       "hastaX": 26000,
@@ -1635,7 +1635,7 @@
     }
   ],
   "inicio_jugadores": {
-    "x": 200,
+    "x": 50,
     "y": 350
   },
   "meta": {
