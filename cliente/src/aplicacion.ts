@@ -165,8 +165,19 @@ export class  Aplicacion {
     }
 
     private handleIniciarJuego() {
-        console.log("Iniciar Juego");
-        this.SetLabelGrafico("", "");
+        this.SetLabelGrafico("Iniciando", "3 ...");
+        setTimeout(() => {
+            this.SetLabelGrafico("Iniciando", "... 2 ...");
+            setTimeout(() => {
+            this.SetLabelGrafico("Iniciando", "     ....  1");
+            setTimeout(() => {
+                this.SetLabelGrafico("Iniciado", "A correr");
+                setTimeout(() => {
+                this.SetLabelGrafico("", "");
+                }, 1000);
+            }, 1000);
+            }, 1000);
+        }, 1000);
         this.mapa.dibujarMapa(this.graficos);    
         this.jugadores.forEach(jugador => jugador.dibujar(this.graficos));
     }
