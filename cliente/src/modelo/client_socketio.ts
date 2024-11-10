@@ -18,7 +18,7 @@ export interface PosicionJugador {
     y: number,
     tieneGravedadInvertida: boolean,
     estaCaminando: boolean,
-    estaMuerto: boolean,
+    estado: string,
 }
 
 export interface ClientToServerEvents {
@@ -123,7 +123,7 @@ export class Client {
             });
 
 
-            
+
             socket.on("informacionSala", (salaID, mapa, listaJugadores) => {
                 console.log("informacionSala received", salaID, mapa, listaJugadores);
 

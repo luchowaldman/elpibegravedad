@@ -14,6 +14,14 @@ const (
 	characterSpeedY         float64 = float64(90) / ticksPerSecond
 )
 
+type PlayerStatus string
+
+const (
+	PlayerStatusOK       PlayerStatus = "ok"
+	PlayerStatusDead     PlayerStatus = "muerto"
+	PlayerStatusFinished PlayerStatus = "cruzoMeta"
+)
+
 type PlayerInfo struct {
 	playerNumber       int
 	posX               int
@@ -21,16 +29,25 @@ type PlayerInfo struct {
 	hasGravityInverted bool
 	isWalking          bool
 	isDead             bool
+	hasFinished        bool
 }
 
 func (playerInfo PlayerInfo) ToMap() map[string]any {
+	status := PlayerStatusOK
+
+	if playerInfo.isDead {
+		status = PlayerStatusDead
+	} else if playerInfo.hasFinished {
+		status = PlayerStatusFinished
+	}
+
 	return map[string]any{
 		"numeroJugador":          playerInfo.playerNumber,
 		"x":                      playerInfo.posX,
 		"y":                      playerInfo.posY,
 		"tieneGravedadInvertida": playerInfo.hasGravityInverted,
 		"estaCaminando":          playerInfo.isWalking,
-		"estaMuerto":             playerInfo.isDead,
+		"estado":                 status,
 	}
 }
 
@@ -101,6 +118,7 @@ func gameLoop(world *World, room *Room) {
 					hasGravityInverted := player.Character.HasGravityInverted
 					isWalking := player.Character.IsWalking
 					isDead := player.Character.IsDead
+					hasFinished := player.Character.HasFinished
 
 					point := Point{
 						X: int(posX),
@@ -114,6 +132,7 @@ func gameLoop(world *World, room *Room) {
 						hasGravityInverted: hasGravityInverted,
 						isWalking:          isWalking,
 						isDead:             isDead,
+						hasFinished:        hasFinished,
 					})
 				}
 
