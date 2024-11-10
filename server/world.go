@@ -175,9 +175,11 @@ func (world *World) updateCharacterPosition(character *Character) {
 
 	// dx is the horizontal delta movement variable (which is the Character's horizontal speed). If we come into contact with something, then it will
 	// be that movement instead.
-
 	dx := character.Speed.X
-	log.Println(character.Object.Position)
+
+	if character.IsWalking {
+		dx *= 2
+	}
 
 	// Moving horizontally is done fairly simply;
 	// we just check to see if something solid is in front of us. If so, we move into contact with it
@@ -186,10 +188,6 @@ func (world *World) updateCharacterPosition(character *Character) {
 	if collision := character.Object.Check(dx, 0, solidTag); collision != nil {
 		log.Println("Colision en x")
 		dx = collision.ContactWithCell(collision.Cells[0]).X
-	}
-
-	if character.IsWalking {
-		dx *= 2
 	}
 
 	// Then we just apply the horizontal movement to the Character's Object. Easy-peasy.
