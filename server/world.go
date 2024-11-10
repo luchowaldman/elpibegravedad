@@ -113,10 +113,10 @@ func (world *World) Init(gameMap Map, players []*Player) {
 		world.space.Add(characterObject)
 
 		if i%2 == 0 {
+			characterInitialY = characterInitialY + characterHeight + characterInitialPositionDistance
+		} else {
 			characterInitialX = characterInitialX - characterWidth - characterInitialPositionDistance
 			characterInitialY = characterInitialY - characterHeight - characterInitialPositionDistance
-		} else {
-			characterInitialY = characterInitialY + characterHeight + characterInitialPositionDistance
 		}
 	}
 }
