@@ -38,6 +38,8 @@ func main() {
 	world := NewWorld(gameMap, room.Players)
 
 	gameLoop(world, room)
+
+	// TODO eliminar, es para que el server no muera al terminar la carrera
 	for {
 		time.Sleep(5 * time.Second)
 	}
