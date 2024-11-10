@@ -467,10 +467,59 @@ function HacerMapaModo2(archivo_mapa) {
 
 
 
+function HacerMapaCorto(archivo_mapa) {
+
+    const mapa = {
+        nombre: "Mapa de ejemplo",
+        largo: 40000,
+        fondo: "sky",
+        cancion: "cancion",
+        plataformas: [],
+        obstaculos: [],
+        imagenes: [],
+        inicio_jugadores: { x: 50, y: 350 }, 
+        meta: {
+          x: 12500,
+          y: 0,
+          alto: 600
+        }
+    };
+
+
+    
+    let plataformas = [];   
+    let ultimoX = 0;
+    ultimoX = UltimoX(plataformas);
+    // Piso inicial
+    let solopiso = SoloPiso(500, 0, 2700);
+    plataformas.push(...SumarX(solopiso, ultimoX));
+
+
+    
+    ultimoX = UltimoX(plataformas);
+    mapa.largo = ultimoX + 200;
+    mapa.meta.x = ultimoX - 100;
+    plataformas.forEach(p => {
+        mapa.plataformas.push(...p.getPlataformas());
+        mapa.obstaculos.push(...p.obstaculos);
+    });
+
+
+    
+
+
+    const jsonContent = JSON.stringify(mapa, null, 2);
+    fs.writeFileSync(`..\\cliente\\public\\mapas\\${archivo_mapa}.json`, jsonContent, 'utf8');
+    fs.writeFileSync(`..\\server\\mapas\\${archivo_mapa}.json`, jsonContent, 'utf8');
+
+    console.log(`Archivo ${archivo_mapa}.json creado con éxito`);
+}
+
 async function main() {
 
     //HacerMapaModo1("mapa1");
-    HacerMapaModo2("mapa1");
+    //HacerMapaModo2("mapa1");
+    HacerMapaCorto("mapa1");
 }
 
 main();
