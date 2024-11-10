@@ -13,6 +13,9 @@ export class Jugador {
     entidad: EntidadGrafica | undefined;
     animacion: string;
     rotacion: number;
+    esta_caminando: boolean;
+    tieneGravedadInvertida: boolean;
+    estado: string = false;
 
     constructor(id: string,color: number, x: number, y: number) {
         this.id = id;
@@ -21,6 +24,8 @@ export class Jugador {
         this.y = y;
         this.animacion = ""        
         this.rotacion = -1000;
+
+        
     }
 
     dibujar(graficos: graficoJuego) {
@@ -55,22 +60,28 @@ export class Jugador {
 
     
 
-    setPosicion(graficos: graficoJuego, x: number, y: number, esta_caminando: boolean, tieneGravedadInvertida: boolean, estaMuerto: boolean) 
+    setPosicion(graficos: graficoJuego, x: number, y: number, esta_caminando: boolean, tieneGravedadInvertida: boolean, estado: string) 
     {
         const frame = graficos.agenda.getFrame();
-        if (!estaMuerto) 
+        if (this.esta_caminando != esta_caminando) 
         {
-            
             this.esta_caminando = esta_caminando;
-            if (esta_caminando) {
+            if (this.esta_caminando) {
                 this.animar(graficos, "animacioncaminando");
             } else {
                 this.animar(graficos, "animacionvolando");
             }
         }
-        else {
-            this.animar(graficos, "animacionvolando");
-        }
+        
+        
+        if (this.estado != estado) 
+            {
+                console.log("Jugador muerto", this.id);
+                this.estado = estado;                   
+                if (this.estado == "muerto") {
+                    this.animar(graficos, "animacionmuriendo");
+                }
+            }
 
         if (this.tieneGravedadInvertida != tieneGravedadInvertida) 
         {

@@ -42,9 +42,9 @@ export class Client {
     public setIniciarJuegoHandler(handler: () => void) {
         this.IniciarJuegoHandler = handler;
     }
-    private InformacionSalaHandler?: (id: string, mapa: string, listaJugadores: InformacionJugador) => void;
+    private InformacionSalaHandler?: (id: string, mapa: string, listaJugadores: InformacionJugador[]) => void;
 
-    public setInformacionSalaHandler(handler: (id: string, mapa: string, listaJugadores: InformacionJugador) => void) {
+    public setInformacionSalaHandler(handler: (id: string, mapa: string, listaJugadores: InformacionJugador[]) => void) {
         this.InformacionSalaHandler = handler;
     }
 
