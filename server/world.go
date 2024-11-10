@@ -8,18 +8,16 @@ import (
 )
 
 const (
-	cellSize                                 = 5
-	solidTag                                 = "solid"
-	worldLimitTag                            = "worldLimit"
-	raceFinishTag                            = "raceFinish"
-	characterTag                             = "character"
-	characterHeight                          = 50
-	characterWidth                           = 35
-	characterSpeedX                  float64 = float64(100) / TicksPerSecond
-	characterSpeedY                  float64 = float64(90) / TicksPerSecond
-	cameraLimitWidth                         = cellSize
-	raceFinishWidth                          = 50
-	characterInitialPositionDistance         = 20
+	cellSize                         = 5
+	solidTag                         = "solid"
+	worldLimitTag                    = "worldLimit"
+	raceFinishTag                    = "raceFinish"
+	characterTag                     = "character"
+	characterHeight                  = 50
+	characterWidth                   = 35
+	cameraLimitWidth                 = cellSize
+	raceFinishWidth                  = 50
+	characterInitialPositionDistance = 20
 )
 
 var collisionTags = []string{solidTag, characterTag}
@@ -108,7 +106,6 @@ func (world *World) Init(gameMap Map, players []*Player) {
 		)
 
 		player.Character = NewCharacter(characterObject)
-		player.Character.SetSpeed(characterSpeedX, -characterSpeedY)
 
 		world.space.Add(characterObject)
 
