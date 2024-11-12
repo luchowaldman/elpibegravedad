@@ -36,6 +36,51 @@ invitaciones para que los amigos puedan unirse a partidas, y la gestión de la e
 jugadores en las partidas. También será importante implementar un sistema para iniciar y finalizar las
 partidas, asegurando que todo funcione de manera fluida y sin interrupciones.
 
+# Cliente
+
+Servidor escrito en Golang para el juego "El pibe gravedad".
+
+## Ejecucion local
+
+La ejecucion local del proyecto es necesario tener instalado `npn` `node.js` y `lint`:
+
+1. Instalar:
+
+    ```bash
+    cd cliente
+    npm install
+    ```
+
+2. Ejecutar
+    npm run dev
+
+
 Para detalles sobre el cliente visita [esta pagina](cliente/README.md).
+
+
+# Server
+
+Servidor escrito en Golang para el juego "El pibe gravedad".
+
+## Ejecucion local
+
+La ejecucion local del proyecto es utilizando `docker` y `make`:
+
+1. Instala docker y el plugin compose
+2. Instala make
+3. Ejecuta
+
+    ```bash
+    make dev
+    ```
+
+O directamente usando `go`:
+
+1. Instala go>1.23.1
+2. Ejecuta
+
+    ```bash
+    go run .
+    ```
 
 Para detalles sobre el servidor visita [esta pagina](server/README.md).
