@@ -1,6 +1,12 @@
 import { Aplicacion } from './aplicacion';
 
-const aplicacion = new Aplicacion();
+const username = localStorage.getItem('username') || '';
+const serverInput = localStorage.getItem('server') || '';
+if (serverInput == '') {
+    
+    window.location.href = 'config.html';
+}
+const aplicacion = new Aplicacion(serverInput, username);
 aplicacion.iniciar();
 document.addEventListener('DOMContentLoaded', () => {
 
