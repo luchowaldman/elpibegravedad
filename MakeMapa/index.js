@@ -1,7 +1,7 @@
 const fs = require('fs');
 
 // index.js
-const { PlataformasHorizontales, LargoPlataforma, Plataforma, Obstaculo, Imagen } = require('./plataforma');
+const { PlataformasHorizontales, LargoPlataforma, Plataforma, Texto, Imagen } = require('./plataforma');
 
 
 function SumarX(plataformas, x) {
@@ -476,6 +476,7 @@ function HacerMapaModoHistoria(archivo_mapa) {
         plataformas: [],
         obstaculos: [],
         imagenes: [],
+        textos: [],
         inicio_jugadores: { x: 250, y: 350 }, 
         meta: {
           x: 12500,
@@ -488,12 +489,60 @@ function HacerMapaModoHistoria(archivo_mapa) {
     
     let plataformas = [];   
     let ultimoX = 0;
+    
+    
+    // 1800
     ultimoX = UltimoX(plataformas);
-    // Piso inicial
-    let solopiso = SoloPiso(590, 0, 2700, "pisodoble");
+    let solopiso = SoloPiso(390, 0, 2700, "pisodoble");
+    mapa.textos.push(new Texto("Buenos Aires. 1800", ultimoX + 100, 500, "30px", "blue", "FriedNuget"));
+    plataformas.push(...SumarX(solopiso, ultimoX));
+
+    // 1810
+    ultimoX = UltimoX(plataformas);
+    solopiso = SoloPiso(380, 0, 2700, "pisodoble");
+    mapa.textos.push(new Texto("Buenos Aires. 1810", ultimoX + 100, 500, "30px", "blue", "FriedNuget"));
     plataformas.push(...SumarX(solopiso, ultimoX));
 
 
+    // 1820
+    ultimoX = UltimoX(plataformas);
+    solopiso = SoloPiso(380, 0, 2700, "pisodoble");
+    mapa.textos.push(new Texto("Buenos Aires. 1820", ultimoX + 100, 500, "30px", "blue", "FriedNuget"));
+    plataformas.push(...SumarX(solopiso, ultimoX));
+
+
+
+    // 1850
+    ultimoX = UltimoX(plataformas);
+    solopiso = SoloPiso(380, 0, 2700, "pisodoble");
+    mapa.textos.push(new Texto("Buenos Aires. 1850", ultimoX + 100, 500, "30px", "blue", "FriedNuget"));
+    plataformas.push(...SumarX(solopiso, ultimoX));
+
+    // 19000
+    ultimoX = UltimoX(plataformas);
+    solopiso = SoloPiso(380, 0, 2700, "pisodoble");
+    mapa.textos.push(new Texto("Buenos Aires. 1900", ultimoX + 100, 500, "30px", "blue", "FriedNuget"));
+    plataformas.push(...SumarX(solopiso, ultimoX));
+
+        // 1950
+        ultimoX = UltimoX(plataformas);
+        solopiso = SoloPiso(380, 0, 2700, "pisodoble");
+        mapa.textos.push(new Texto("Buenos Aires. 1950", ultimoX + 100, 500, "30px", "blue", "FriedNuget"));
+        plataformas.push(...SumarX(solopiso, ultimoX));
+
+    // 2000
+    ultimoX = UltimoX(plataformas);
+    solopiso = SoloPiso(380, 0, 2700, "pisodoble");
+
+    mapa.textos.push(new Texto("Buenos Aires. 2000", ultimoX + 100, 500, "30px", "blue", "FriedNuget"));
+    plataformas.push(...SumarX(solopiso, ultimoX));
+
+        // 2050
+        ultimoX = UltimoX(plataformas);
+        solopiso = SoloPiso(380, 0, 2700, "pisodoble");
+        mapa.textos.push(new Texto("Buenos Aires. 2050", ultimoX + 100, 500, "30px", "blue", "FriedNuget"));
+        plataformas.push(...SumarX(solopiso, ultimoX));
+        
     ultimoX = UltimoX(plataformas);
     mapa.largo = ultimoX + 200;
     mapa.meta.x = ultimoX - 100;

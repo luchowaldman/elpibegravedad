@@ -38,6 +38,17 @@ class Imagen {
     }
 }
 
+class Texto {
+    constructor(texto, desdeX, desdeY, pixeles = "20px", color = "blue", fuente = "Arial") {
+        this.texto = texto;
+        this.desdeX = desdeX;
+        this.desdeY = desdeY;
+        this.pixeles = pixeles;
+        this.color = color;
+        this.fuente = fuente;
+    }
+}
+
 class PlataformasHorizontales {
     y = 0;
     largo = 0;
@@ -124,4 +135,4 @@ class PlataformasHorizontales {
 
 
 
-module.exports = { PlataformasHorizontales, LargoPlataforma, Plataforma, Obstaculo, Imagen };
+module.exports = { PlataformasHorizontales, LargoPlataforma, Plataforma, Obstaculo, Imagen, Texto };
