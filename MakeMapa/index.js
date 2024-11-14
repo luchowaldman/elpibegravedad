@@ -88,10 +88,10 @@ function PistoYTecho(y_piso = 400,y_techo = 230, xdesde_piso = 230, xhasta_piso 
 }
 
 
-function SoloPiso(y_piso = 400, xdesde_piso = 230, xhasta_piso = 1000) {   
+function SoloPiso(y_piso = 400, xdesde_piso = 230, xhasta_piso = 1000, tipo = "piso") {   
     
     let plataformas = [];    
-    let piso = new PlataformasHorizontales(y_piso, "piso");
+    let piso = new PlataformasHorizontales(y_piso, tipo);
     plataformas.push(piso);
     piso.AgregarPlataforma(xdesde_piso, xhasta_piso);
     return plataformas;
@@ -466,11 +466,59 @@ function HacerMapaModo2(archivo_mapa) {
 }
 
 
+function HacerMapaModoHistoria(archivo_mapa) {
+
+    const mapa = {
+        nombre: "Historia Argentina",
+        largo: 40000,
+        fondo: "sky",
+        cancion: "cancion",
+        plataformas: [],
+        obstaculos: [],
+        imagenes: [],
+        inicio_jugadores: { x: 250, y: 350 }, 
+        meta: {
+          x: 12500,
+          y: 0,
+          alto: 600
+        }
+    };
+
+
+    
+    let plataformas = [];   
+    let ultimoX = 0;
+    ultimoX = UltimoX(plataformas);
+    // Piso inicial
+    let solopiso = SoloPiso(590, 0, 2700, "pisodoble");
+    plataformas.push(...SumarX(solopiso, ultimoX));
+
+
+    ultimoX = UltimoX(plataformas);
+    mapa.largo = ultimoX + 200;
+    mapa.meta.x = ultimoX - 100;
+    plataformas.forEach(p => {
+        mapa.plataformas.push(...p.getPlataformas());
+        mapa.obstaculos.push(...p.obstaculos);
+    });
+
+
+    
+
+
+    const jsonContent = JSON.stringify(mapa, null, 2);
+    fs.writeFileSync(`..\\cliente\\public\\mapas\\${archivo_mapa}.json`, jsonContent, 'utf8');
+    fs.writeFileSync(`..\\server\\mapas\\${archivo_mapa}.json`, jsonContent, 'utf8');
+
+    console.log(`Archivo ${archivo_mapa}.json creado con éxito`);
+}
+
 
 async function main() {
 
     //HacerMapaModo1("mapa1");
-    HacerMapaModo2("mapa1");
+    //HacerMapaModo2("mapa1");
+    HacerMapaModoHistoria("mapa1");
 }
 
 main();
