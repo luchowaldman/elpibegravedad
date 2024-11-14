@@ -7,8 +7,19 @@ import (
 )
 
 const (
-	TicksPerSecond = 30
-	cameraWidth    = int(1500 / 2)
+	ticksPerSecond                  = 30
+	cameraWidth                     = int(1500 / 2)
+	initialTimeWithoutSpeed         = time.Second * 3
+	characterSpeedX         float64 = float64(100) / ticksPerSecond
+	characterSpeedY         float64 = float64(90) / ticksPerSecond
+)
+
+type PlayerStatus string
+
+const (
+	PlayerStatusOK       PlayerStatus = "ok"
+	PlayerStatusDead     PlayerStatus = "muerto"
+	PlayerStatusFinished PlayerStatus = "cruzoMeta"
 )
 
 type PlayerInfo struct {
@@ -18,21 +29,31 @@ type PlayerInfo struct {
 	hasGravityInverted bool
 	isWalking          bool
 	isDead             bool
+	hasFinished        bool
 }
 
 func (playerInfo PlayerInfo) ToMap() map[string]any {
+	status := PlayerStatusOK
+
+	if playerInfo.isDead {
+		status = PlayerStatusDead
+	} else if playerInfo.hasFinished {
+		status = PlayerStatusFinished
+	}
+
 	return map[string]any{
 		"numeroJugador":          playerInfo.playerNumber,
 		"x":                      playerInfo.posX,
 		"y":                      playerInfo.posY,
 		"tieneGravedadInvertida": playerInfo.hasGravityInverted,
 		"estaCaminando":          playerInfo.isWalking,
-		"estaMuerto":             playerInfo.isDead,
+		"estado":                 status,
 	}
 }
 
 func gameLoop(world *World, room *Room) {
-	ticker := time.NewTicker(time.Second / TicksPerSecond)
+	ticker := time.NewTicker(time.Second / ticksPerSecond)
+	initialTimer := time.NewTimer(initialTimeWithoutSpeed)
 	quit := make(chan struct{})
 
 	amountOfPlayers := len(room.Players)
@@ -40,25 +61,39 @@ func gameLoop(world *World, room *Room) {
 	playersThatFinished := make([]int, 0, amountOfPlayers)
 	playersThatDied := make([]int, 0, amountOfPlayers)
 
+	raceStarted := false // raceStarted represents whether the race has started, since there is an initial period where the game has started but the characters do not yet have speed
+
 	log.Println("Stating game loop")
+
 	for {
 		select {
+		case <-initialTimer.C:
+			// add speed to characters
+			for _, player := range room.Players {
+				player.Character.SetSpeed(characterSpeedX, -characterSpeedY)
+			}
+
+			raceStarted = true
+
+			log.Println("race started")
 		case <-ticker.C:
 			playersPositions := []PlayerInfo{}
 
-			room.Mutex.Lock()
+			if raceStarted {
+				room.Mutex.Lock()
 
-			for _, player := range room.Players {
-				finished, died := world.Update(player.Character)
+				for _, player := range room.Players {
+					finished, died := world.Update(player.Character)
 
-				if finished {
-					playersThatFinished = append(playersThatFinished, player.ID)
-				} else if died {
-					playersThatDied = append(playersThatDied, player.ID)
+					if finished {
+						playersThatFinished = append(playersThatFinished, player.ID)
+					} else if died {
+						playersThatDied = append(playersThatDied, player.ID)
+					}
 				}
-			}
 
-			room.Mutex.Unlock()
+				room.Mutex.Unlock()
+			}
 
 			if len(playersThatFinished)+len(playersThatDied) == amountOfPlayers {
 				log.Println("race finished")
@@ -83,6 +118,7 @@ func gameLoop(world *World, room *Room) {
 					hasGravityInverted := player.Character.HasGravityInverted
 					isWalking := player.Character.IsWalking
 					isDead := player.Character.IsDead
+					hasFinished := player.Character.HasFinished
 
 					point := Point{
 						X: int(posX),
@@ -96,6 +132,7 @@ func gameLoop(world *World, room *Room) {
 						hasGravityInverted: hasGravityInverted,
 						isWalking:          isWalking,
 						isDead:             isDead,
+						hasFinished:        hasFinished,
 					})
 				}
 

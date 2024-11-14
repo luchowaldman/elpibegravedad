@@ -11,6 +11,7 @@ type Character struct {
 	HasGravityInverted bool
 	IsWalking          bool
 	IsDead             bool
+	HasFinished        bool
 }
 
 func NewCharacter(object *resolv.Object) *Character {

@@ -8,19 +8,19 @@ import (
 )
 
 const (
-	cellSize                                 = 5
-	solidTag                                 = "solid"
-	worldLimitTag                            = "worldLimit"
-	raceFinishTag                            = "raceFinish"
-	characterTag                             = "character"
-	characterHeight                          = 50
-	characterWidth                           = 35
-	characterSpeedX                  float64 = float64(100) / TicksPerSecond
-	characterSpeedY                  float64 = float64(90) / TicksPerSecond
-	cameraLimitWidth                         = cellSize
-	raceFinishWidth                          = 50
-	characterInitialPositionDistance         = 20
+	cellSize                         = 5
+	solidTag                         = "solid"
+	worldLimitTag                    = "worldLimit"
+	raceFinishTag                    = "raceFinish"
+	characterTag                     = "character"
+	characterHeight                  = 50
+	characterWidth                   = 35
+	cameraLimitWidth                 = cellSize
+	raceFinishWidth                  = 50
+	characterInitialPositionDistance = 20
 )
+
+var collisionTags = []string{solidTag, characterTag}
 
 type World struct {
 	space *resolv.Space
@@ -56,11 +56,11 @@ func (world *World) Init(gameMap Map, players []*Player) {
 			worldLimitTag,
 		),
 		resolv.NewObject(
-			0, 0, gameWidth, cellSize,
+			80, 0, gameWidth, cellSize,
 			worldLimitTag,
 		),
 		resolv.NewObject(
-			0, gameHeight-cellSize, gameWidth, cellSize,
+			80, gameHeight-cellSize, gameWidth, cellSize,
 			worldLimitTag,
 		),
 	)
@@ -106,15 +106,14 @@ func (world *World) Init(gameMap Map, players []*Player) {
 		)
 
 		player.Character = NewCharacter(characterObject)
-		player.Character.SetSpeed(characterSpeedX, -characterSpeedY)
 
 		world.space.Add(characterObject)
 
 		if i%2 == 0 {
+			characterInitialY = characterInitialY + characterHeight + characterInitialPositionDistance
+		} else {
 			characterInitialX = characterInitialX - characterWidth - characterInitialPositionDistance
 			characterInitialY = characterInitialY - characterHeight - characterInitialPositionDistance
-		} else {
-			characterInitialY = characterInitialY + characterHeight + characterInitialPositionDistance
 		}
 	}
 }
@@ -125,8 +124,7 @@ func (world *World) Init(gameMap Map, players []*Player) {
 //   - finished: true if the character finished the race this tick
 //   - died: true if the character died this tick
 func (world *World) Update(character *Character) (bool, bool) {
-	if !character.IsDead {
-		// TODO aca tener cuidado con colisiones entre los mismos players, calcular antes de avanzar
+	if !character.IsDead && !character.HasFinished {
 		world.updateCharacterPosition(character)
 
 		if world.checkIfCharacterFinishedRace(character) {
@@ -157,7 +155,7 @@ func (world *World) checkIfCharacterFinishedRace(character *Character) bool {
 	if collision := character.Object.Check(0, 0, raceFinishTag); collision != nil {
 		log.Println("Character finished race")
 
-		character.IsDead = true
+		character.HasFinished = true
 
 		return true
 	}
@@ -176,15 +174,15 @@ func (world *World) updateCharacterPosition(character *Character) {
 	// dx is the horizontal delta movement variable (which is the Character's horizontal speed). If we come into contact with something, then it will
 	// be that movement instead.
 
-	dx := character.Speed.X
-	log.Println(character.Object.Position)
+	if character.IsWalking {
+		dx *= 2
+	}
 
 	// Moving horizontally is done fairly simply;
 	// we just check to see if something solid is in front of us. If so, we move into contact with it
 	// and stop horizontal movement speed. If not, then we can just move forward.
 
-	if collision := character.Object.Check(dx, 0, solidTag); collision != nil {
-		log.Println("Colision en x")
+	if collision := character.Object.Check(dx, 0, collisionTags...); collision != nil {
 		dx = collision.ContactWithCell(collision.Cells[0]).X
 	}
 
@@ -213,9 +211,7 @@ func (world *World) updateCharacterPosition(character *Character) {
 
 	// We check for any solid / stand-able objects. In actuality, there aren't any other Objects
 	// with other tags in this Space, so we don't -have- to specify any tags, but it's good to be specific for clarity in this example.
-	if collision := character.Object.Check(0, dy, solidTag); collision != nil {
-		log.Println("Colision en y")
-
+	if collision := character.Object.Check(0, dy, collisionTags...); collision != nil {
 		dy = collision.ContactWithCell(collision.Cells[0]).Y
 
 		character.IsWalking = true

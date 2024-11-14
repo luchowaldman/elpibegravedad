@@ -1,15 +1,20 @@
 {
   "nombre": "Mapa de ejemplo",
+<<<<<<< HEAD
   "largo": 26200,
+=======
+  "largo": 2900,
+>>>>>>> desarrollo
   "fondo": "sky",
   "cancion": "cancion",
   "plataformas": [
     {
-      "tipo": "piso",
+      "tipo": "pisodoble",
       "desdeX": 0,
       "desdeY": 500,
       "hastaX": 2700,
       "hastaY": 500,
+<<<<<<< HEAD
       "alto": 10
     },
     {
@@ -1634,12 +1639,23 @@
       "alto": 220
     }
   ],
+=======
+      "alto": 10
+    }
+  ],
+  "obstaculos": [],
+  "imagenes": [],
+>>>>>>> desarrollo
   "inicio_jugadores": {
     "x": 50,
     "y": 350
   },
   "meta": {
+<<<<<<< HEAD
     "x": 25900,
+=======
+    "x": 2600,
+>>>>>>> desarrollo
     "y": 0,
     "alto": 600
   }

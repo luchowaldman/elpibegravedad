@@ -1,6 +1,6 @@
 import { ControladorDOM } from './ControladorDOM';
 import { AccionGraficaModificarTexto, AccionGraficaMostrarTexto, AccionGraficaSetPosicion, AccionGraficaSetPosicionTexto } from './modelo/AccionGrafica';
-import { Client, InformacionJugador } from './modelo/client_socketio';
+import { Client, InformacionJugador, PosicionJugador } from './modelo/client_socketio';
 import { divMapa } from './modelo/divMapa';
 import { graficoJuego } from './modelo/graficoJuego';
 import { Jugador } from './modelo/jugador';
@@ -29,10 +29,11 @@ export class  Aplicacion {
     private client: Client; 
     private mapa: Mapa;
     private graficos: graficoJuego;
-
-    constructor() {
+    private nombreususario: string;
+    constructor(urlserver: string, nombreususario: string) {
+        this.nombreususario = nombreususario;
         this.controladorDOM = new ControladorDOM();
-        this.client = new Client();
+        this.client = new Client(urlserver);
         this.mapa = new Mapa();
         this.graficos = new graficoJuego();
         this.ConfigGraficos();           
@@ -75,6 +76,10 @@ export class  Aplicacion {
         this.graficos.AddAnimacionEntidadGrafica('animacionvolando', 'player_volando', 0, 1, 7, -1);
         this.graficos.AddAnimacion('player_muriendo',  35, 50);
         this.graficos.AddAnimacionEntidadGrafica('animacionmuriendo', 'player_muriendo', 0, 1, 7, -1);
+        this.graficos.AddAnimacion('player_festejando',  35, 50);
+        this.graficos.AddAnimacionEntidadGrafica('animacionfestejando', 'player_festejando', 0, 1, 7, -1);
+
+        
         this.graficos.agenda.agregarAccionGrafica(0 ,new  AccionGraficaMostrarTexto(this.graficos, "status_label", "DOM INICIADO", 600, posYLabelStatus));
         this.graficos.agenda.agregarAccionGrafica(0 ,new  AccionGraficaMostrarTexto(this.graficos, "jugadores_label", "", 500, posYLabelJugadores));
     }
@@ -140,18 +145,13 @@ export class  Aplicacion {
         console.log("Error en la conexion");
         this.controladorDOM.mostrar_error("Error en la conexion");
     }
-    private handlePosicionJugadores(posicionesDeLosJugadores: any[]) {
+    private handlePosicionJugadores(posicionesDeLosJugadores: PosicionJugador[]) {
         
         for (let i = 0; i < posicionesDeLosJugadores.length; i++) {
             const x = posicionesDeLosJugadores[i].x;
             const y = posicionesDeLosJugadores[i].y;
             console.log("Jugador", posicionesDeLosJugadores[i]);
-            if (posicionesDeLosJugadores[i].estaMuerto) {
-                console.log("Jugador Muerto", i);
-
-            }
-
-            this.jugadores[i].setPosicion(this.graficos, x, y, posicionesDeLosJugadores[i].estaCaminando, posicionesDeLosJugadores[i].tieneGravedadInvertida, posicionesDeLosJugadores[i].estaMuerto);
+            this.jugadores[i].setPosicion(this.graficos, x, y, posicionesDeLosJugadores[i].estaCaminando, posicionesDeLosJugadores[i].tieneGravedadInvertida, posicionesDeLosJugadores[i].estado);
         }
     }
 
@@ -170,8 +170,19 @@ export class  Aplicacion {
     }
 
     private handleIniciarJuego() {
-        console.log("Iniciar Juego");
-        this.SetLabelGrafico("", "");
+        this.SetLabelGrafico("Iniciando", "3 ...");
+        setTimeout(() => {
+            this.SetLabelGrafico("Iniciando", "... 2 ...");
+            setTimeout(() => {
+            this.SetLabelGrafico("Iniciando", "     ....  1");
+            setTimeout(() => {
+                this.SetLabelGrafico("Iniciado", "A correr");
+                setTimeout(() => {
+                this.SetLabelGrafico("", "");
+                }, 1000);
+            }, 1000);
+            }, 1000);
+        }, 1000);
         this.mapa.dibujarMapa(this.graficos);    
         this.jugadores.forEach(jugador => jugador.dibujar(this.graficos));
     }

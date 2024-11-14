@@ -781,7 +781,11 @@
     }
   ],
   "inicio_jugadores": {
+<<<<<<< HEAD
     "x": 50,
+=======
+    "x": 200,
+>>>>>>> desarrollo
     "y": 350
   },
   "meta": {

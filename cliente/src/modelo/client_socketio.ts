@@ -18,7 +18,7 @@ export interface PosicionJugador {
     y: number,
     tieneGravedadInvertida: boolean,
     estaCaminando: boolean,
-    estaMuerto: boolean,
+    estado: string,
 }
 
 export interface ClientToServerEvents {
@@ -42,9 +42,9 @@ export class Client {
     public setIniciarJuegoHandler(handler: () => void) {
         this.IniciarJuegoHandler = handler;
     }
-    private InformacionSalaHandler?: (id: string, mapa: string, listaJugadores: InformacionJugador) => void;
+    private InformacionSalaHandler?: (id: string, mapa: string, listaJugadores: InformacionJugador[]) => void;
 
-    public setInformacionSalaHandler(handler: (id: string, mapa: string, listaJugadores: InformacionJugador) => void) {
+    public setInformacionSalaHandler(handler: (id: string, mapa: string, listaJugadores: InformacionJugador[]) => void) {
         this.InformacionSalaHandler = handler;
     }
 
@@ -75,13 +75,17 @@ export class Client {
         this.connectErrorHandler = handler;
     }
 
-    constructor() {
+    
+    private urlserver: string;
+    constructor(urlserver: string) {
+        this.urlserver = urlserver;
     }
 
     public connect() {
 
 
-        let socket: Socket<ServerToClientEvents, ClientToServerEvents> = io("http://localhost:8080", {
+        console.log("conectando con %s", this.urlserver);
+        let socket: Socket<ServerToClientEvents, ClientToServerEvents> = io(this.urlserver, {
             autoConnect: true,
             rejectUnauthorized: false,
             transports: ['websocket']
@@ -123,7 +127,7 @@ export class Client {
             });
 
 
-            
+
             socket.on("informacionSala", (salaID, mapa, listaJugadores) => {
                 console.log("informacionSala received", salaID, mapa, listaJugadores);
 
