@@ -8,6 +8,7 @@ import { graficoJuego } from "./graficoJuego";
 import TipoPlataformaFactory from "./tiposplataforma/tipoplataformafactory";
 import { EntidadGrafica } from "./entidadgrafica";
 import { ImagenMapa } from "./ImagenMapa";
+import { TextoMapa } from "./textoMapa";
 
 export class Mapa {
     nombre: string = '';
@@ -19,6 +20,7 @@ export class Mapa {
     inicio_jugadores: InicioJugadores =  new InicioJugadores(0, 0);
     meta: Meta = new Meta(0, 0, 0);
     imagenes: ImagenMapa[] = [];
+    textos: TextoMapa[] = [];
     
     async cargarMapa(rutaArchivo: string) {
       try {
@@ -31,6 +33,7 @@ export class Mapa {
       this.plataformas = mapaData.plataformas.map((plataforma: Plataforma) => TipoPlataformaFactory.Crear(plataforma.tipo, plataforma.desdeX, plataforma.desdeY, plataforma.hastaX, plataforma.hastaY, plataforma.alto));
       this.obstaculos = mapaData.obstaculos.map((obstaculo: Obstaculo) => new Obstaculo(obstaculo.tipo, obstaculo.id, obstaculo.desdeX, obstaculo.desdeY, obstaculo.largo, obstaculo.alto));
       this.imagenes = mapaData.imagenes.map((imagen: ImagenMapa) => new ImagenMapa(imagen.imagen, imagen.desdeX, imagen.desdeY, imagen.largo, imagen.alto));
+      this.textos = mapaData.textos.map((texto: TextoMapa) => new TextoMapa(texto.texto, texto.desdeX, texto.desdeY, texto.largo, texto.alto, texto.pixeles, texto.color, texto.fuente));
       this.inicio_jugadores = new InicioJugadores(mapaData.inicio_jugadores.x, mapaData.inicio_jugadores.y);
       this.meta = new Meta(mapaData.meta.x, mapaData.meta.y, mapaData.meta.alto);
       
@@ -53,6 +56,12 @@ export class Mapa {
         this.imagenes.forEach((imagen) => {
           imagen.dibujar(graficos);
         });
+
+        this.textos.forEach((t) => {
+          t.dibujar(graficos);
+        });
+
+
         graficos.AdddEntidad(new EntidadGrafica("meta", "meta", this.meta.x, this.meta.y, 50, 600));
       }
 
