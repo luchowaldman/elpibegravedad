@@ -29,10 +29,11 @@ export class  Aplicacion {
     private client: Client; 
     private mapa: Mapa;
     private graficos: graficoJuego;
-
-    constructor() {
+    private nombreususario: string;
+    constructor(urlserver: string, nombreususario: string) {
+        this.nombreususario = nombreususario;
         this.controladorDOM = new ControladorDOM();
-        this.client = new Client();
+        this.client = new Client(urlserver);
         this.mapa = new Mapa();
         this.graficos = new graficoJuego();
         this.ConfigGraficos();           
