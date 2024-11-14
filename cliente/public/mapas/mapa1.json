@@ -3,6 +3,23 @@
   "largo": 2900,
   "fondo": "sky",
   "cancion": "cancion",
+  "textos": [
+    {
+      "texto": "ay caramba!",
+      "desdeX": 200,
+      "desdeY": 300,
+      "color": "red",
+      "fuente": "Arial"
+    },
+    {
+      "texto": "si señor",
+      "desdeX": 200,
+      "desdeY": 400,
+      "pixeles": "20px",
+      "color": "yellow",
+      "fuente": "Arial"
+    }
+  ],
   "plataformas": [
     {
       "tipo": "pisodoble",
