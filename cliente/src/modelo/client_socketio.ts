@@ -75,13 +75,17 @@ export class Client {
         this.connectErrorHandler = handler;
     }
 
-    constructor() {
+    
+    private urlserver: string;
+    constructor(urlserver: string) {
+        this.urlserver = urlserver;
     }
 
     public connect() {
 
 
-        let socket: Socket<ServerToClientEvents, ClientToServerEvents> = io("http://localhost:8080", {
+        console.log("conectando con %s", this.urlserver);
+        let socket: Socket<ServerToClientEvents, ClientToServerEvents> = io(this.urlserver, {
             autoConnect: true,
             rejectUnauthorized: false,
             transports: ['websocket']
