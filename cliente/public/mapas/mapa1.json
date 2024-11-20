@@ -1,6 +1,6 @@
 {
-  "nombre": "Demo",
-  "largo": 2900,
+  "nombre": "Historia Argentina",
+  "largo": 21800,
   "fondo": "sky",
   "cancion": "cancion",
   "plataformas": [
@@ -30,18 +30,137 @@
       "hastaY": 420,
       "alto": 10,
       "multiplicador_velocidad": 1
+    },
+    {
+      "tipo": "pisodoble",
+      "desdeX": 2700,
+      "desdeY": 380,
+      "hastaX": 5400,
+      "hastaY": 380,
+      "alto": 10,
+      "multiplicador_velocidad": 1
+    },
+    {
+      "tipo": "pisodoble",
+      "desdeX": 5400,
+      "desdeY": 380,
+      "hastaX": 8100,
+      "hastaY": 380,
+      "alto": 10,
+      "multiplicador_velocidad": 1
+    },
+    {
+      "tipo": "pisodoble",
+      "desdeX": 8100,
+      "desdeY": 380,
+      "hastaX": 10800,
+      "hastaY": 380,
+      "alto": 10,
+      "multiplicador_velocidad": 1
+    },
+    {
+      "tipo": "pisodoble",
+      "desdeX": 10800,
+      "desdeY": 380,
+      "hastaX": 13500,
+      "hastaY": 380,
+      "alto": 10,
+      "multiplicador_velocidad": 1
+    },
+    {
+      "tipo": "pisodoble",
+      "desdeX": 13500,
+      "desdeY": 380,
+      "hastaX": 16200,
+      "hastaY": 380,
+      "alto": 10,
+      "multiplicador_velocidad": 1
+    },
+    {
+      "tipo": "pisodoble",
+      "desdeX": 16200,
+      "desdeY": 380,
+      "hastaX": 18900,
+      "hastaY": 380,
+      "alto": 10,
+      "multiplicador_velocidad": 1
+    },
+    {
+      "tipo": "pisodoble",
+      "desdeX": 18900,
+      "desdeY": 380,
+      "hastaX": 21600,
+      "hastaY": 380,
+      "alto": 10,
+      "multiplicador_velocidad": 1
     }
   ],
   "obstaculos": [],
   "imagenes": [],
   "textos": [
     {
-      "texto": "Demo",
+      "texto": "Buenos Ayres, Virreynato del Plata. 1800",
       "desdeX": 100,
       "desdeY": 500,
       "pixeles": "30px",
       "color": "blue",
-      "fuente": "Arial"
+      "fuente": "FriedNuget"
+    },
+    {
+      "texto": "Buenos Aires. 1810",
+      "desdeX": 2800,
+      "desdeY": 500,
+      "pixeles": "30px",
+      "color": "blue",
+      "fuente": "FriedNuget"
+    },
+    {
+      "texto": "Buenos Aires. 1820",
+      "desdeX": 5500,
+      "desdeY": 500,
+      "pixeles": "30px",
+      "color": "blue",
+      "fuente": "FriedNuget"
+    },
+    {
+      "texto": "Buenos Aires. 1850",
+      "desdeX": 8200,
+      "desdeY": 500,
+      "pixeles": "30px",
+      "color": "blue",
+      "fuente": "FriedNuget"
+    },
+    {
+      "texto": "Buenos Aires. 1900",
+      "desdeX": 10900,
+      "desdeY": 500,
+      "pixeles": "30px",
+      "color": "blue",
+      "fuente": "FriedNuget"
+    },
+    {
+      "texto": "Buenos Aires. 1950",
+      "desdeX": 13600,
+      "desdeY": 500,
+      "pixeles": "30px",
+      "color": "blue",
+      "fuente": "FriedNuget"
+    },
+    {
+      "texto": "Buenos Aires. 2000",
+      "desdeX": 16300,
+      "desdeY": 500,
+      "pixeles": "30px",
+      "color": "blue",
+      "fuente": "FriedNuget"
+    },
+    {
+      "texto": "Buenos Aires. 2050",
+      "desdeX": 19000,
+      "desdeY": 500,
+      "pixeles": "30px",
+      "color": "blue",
+      "fuente": "FriedNuget"
     }
   ],
   "inicio_jugadores": {
@@ -49,7 +168,7 @@
     "y": 350
   },
   "meta": {
-    "x": 2600,
+    "x": 21500,
     "y": 0,
     "alto": 600
   }
