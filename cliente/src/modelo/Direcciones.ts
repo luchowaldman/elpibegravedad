@@ -45,8 +45,16 @@ export class Direcciones {
       saynomore: 'img/saynomore.png',
       partitura: 'img/partitura.png',
       texto_hace4anios: 'img/texto_hace4anios.png',
+      banderainglesa: 'img/banderainglesa.png',
+      invaciones1: 'img/invaciones1.png',
+      invaciones2: 'img/invaciones2.png',
+      piso_div_3: 'img/piso_rx-2_fin.png',
+      piso_div_1: 'img/piso_rx-2_ini.png',
+      piso_div_2: 'img/piso_rx-2_med.png',
+      piso_mul_3: 'img/piso_rx2_fin.png',
+      piso_mul_1: 'img/piso_rx2_ini.png',
+      piso_mul_2: 'img/piso_rx2_med.png',
 
-      
     };
   
     public static obtenerConstante(nombre: string): string | undefined {
