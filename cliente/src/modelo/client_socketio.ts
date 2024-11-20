@@ -23,6 +23,9 @@ export interface PosicionJugador {
 
 export interface ClientToServerEvents {
     changeGravity: () => void;
+    crearSala: (mapa: string, nombre: string) => void;
+    unirSala: (salaID: string, nombre: string) => void;
+    iniciarJuego: () => void;
 }
 
 export class Client {
@@ -75,15 +78,13 @@ export class Client {
         this.connectErrorHandler = handler;
     }
 
-    
+
     private urlserver: string;
     constructor(urlserver: string) {
         this.urlserver = urlserver;
     }
 
     public connect() {
-
-
         console.log("conectando con %s", this.urlserver);
         let socket: Socket<ServerToClientEvents, ClientToServerEvents> = io(this.urlserver, {
             autoConnect: true,
@@ -91,10 +92,8 @@ export class Client {
             transports: ['websocket']
         });
 
-
         if (socket.active) {
             console.log("socket active")
-
 
             socket.on("connect", () => {
                 console.log("socket connected");
@@ -126,8 +125,6 @@ export class Client {
                 this.IniciarJuegoHandler?.();
             });
 
-
-
             socket.on("informacionSala", (salaID, mapa, listaJugadores) => {
                 console.log("informacionSala received", salaID, mapa, listaJugadores);
 
@@ -143,19 +140,18 @@ export class Client {
         this.socket.emit('changeGravity');
     }
 
-    sendInitSala(mapName: string) {
-        console.log(`sending initSala with mapName: ${mapName}`);
-        this.socket.emit('initSala', mapName);
+    sendInitSala(mapName: string, playerName: string) {
+        console.log(`sending crearSala with mapName ${mapName} and playerName ${playerName}`);
+        this.socket.emit('crearSala', mapName, playerName);
     }
-
 
     sendiniciarJuego() {
         console.log(`sending iniciarJuego`);
         this.socket.emit('iniciarJuego');
     }
 
-    sendUnirseSala(id_sala: string) {
-        console.log(`sending initSala with mapName: ${id_sala}`);
-        this.socket.emit('unirSala', id_sala);
+    sendUnirseSala(salaID: string, playerName: string) {
+        console.log(`sending unirSala with salaID ${salaID} and playerName ${playerName}`);
+        this.socket.emit('unirSala', salaID, playerName);
     }
 }
