@@ -9,13 +9,13 @@ type Player struct {
 	ID        int
 	Name      string
 	Socket    *socket.Socket
+	Room      *Room
 	Character *Character
 }
 
 func NewPlayer(socket *socket.Socket) *Player {
 	return &Player{
 		Socket: socket,
-		Name:   "Franco",
 	}
 }
 

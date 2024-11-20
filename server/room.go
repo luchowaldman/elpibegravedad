@@ -39,7 +39,7 @@ func (room *Room) AddPlayer(newPlayer *Player) {
 	room.Mutex.Unlock()
 }
 
-func (room *Room) RemovePlayer(oldPlayer *Player) {
+func (room *Room) RemovePlayer(oldPlayer *Player) int {
 	room.Mutex.Lock()
 
 	// if the game didn't start yet, remove the player
@@ -52,7 +52,12 @@ func (room *Room) RemovePlayer(oldPlayer *Player) {
 	}
 
 	oldPlayer.Socket = nil
+	oldPlayer.Room = nil
+
+	playerAmount := len(room.Players)
 	room.Mutex.Unlock()
+
+	return playerAmount
 }
 
 func (room *Room) StartGame() {
