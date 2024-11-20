@@ -1,6 +1,8 @@
 import { Plataforma } from "../Plataforma";
 import Piso from "./piso";
 import PisoDoble from "./pisodoble";
+import PisoMultiplicador from "./pisomultiplicador";
+import PisoReductor from "./pisoreductor";
 import Techo from "./techo";
 
 export default class TipoPlataformaFactory {
@@ -14,6 +16,12 @@ export default class TipoPlataformaFactory {
         }
         if (tipo === "pisodoble") {
           return new PisoDoble(desdeX, desdeY, hastaX, hastaY, alto);
+        }
+        if (tipo === "pisoreductor") {
+          return new PisoReductor(desdeX, desdeY, hastaX, hastaY, alto);
+        }
+        if (tipo === "pisomultiplicador") {
+          return new PisoMultiplicador(desdeX, desdeY, hastaX, hastaY, alto);
         }
         // Puedes agregar más condiciones para otros tipos de plataformas aquí
         return null;

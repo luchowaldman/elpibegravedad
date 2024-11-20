@@ -88,10 +88,13 @@ function PistoYTecho(y_piso = 400,y_techo = 230, xdesde_piso = 230, xhasta_piso 
 }
 
 
-function SoloPiso(y_piso = 400, xdesde_piso = 230, xhasta_piso = 1000, tipo = "piso") {   
+function SoloPiso(y_piso = 400, xdesde_piso = 230, xhasta_piso = 1000, tipo = "piso", multiplicador_velocidad = 1) {   
     
     let plataformas = [];    
     let piso = new PlataformasHorizontales(y_piso, tipo);
+    if (multiplicador_velocidad != 1) {
+        piso.multiplicador_velocidad = multiplicador_velocidad;
+    }
     plataformas.push(piso);
     piso.AgregarPlataforma(xdesde_piso, xhasta_piso);
     return plataformas;
@@ -493,8 +496,16 @@ function HacerMapaModoHistoria(archivo_mapa) {
     
     // 1800
     ultimoX = UltimoX(plataformas);
-    let solopiso = SoloPiso(390, 0, 2700, "pisodoble");
-    mapa.textos.push(new Texto("Buenos Aires. 1800", ultimoX + 100, 500, "30px", "blue", "FriedNuget"));
+    let solopiso = SoloPiso(420, 0, 2700, "pisodoble");
+    let solopiso2 = SoloPiso(210, 1000, 2700, "pisoreductor", 0.5);
+    let solopisom2 = SoloPiso(80, 400, 2700, "pisomultiplicador", 2);
+/*
+    mapa.imagenes.push(new Imagen("invaciones1", ultimoX + 1000, 40, 200, 200));
+    mapa.imagenes.push(new Imagen("invaciones2", ultimoX + 1800, 240, 200, 200));
+*/
+    mapa.textos.push(new Texto("Buenos Ayres, Virreynato del Plata. 1800", ultimoX + 100, 500, "30px", "blue", "FriedNuget"));
+    plataformas.push(...SumarX(solopiso2, ultimoX));
+    plataformas.push(...SumarX(solopisom2, ultimoX));
     plataformas.push(...SumarX(solopiso, ultimoX));
 
     // 1810
@@ -563,11 +574,69 @@ function HacerMapaModoHistoria(archivo_mapa) {
 }
 
 
+function HacerDemo(archivo_mapa) {
+
+    const mapa = {
+        nombre: "Demo",
+        largo: 40000,
+        fondo: "sky",
+        cancion: "cancion",
+        plataformas: [],
+        obstaculos: [],
+        imagenes: [],
+        textos: [],
+        inicio_jugadores: { x: 250, y: 350 }, 
+        meta: {
+          x: 12500,
+          y: 0,
+          alto: 600
+        }
+    };
+
+
+    
+    let plataformas = [];   
+    let ultimoX = 0;
+    
+    
+    // 1800
+    ultimoX = UltimoX(plataformas);
+    let solopiso = SoloPiso(420, 0, 2700, "pisodoble");
+    let solopiso2 = SoloPiso(210, 1000, 2700, "pisoreductor", 0.5);
+    let solopisom2 = SoloPiso(80, 400, 2700, "pisomultiplicador", 2);
+/*
+    mapa.imagenes.push(new Imagen("invaciones1", ultimoX + 1000, 40, 200, 200));
+    mapa.imagenes.push(new Imagen("invaciones2", ultimoX + 1800, 240, 200, 200));
+*/
+    mapa.textos.push(new Texto("Demo", ultimoX + 100, 500, "30px", "blue"));
+    plataformas.push(...SumarX(solopiso2, ultimoX));
+    plataformas.push(...SumarX(solopisom2, ultimoX));
+    plataformas.push(...SumarX(solopiso, ultimoX));
+
+    ultimoX = UltimoX(plataformas);
+    mapa.largo = ultimoX + 200;
+    mapa.meta.x = ultimoX - 100;
+    plataformas.forEach(p => {
+        mapa.plataformas.push(...p.getPlataformas());
+        mapa.obstaculos.push(...p.obstaculos);
+    });
+
+
+    
+
+
+    const jsonContent = JSON.stringify(mapa, null, 2);
+    fs.writeFileSync(`..\\cliente\\public\\mapas\\${archivo_mapa}.json`, jsonContent, 'utf8');
+    fs.writeFileSync(`..\\server\\mapas\\${archivo_mapa}.json`, jsonContent, 'utf8');
+
+    console.log(`Archivo ${archivo_mapa}.json creado con éxito`);
+}
+
 async function main() {
 
     //HacerMapaModo1("mapa1");
     //HacerMapaModo2("mapa1");
-    HacerMapaModoHistoria("mapa1");
+    HacerDemo("mapa1");
 }
 
 main();

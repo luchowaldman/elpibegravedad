@@ -1,140 +1,47 @@
 {
-  "nombre": "Historia Argentina",
-  "largo": 21800,
+  "nombre": "Demo",
+  "largo": 2900,
   "fondo": "sky",
   "cancion": "cancion",
   "plataformas": [
     {
+      "tipo": "pisoreductor",
+      "desdeX": 1000,
+      "desdeY": 210,
+      "hastaX": 2700,
+      "hastaY": 210,
+      "alto": 10,
+      "multiplicador_velocidad": 0.5
+    },
+    {
+      "tipo": "pisomultiplicador",
+      "desdeX": 400,
+      "desdeY": 80,
+      "hastaX": 2700,
+      "hastaY": 80,
+      "alto": 10,
+      "multiplicador_velocidad": 2
+    },
+    {
       "tipo": "pisodoble",
       "desdeX": 0,
-      "desdeY": 390,
+      "desdeY": 420,
       "hastaX": 2700,
-      "hastaY": 390,
-      "alto": 10
-    },
-    {
-      "tipo": "pisodoble",
-      "desdeX": 2700,
-      "desdeY": 380,
-      "hastaX": 5400,
-      "hastaY": 380,
-      "alto": 10
-    },
-    {
-      "tipo": "pisodoble",
-      "desdeX": 5400,
-      "desdeY": 380,
-      "hastaX": 8100,
-      "hastaY": 380,
-      "alto": 10
-    },
-    {
-      "tipo": "pisodoble",
-      "desdeX": 8100,
-      "desdeY": 380,
-      "hastaX": 10800,
-      "hastaY": 380,
-      "alto": 10
-    },
-    {
-      "tipo": "pisodoble",
-      "desdeX": 10800,
-      "desdeY": 380,
-      "hastaX": 13500,
-      "hastaY": 380,
-      "alto": 10
-    },
-    {
-      "tipo": "pisodoble",
-      "desdeX": 13500,
-      "desdeY": 380,
-      "hastaX": 16200,
-      "hastaY": 380,
-      "alto": 10
-    },
-    {
-      "tipo": "pisodoble",
-      "desdeX": 16200,
-      "desdeY": 380,
-      "hastaX": 18900,
-      "hastaY": 380,
-      "alto": 10
-    },
-    {
-      "tipo": "pisodoble",
-      "desdeX": 18900,
-      "desdeY": 380,
-      "hastaX": 21600,
-      "hastaY": 380,
-      "alto": 10
+      "hastaY": 420,
+      "alto": 10,
+      "multiplicador_velocidad": 1
     }
   ],
   "obstaculos": [],
   "imagenes": [],
   "textos": [
     {
-      "texto": "Buenos Aires. 1800",
+      "texto": "Demo",
       "desdeX": 100,
       "desdeY": 500,
       "pixeles": "30px",
       "color": "blue",
-      "fuente": "FriedNuget"
-    },
-    {
-      "texto": "Buenos Aires. 1810",
-      "desdeX": 2800,
-      "desdeY": 500,
-      "pixeles": "30px",
-      "color": "blue",
-      "fuente": "FriedNuget"
-    },
-    {
-      "texto": "Buenos Aires. 1820",
-      "desdeX": 5500,
-      "desdeY": 500,
-      "pixeles": "30px",
-      "color": "blue",
-      "fuente": "FriedNuget"
-    },
-    {
-      "texto": "Buenos Aires. 1850",
-      "desdeX": 8200,
-      "desdeY": 500,
-      "pixeles": "30px",
-      "color": "blue",
-      "fuente": "FriedNuget"
-    },
-    {
-      "texto": "Buenos Aires. 1900",
-      "desdeX": 10900,
-      "desdeY": 500,
-      "pixeles": "30px",
-      "color": "blue",
-      "fuente": "FriedNuget"
-    },
-    {
-      "texto": "Buenos Aires. 1950",
-      "desdeX": 13600,
-      "desdeY": 500,
-      "pixeles": "30px",
-      "color": "blue",
-      "fuente": "FriedNuget"
-    },
-    {
-      "texto": "Buenos Aires. 2000",
-      "desdeX": 16300,
-      "desdeY": 500,
-      "pixeles": "30px",
-      "color": "blue",
-      "fuente": "FriedNuget"
-    },
-    {
-      "texto": "Buenos Aires. 2050",
-      "desdeX": 19000,
-      "desdeY": 500,
-      "pixeles": "30px",
-      "color": "blue",
-      "fuente": "FriedNuget"
+      "fuente": "Arial"
     }
   ],
   "inicio_jugadores": {
@@ -142,7 +49,7 @@
     "y": 350
   },
   "meta": {
-    "x": 21500,
+    "x": 2600,
     "y": 0,
     "alto": 600
   }

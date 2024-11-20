@@ -7,13 +7,14 @@ class LargoPlataforma {
 }
 
 class Plataforma {
-    constructor(tipo, desdeX, desdeY, hastaX, hastaY, alto) {
+    constructor(tipo, desdeX, desdeY, hastaX, hastaY, alto, multiplicador_velocidad) {
         this.tipo = tipo;
         this.desdeX = desdeX;
         this.desdeY = desdeY;
         this.hastaX = hastaX;
         this.hastaY = hastaY;
         this.alto = alto;
+        this.multiplicador_velocidad = multiplicador_velocidad;
     }
 }
 
@@ -54,6 +55,7 @@ class PlataformasHorizontales {
     largo = 0;
     tipo = "piso";
     obstaculos = [];
+    multiplicador_velocidad = 1;
 
     constructor(y, tipo, largo) {
         this.y = y;
@@ -127,7 +129,7 @@ class PlataformasHorizontales {
     getPlataformas() {
         let ret = [];
         this.plataformas.forEach(plataforma => {
-            ret.push(new Plataforma(this.tipo, plataforma.desdeX, this.y, plataforma.hastaX, this.y, this.largo));
+            ret.push(new Plataforma(this.tipo, plataforma.desdeX, this.y, plataforma.hastaX, this.y, this.largo, this.multiplicador_velocidad));
         });
         return ret;
     }
