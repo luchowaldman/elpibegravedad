@@ -2,6 +2,9 @@
     color: #0000ff;
 }
 
+@font-face { font-family: 'FriedNuget'; src: url('/assets/FriedNuget.otf') format('opentype'); }
+
+
 .divMapa {
     border: 1px solid #0000ff;
     align-content: center;
