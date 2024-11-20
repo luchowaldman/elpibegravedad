@@ -3,8 +3,11 @@ package main
 import (
 	"log"
 
+	"github.com/google/uuid"
 	"github.com/zishang520/socket.io/v2/socket"
 )
+
+var rooms = map[uuid.UUID]*Room{}
 
 func manageClientConnection(clients []any, gameStart chan *Room) {
 	newClient := clients[0].(*socket.Socket)
@@ -38,7 +41,12 @@ func manageClientConnection(clients []any, gameStart chan *Room) {
 	err = newClient.On("iniciarJuego", func(datas ...any) {
 		log.Println("iniciarJuego event received")
 
-		newPlayer.Room.StartGame()
+		started := newPlayer.Room.StartGame()
+		if !started {
+			log.Println("iniciarJuego event received when the game has already started, ignoring message")
+
+			return
+		}
 
 		gameStart <- newPlayer.Room
 	})
@@ -49,44 +57,62 @@ func manageClientConnection(clients []any, gameStart chan *Room) {
 		return
 	}
 
-	// TODO sprint 5, manage unirSala message
-	// err = newClient.On("unirSala", func(datas ...any) {
-	// 	nombresala, ok := datas[0].(string)
-	// 	if ok {
-	// 		log.Println("unirSala event received with sala name:", nombresala)
-	// 		newClient.Emit("salaIniciada", nombresala, "mapa1")
-	// 	} else {
-	// 		log.Println("unirSala event received but map name is not a string")
-	// 	}
+	err = newClient.On("unirSala", func(datas ...any) {
+		if len(datas) == 2 {
+			roomID := datas[0].(string)
+			playerName := datas[0].(string)
 
-	// if room.GameStarted.Load() {
-	// 	log.Println("connection established received when the game has already begun, rejecting client")
-	// 	newClient.Disconnect(true)
+			log.Println("unirSala event received with:", roomID, playerName)
 
-	// 	return
-	// }
+			roomUUID, err := uuid.Parse(roomID)
+			if err != nil {
+				log.Println("unirSala event received with invalid room id")
 
-	// })
-	// if err != nil {
-	// 	log.Println("failed to register on unirSala message", "err", err)
-	// 	newClient.Disconnect(true)
+				return
+			}
 
-	// 	return
-	// }
+			room, roomExists := rooms[roomUUID]
+
+			if !roomExists {
+				log.Println("unirSala event received with not existent room id")
+
+				return
+			}
+
+			if room.GameStarted.Load() {
+				log.Println("unirSala event received when the game has already begun, rejecting client")
+
+				return
+			}
+
+			newPlayer.Name = playerName
+			room.AddPlayer(newPlayer)
+		} else {
+			log.Println("unirSala event received without correct params")
+		}
+	})
+	if err != nil {
+		log.Println("failed to register on unirSala message", "err", err)
+		newClient.Disconnect(true)
+
+		return
+	}
 
 	err = newClient.On("crearSala", func(datas ...any) {
-		if len(datas) != 2 {
+		if len(datas) == 2 {
 			mapName := datas[0].(string)
 			playerName := datas[1].(string)
 
 			log.Println("crearSala event received with:", mapName, playerName)
 
-			newPlayer.Name = playerName
-			newPlayer.Room = NewRoom(mapName)
+			newRoom := NewRoom(mapName)
 
-			newPlayer.Room.AddPlayer(newPlayer)
+			newPlayer.Name = playerName
+			newRoom.AddPlayer(newPlayer)
+
+			rooms[newRoom.ID] = newRoom
 		} else {
-			log.Println("crearSala event received but no all the params were sent")
+			log.Println("crearSala event received without correct params")
 		}
 	})
 	if err != nil {
@@ -101,7 +127,7 @@ func manageClientConnection(clients []any, gameStart chan *Room) {
 
 		playersAmount := newPlayer.Room.RemovePlayer(newPlayer)
 		if playersAmount == 0 {
-			//delete room
+			delete(rooms, newPlayer.Room.ID)
 		}
 	})
 	if err != nil {
