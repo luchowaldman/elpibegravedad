@@ -30,7 +30,9 @@ export class Aplicacion {
     private mapa: Mapa;
     private graficos: graficoJuego;
     private nombreususario: string;
+    private urlserver: string;
     constructor(urlserver: string, nombreususario: string) {
+        this.urlserver = urlserver;
         this.nombreususario = nombreususario;
         this.controladorDOM = new ControladorDOM();
         this.client = new Client(urlserver);
@@ -94,7 +96,7 @@ export class Aplicacion {
     async unirse_partida(partida_id: string) {
 
         console.log("Envia Unirse a partida", partida_id);
-        this.client.sendUnirseSala(partida_id, "Franco");
+        this.client.sendUnirseSala(partida_id, this.nombreususario);
     }
 
 
@@ -119,7 +121,7 @@ export class Aplicacion {
         this.graficos.agenda.iniciar();
         this.controladorDOM.mostrar_pagina('pagina2');
         this.SetLabelGrafico("Cargando Mapa", "Total de Jugadores: 1");
-        this.client.sendInitSala(mapa.id, "Franco");
+        this.client.sendInitSala(mapa.id, this.nombreususario);
 
     }
 
@@ -193,15 +195,32 @@ export class Aplicacion {
 
             this.cargado = true;
 
-            this.controladorDOM.mostrar_compartirpagina(id);
+            const url = `${window.location.protocol}//${window.location.host}`;
+            this.controladorDOM.mostrar_compartirpagina(url ,id);
             await this.mapa.cargarMapa(this.getMapaJSON(mapa));
             this.mapa.cargarImagenes(this.graficos);
             await this.graficos.init();
             this.graficos.agenda.iniciar();
             this.controladorDOM.mostrar_pagina('pagina2');
         }
-        const numerosJugadores = listaJugadores.map(jugador => jugador.nombre).join(', ');
-        this.SetLabelGrafico("En la sala [Franco]", `${listaJugadores.length} Jugadores: ${numerosJugadores}`);
+        
+        let nombrejugadores = ""
+        let cont = 0;
+        listaJugadores.forEach(jugador => {
+            if (cont != 0)
+            {
+                if (cont % 2 == 0)
+                    nombrejugadores = nombrejugadores.concat("\n");
+                else
+                    nombrejugadores = nombrejugadores.concat(",");
+            }
+            cont++;
+            nombrejugadores = nombrejugadores.concat(jugador.nombre);
+        });
+        
+        listaJugadores.map(jugador => jugador.nombre).join('\n');
+
+        this.SetLabelGrafico(`En la sala, ${this.nombreususario}`, `${listaJugadores.length} Jugadores: \n ${nombrejugadores}`);
     }
 
 
