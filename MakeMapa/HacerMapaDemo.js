@@ -66,9 +66,6 @@ function HacerMapaDemo(archivo_mapa) {
     });
 
 
-    
-
-
     const jsonContent = JSON.stringify(mapa, null, 2);
     fs.writeFileSync(`..\\cliente\\public\\mapas\\${archivo_mapa}.json`, jsonContent, 'utf8');
     fs.writeFileSync(`..\\server\\mapas\\${archivo_mapa}.json`, jsonContent, 'utf8');
