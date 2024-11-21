@@ -97,6 +97,8 @@ func manageClientConnection(clients []any, gameStart chan *Room) {
 				return
 			}
 
+			removeFromRoom(newPlayer)
+
 			newPlayer.Name = playerName
 			room.AddPlayer(newPlayer)
 		} else {
@@ -116,6 +118,8 @@ func manageClientConnection(clients []any, gameStart chan *Room) {
 			playerName := datas[1].(string)
 
 			log.Println("crearSala event received with:", mapName, playerName)
+
+			removeFromRoom(newPlayer)
 
 			newRoom := NewRoom(mapName)
 
@@ -141,17 +145,21 @@ func manageClientConnection(clients []any, gameStart chan *Room) {
 
 		newPlayer.Socket = nil
 
-		if newPlayer.Room != nil {
-			playersAmount := newPlayer.Room.RemovePlayer(newPlayer)
-			if playersAmount == 0 {
-				delete(rooms, newPlayer.Room.ID)
-			}
-		}
+		removeFromRoom(newPlayer)
 	})
 	if err != nil {
 		log.Println("failed to register on disconnect message", "err", err)
 		newClient.Disconnect(true)
 
 		return
+	}
+}
+
+func removeFromRoom(player *Player) {
+	if player.Room != nil {
+		playersAmount := player.Room.RemovePlayer(player)
+		if playersAmount == 0 {
+			delete(rooms, player.Room.ID)
+		}
 	}
 }
