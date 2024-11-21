@@ -1,5 +1,5 @@
 {
-  "nombre": "Mapa de ejemplo",
+  "nombre": "Demo",
   "largo": 2900,
   "fondo": "sky",
   "cancion": "cancion",
@@ -23,29 +23,33 @@
       "multiplicador_velocidad": 2
     },
     {
-      "tipo": "piso",
+      "tipo": "pisodoble",
       "desdeX": 0,
-      "desdeY": 500,
+      "desdeY": 420,
       "hastaX": 2700,
-      "hastaY": 500,
-      "alto": 10
-    }
-  ],
-  "textos": [
-    {
-      "texto": "¡Bienvenido al juego!",
-      "x": 50,
-      "y": 50
+      "hastaY": 420,
+      "alto": 10,
+      "multiplicador_velocidad": 1
     }
   ],
   "obstaculos": [],
   "imagenes": [],
+  "textos": [
+    {
+      "texto": "Demo",
+      "desdeX": 100,
+      "desdeY": 500,
+      "pixeles": "30px",
+      "color": "blue",
+      "fuente": "Arial"
+    }
+  ],
   "inicio_jugadores": {
     "x": 250,
     "y": 350
   },
   "meta": {
-    "x": 17300,
+    "x": 2600,
     "y": 0,
     "alto": 600
   }

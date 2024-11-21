@@ -36,10 +36,12 @@ func (room *Room) AddPlayer(newPlayer *Player) {
 	room.Players = append(room.Players, newPlayer)
 	room.sendInformacionSala()
 
+	newPlayer.Room = room
+
 	room.Mutex.Unlock()
 }
 
-func (room *Room) RemovePlayer(oldPlayer *Player) {
+func (room *Room) RemovePlayer(oldPlayer *Player) int {
 	room.Mutex.Lock()
 
 	// if the game didn't start yet, remove the player
@@ -52,16 +54,19 @@ func (room *Room) RemovePlayer(oldPlayer *Player) {
 	}
 
 	oldPlayer.Socket = nil
+	oldPlayer.Room = nil
+
+	playerAmount := len(room.Players)
 	room.Mutex.Unlock()
+
+	return playerAmount
 }
 
-func (room *Room) StartGame() {
+func (room *Room) StartGame() bool {
 	room.Mutex.Lock()
 
 	if room.GameStarted.Load() {
-		log.Println("iniciarJuego event received when the game has already begun, ignoring message")
-
-		return
+		return false
 	}
 
 	room.GameStarted.Store(true)
@@ -73,7 +78,15 @@ func (room *Room) StartGame() {
 		}
 	}
 
+	go func() {
+		startGame(room)
+
+		delete(rooms, room.ID)
+	}()
+
 	room.Mutex.Unlock()
+
+	return true
 }
 
 func (room *Room) sendInformacionSala() {

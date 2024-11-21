@@ -1,55 +1,43 @@
 {
   "nombre": "Demo",
-  "largo": 2900,
+  "largo": 20000,
   "fondo": "sky",
   "cancion": "cancion",
   "plataformas": [
     {
-      "tipo": "pisoreductor",
-      "desdeX": 1000,
-      "desdeY": 210,
-      "hastaX": 2700,
-      "hastaY": 210,
-      "alto": 10,
-      "multiplicador_velocidad": 0.5
+      "texto": "ay caramba!",
+      "desdeX": 200,
+      "desdeY": 300,
+      "color": "red",
+      "fuente": "Arial"
     },
     {
-      "tipo": "pisomultiplicador",
-      "desdeX": 400,
-      "desdeY": 80,
-      "hastaX": 2700,
-      "hastaY": 80,
-      "alto": 10,
-      "multiplicador_velocidad": 2
-    },
+      "texto": "si señor",
+      "desdeX": 200,
+      "desdeY": 400,
+      "pixeles": "20px",
+      "color": "yellow",
+      "fuente": "Arial"
+    }
+  ],
+  "plataformas": [
     {
       "tipo": "pisodoble",
       "desdeX": 0,
-      "desdeY": 420,
+      "desdeY": 500,
       "hastaX": 2700,
-      "hastaY": 420,
-      "alto": 10,
-      "multiplicador_velocidad": 1
+      "hastaY": 500,
+      "alto": 10
     }
   ],
   "obstaculos": [],
   "imagenes": [],
-  "textos": [
-    {
-      "texto": "Demo",
-      "desdeX": 100,
-      "desdeY": 500,
-      "pixeles": "30px",
-      "color": "blue",
-      "fuente": "Arial"
-    }
-  ],
   "inicio_jugadores": {
     "x": 250,
     "y": 350
   },
   "meta": {
-    "x": 2600,
+    "x": 17300,
     "y": 0,
     "alto": 600
   }
