@@ -51,6 +51,16 @@ func (playerInfo PlayerInfo) ToMap() map[string]any {
 	}
 }
 
+func startGame(room *Room) {
+	log.Println("Loading map")
+	gameMap := loadMap(room.MapName)
+
+	log.Println("Creating world")
+	world := NewWorld(gameMap, room.Players)
+
+	gameLoop(world, room)
+}
+
 func gameLoop(world *World, room *Room) {
 	ticker := time.NewTicker(time.Second / ticksPerSecond)
 	initialTimer := time.NewTimer(initialTimeWithoutSpeed)
