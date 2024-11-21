@@ -78,6 +78,12 @@ func (room *Room) StartGame() bool {
 		}
 	}
 
+	go func() {
+		startGame(room)
+
+		delete(rooms, room.ID)
+	}()
+
 	room.Mutex.Unlock()
 
 	return true

@@ -111,6 +111,8 @@ func manageClientConnection(clients []any, gameStart chan *Room) {
 			newRoom.AddPlayer(newPlayer)
 
 			rooms[newRoom.ID] = newRoom
+
+			log.Println("Room ", newRoom.ID, " created, waiting for players")
 		} else {
 			log.Println("crearSala event received without correct params")
 		}

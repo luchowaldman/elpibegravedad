@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"log"
 	"os"
 )
@@ -52,10 +53,8 @@ type RaceFinish struct {
 	Height int `json:"alto"`
 }
 
-func loadMap() Map {
-	log.Println("Loading map")
-
-	configFile, err := os.Open("mapas/mapa1.json")
+func loadMap(name string) Map {
+	configFile, err := os.Open(fmt.Sprintf("mapas/%s.json", name))
 	if err != nil {
 		log.Fatalln("Error opening map file", "err", err)
 	}
