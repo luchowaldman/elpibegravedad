@@ -9,7 +9,7 @@ import (
 
 var rooms = map[uuid.UUID]*Room{}
 
-func manageClientConnection(clients []any, gameStart chan *Room) {
+func manageClientConnection(clients []any) {
 	newClient := clients[0].(*socket.Socket)
 	newClientID := newClient.Id()
 
@@ -59,8 +59,6 @@ func manageClientConnection(clients []any, gameStart chan *Room) {
 
 			return
 		}
-
-		gameStart <- newPlayer.Room
 	})
 	if err != nil {
 		log.Println("failed to register on iniciarJuego message", "err", err)
