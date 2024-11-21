@@ -82,6 +82,8 @@ export class Mapa {
     this.imagenes.forEach((imagen) => {
       imagen.cargarImagenes(graficos);
     });
+
+    graficos.AddSonido(this.cancion);
  }
 }
  
