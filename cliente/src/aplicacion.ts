@@ -1,5 +1,5 @@
 import { ControladorDOM } from './ControladorDOM';
-import { AccionGraficaModificarTexto, AccionGraficaMostrarTexto, AccionGraficaSetPosicion, AccionGraficaSetPosicionTexto } from './modelo/AccionGrafica';
+import { AccionGraficaEjecutarSonido, AccionGraficaModificarTexto, AccionGraficaMostrarTexto, AccionGraficaSetPosicion, AccionGraficaSetPosicionTexto } from './modelo/AccionGrafica';
 import { Client, InformacionJugador, PosicionJugador } from './modelo/client_socketio';
 import { divMapa } from './modelo/divMapa';
 import { graficoJuego } from './modelo/graficoJuego';
@@ -81,6 +81,7 @@ export class Aplicacion {
         this.graficos.AddAnimacionEntidadGrafica('animacionmuriendo', 'player_muriendo', 0, 1, 7, -1);
         this.graficos.AddAnimacion('player_festejando', 35, 50);
         this.graficos.AddAnimacionEntidadGrafica('animacionfestejando', 'player_festejando', 0, 1, 7, -1);
+        
 
 
         this.graficos.agenda.agregarAccionGrafica(0, new AccionGraficaMostrarTexto(this.graficos, "status_label", "DOM INICIADO", 600, posYLabelStatus));
@@ -152,7 +153,6 @@ export class Aplicacion {
         for (let i = 0; i < posicionesDeLosJugadores.length; i++) {
             const x = posicionesDeLosJugadores[i].x;
             const y = posicionesDeLosJugadores[i].y;
-            console.log("Jugador", posicionesDeLosJugadores[i]);
             this.jugadores[i].setPosicion(this.graficos, x, y, posicionesDeLosJugadores[i].estaCaminando, posicionesDeLosJugadores[i].tieneGravedadInvertida, posicionesDeLosJugadores[i].estado);
         }
     }
@@ -181,6 +181,7 @@ export class Aplicacion {
                     this.SetLabelGrafico("Iniciado", "A correr");
                     setTimeout(() => {
                         this.SetLabelGrafico("", "");
+                        this.graficos.agenda.agregarAccionGrafica(1, new AccionGraficaEjecutarSonido(this.graficos, this.mapa.cancion));
                     }, 1000);
                 }, 1000);
             }, 1000);
