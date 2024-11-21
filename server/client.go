@@ -20,6 +20,12 @@ func manageClientConnection(clients []any, gameStart chan *Room) {
 	err := newClient.On("changeGravity", func(datas ...any) {
 		log.Println("changeGravity event received")
 
+		if newPlayer.Room == nil {
+			log.Println("changeGravity event received when the player is not in a room, ignoring message")
+
+			return
+		}
+
 		if !newPlayer.Room.GameStarted.Load() {
 			log.Println("changeGravity event received when the game has not yet started, ignoring message")
 
@@ -40,6 +46,12 @@ func manageClientConnection(clients []any, gameStart chan *Room) {
 
 	err = newClient.On("iniciarJuego", func(datas ...any) {
 		log.Println("iniciarJuego event received")
+
+		if newPlayer.Room == nil {
+			log.Println("iniciarJuego event received when the player is not in a room, ignoring message")
+
+			return
+		}
 
 		started := newPlayer.Room.StartGame()
 		if !started {
