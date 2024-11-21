@@ -5,9 +5,10 @@ const { HacerMapaDemo } = require('./HacerMapaDemo');
 
 async function main() {
 
-    //HacerMapaModo1("mapa1");
-    //HacerMapaModo2("mapa1");
-    HacerMapaCorto("mapa1");
+    HacerMapaModo1("mapa1");
+    HacerMapaModo2("charly");
+    HacerMapaModoHistoria("historia");
+    HacerMapaDemo("demo");
 }
 
 main();
