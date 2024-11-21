@@ -16,10 +16,8 @@ func main() {
 	io := socket.NewServer(nil, nil)
 	http.Handle("/socket.io/", io.ServeHandler(nil))
 
-	gameStart := make(chan *Room)
-
 	err := io.On("connection", func(clients ...any) {
-		manageClientConnection(clients, gameStart)
+		manageClientConnection(clients)
 	})
 	if err != nil {
 		log.Fatalln("Error setting socket.io on connection", "err", err)
