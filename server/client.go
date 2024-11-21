@@ -127,6 +127,8 @@ func manageClientConnection(clients []any, gameStart chan *Room) {
 	err = newClient.On("disconnect", func(...any) {
 		log.Println("client disconnected", newClient.Id())
 
+		newPlayer.Socket = nil
+
 		if newPlayer.Room != nil {
 			playersAmount := newPlayer.Room.RemovePlayer(newPlayer)
 			if playersAmount == 0 {
