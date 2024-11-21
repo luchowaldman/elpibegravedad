@@ -11,9 +11,10 @@ const posYLabelJugadores = 300;
 
 export class Aplicacion {
     private controladorDOM = new ControladorDOM();
-    private mapas: divMapa[] = [new divMapa('mapa1', '/img/mapa1_icono.png', 'Mapa en lapicera', './mapas/mapa1.json'),
-    new divMapa('mapa2', '/img/mapa1_icono.png', 'Algun mapa no creado', './mapas/EXmapa1.json'),
-    new divMapa('mapa3', '/img/mapa1_icono.png', 'Este menos', './mapas/mapa2.json')];
+    private mapas: divMapa[] = [new divMapa('mapa1', '/img/mapa1_icono.png', 'Mapa inicial', './mapas/mapa1.json'),
+    new divMapa('charly', '/img/charly_icono.png', 'Charly Garcia', './mapas/charly.json'),
+    new divMapa('historia', '/img/mapa1_icono.png', 'Historia Argentina', './mapas/historia.json'),
+    new divMapa('demo', '/img/mapa1_icono.png', 'Demo', './mapas/demo.json')];
 
 
     private jugadores: Jugador[] = [
