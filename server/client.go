@@ -157,9 +157,11 @@ func manageClientConnection(clients []any, gameStart chan *Room) {
 
 func removeFromRoom(player *Player) {
 	if player.Room != nil {
+		roomID := player.Room.ID
+
 		playersAmount := player.Room.RemovePlayer(player)
 		if playersAmount == 0 {
-			delete(rooms, player.Room.ID)
+			delete(rooms, roomID)
 		}
 	}
 }
