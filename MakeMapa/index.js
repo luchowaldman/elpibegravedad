@@ -634,9 +634,10 @@ function HacerDemo(archivo_mapa) {
 
 async function main() {
 
-    //HacerMapaModo1("mapa1");
-    //HacerMapaModo2("mapa1");
-    HacerDemo("mapa1");
+    HacerMapaModo1("mapa1");
+    HacerMapaModo2("charly");
+    HacerMapaModoHistoria("historia");
+    HacerDemo("demo");
 }
 
 main();
