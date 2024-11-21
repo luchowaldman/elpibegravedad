@@ -60,7 +60,7 @@ func manageClientConnection(clients []any, gameStart chan *Room) {
 	err = newClient.On("unirSala", func(datas ...any) {
 		if len(datas) == 2 {
 			roomID := datas[0].(string)
-			playerName := datas[0].(string)
+			playerName := datas[1].(string)
 
 			log.Println("unirSala event received with:", roomID, playerName)
 
@@ -127,9 +127,11 @@ func manageClientConnection(clients []any, gameStart chan *Room) {
 	err = newClient.On("disconnect", func(...any) {
 		log.Println("client disconnected", newClient.Id())
 
-		playersAmount := newPlayer.Room.RemovePlayer(newPlayer)
-		if playersAmount == 0 {
-			delete(rooms, newPlayer.Room.ID)
+		if newPlayer.Room != nil {
+			playersAmount := newPlayer.Room.RemovePlayer(newPlayer)
+			if playersAmount == 0 {
+				delete(rooms, newPlayer.Room.ID)
+			}
 		}
 	})
 	if err != nil {
