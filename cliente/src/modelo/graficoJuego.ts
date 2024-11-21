@@ -161,10 +161,6 @@ export class graficoJuego {
             this.scene.load.audio(sonido.nombre, sonido.url);
         });
 
-
-
-
-
     }
 
 
