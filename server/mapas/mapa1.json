@@ -777,6 +777,8 @@
       "alto": 50
     }
   ],
+  "textos": [],
+  "obstaculos_mortales": [],
   "imagenes": [
     {
       "imagen": "carteltunel",

@@ -33,6 +33,16 @@
     }
   ],
   "obstaculos": [],
+  "obstaculos_mortales": [
+    {
+      "tipo": "PisoPinches",
+      "id": "pinche1",
+      "desdeX": 1000,
+      "desdeY": 410,
+      "largo": 100,
+      "alto": 10
+    }
+  ],
   "imagenes": [],
   "textos": [
     {

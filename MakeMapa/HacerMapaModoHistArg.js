@@ -28,6 +28,7 @@ function HacerMapaModoHistoria(archivo_mapa) {
         obstaculos: [],
         imagenes: [],
         textos: [],
+        obstaculos_mortales: [],
         inicio_jugadores: { x: 250, y: 350 }, 
         meta: {
           x: 12500,

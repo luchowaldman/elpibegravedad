@@ -26,6 +26,8 @@ function HacerMapaModo2(archivo_mapa) {
         cancion: "cancion",
         plataformas: [],
         obstaculos: [],
+        textos: [],
+        obstaculos_mortales: [],
         imagenes: [],
         inicio_jugadores: { x: 50, y: 350 }, 
         meta: {

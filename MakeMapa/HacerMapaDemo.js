@@ -1,7 +1,7 @@
 const fs = require('fs');
 
 // index.js
-const { PlataformasHorizontales, LargoPlataforma, Plataforma, Texto, Imagen } = require('./plataforma');
+const { PlataformasHorizontales, LargoPlataforma, Plataforma, Texto, Imagen, Obstaculo } = require('./plataforma');
 const {
     SumarX,
     UltimoX,
@@ -27,6 +27,7 @@ function HacerMapaDemo(archivo_mapa) {
         cancion: "cancion",
         plataformas: [],
         obstaculos: [],
+        obstaculos_mortales: [],
         imagenes: [],
         textos: [],
         inicio_jugadores: { x: 250, y: 350 }, 
@@ -56,6 +57,8 @@ function HacerMapaDemo(archivo_mapa) {
     plataformas.push(...SumarX(solopiso2, ultimoX));
     plataformas.push(...SumarX(solopisom2, ultimoX));
     plataformas.push(...SumarX(solopiso, ultimoX));
+
+    mapa.obstaculos_mortales.push(new Obstaculo("PisoPinches", "pinche1", ultimoX + 1000, 410, 100, 10, "invaciones1"));
 
     ultimoX = UltimoX(plataformas);
     mapa.largo = ultimoX + 200;

@@ -163,6 +163,7 @@
       "fuente": "FriedNuget"
     }
   ],
+  "obstaculos_mortales": [],
   "inicio_jugadores": {
     "x": 250,
     "y": 350
