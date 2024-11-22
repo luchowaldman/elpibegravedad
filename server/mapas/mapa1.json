@@ -1,6 +1,6 @@
 {
   "nombre": "Mapa de ejemplo",
-  "largo": 20000,
+  "largo": 17500,
   "fondo": "sky",
   "cancion": "cancion",
   "plataformas": [
@@ -777,6 +777,8 @@
       "alto": 50
     }
   ],
+  "textos": [],
+  "obstaculos_mortales": [],
   "imagenes": [
     {
       "imagen": "carteltunel",
@@ -819,7 +821,7 @@
     "y": 350
   },
   "meta": {
-    "x": 17300,
+    "x": 17200,
     "y": 0,
     "alto": 600
   }
