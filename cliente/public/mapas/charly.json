@@ -2,8 +2,7 @@
   "nombre": "Mapa de ejemplo",
   "largo": 26200,
   "fondo": "sky",
-  "cancion": "musica_charly",
-  "textos": [],
+  "cancion": "cancion",
   "plataformas": [
     {
       "tipo": "piso",
@@ -1530,6 +1529,8 @@
       "alto": 50
     }
   ],
+  "textos": [],
+  "obstaculos_mortales": [],
   "imagenes": [
     {
       "imagen": "texto_porquetequedasenviamuerta",

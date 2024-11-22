@@ -2,7 +2,7 @@ export class Direcciones {
     private static readonly Direcciones: { [key: string]: string } = {
       cancion: '/audio/musica_juego.mp3',
       musica_charly: '/audio/musica_charly.mp3',
-      
+      PisoPinches: '/img/PisoPinches.png',
       sky: '/img/fondocuaderno.jpg',
       noche: '/img/noche.jpg',
       ground: '/img/piso_02.png',

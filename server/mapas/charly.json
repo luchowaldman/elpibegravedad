@@ -1529,6 +1529,8 @@
       "alto": 50
     }
   ],
+  "textos": [],
+  "obstaculos_mortales": [],
   "imagenes": [
     {
       "imagen": "texto_porquetequedasenviamuerta",

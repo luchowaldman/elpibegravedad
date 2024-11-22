@@ -17,6 +17,7 @@ export class Mapa {
     cancion: string = '';
     plataformas: Plataforma[] = [];
     obstaculos: Obstaculo[] = [];
+    obstaculos_mortales: Obstaculo[] = [];
     inicio_jugadores: InicioJugadores =  new InicioJugadores(0, 0);
     meta: Meta = new Meta(0, 0, 0);
     imagenes: ImagenMapa[] = [];
@@ -32,6 +33,7 @@ export class Mapa {
       this.cancion = mapaData.cancion;
       this.plataformas = mapaData.plataformas.map((plataforma: Plataforma) => TipoPlataformaFactory.Crear(plataforma.tipo, plataforma.desdeX, plataforma.desdeY, plataforma.hastaX, plataforma.hastaY, plataforma.alto));
       this.obstaculos = mapaData.obstaculos.map((obstaculo: Obstaculo) => new Obstaculo(obstaculo.tipo, obstaculo.id, obstaculo.desdeX, obstaculo.desdeY, obstaculo.largo, obstaculo.alto));
+      this.obstaculos_mortales = mapaData.obstaculos_mortales.map((obstaculo: Obstaculo) => new Obstaculo(obstaculo.tipo, obstaculo.id, obstaculo.desdeX, obstaculo.desdeY, obstaculo.largo, obstaculo.alto));
       this.imagenes = mapaData.imagenes.map((imagen: ImagenMapa) => new ImagenMapa(imagen.imagen, imagen.desdeX, imagen.desdeY, imagen.largo, imagen.alto));
       this.textos = mapaData.textos.map((texto: TextoMapa) => new TextoMapa(texto.texto, texto.desdeX, texto.desdeY, texto.largo, texto.alto, texto.pixeles, texto.color, texto.fuente));
       this.inicio_jugadores = new InicioJugadores(mapaData.inicio_jugadores.x, mapaData.inicio_jugadores.y);
@@ -49,6 +51,10 @@ export class Mapa {
         });
     
         this.obstaculos.forEach((obstaculo) => {
+          obstaculo.dibujar(graficos);
+          
+        });
+        this.obstaculos_mortales.forEach((obstaculo) => {
           obstaculo.dibujar(graficos);
           
         });
@@ -76,6 +82,10 @@ export class Mapa {
     });
 
     this.obstaculos.forEach((obstaculo) => {
+      obstaculo.cargarImagenes(graficos);
+      
+    });
+    this.obstaculos_mortales.forEach((obstaculo) => {
       obstaculo.cargarImagenes(graficos);
       
     });
