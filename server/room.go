@@ -63,12 +63,11 @@ func (room *Room) RemovePlayer(oldPlayer *Player) int {
 }
 
 func (room *Room) StartGame() bool {
-	room.Mutex.Lock()
-
 	if room.GameStarted.Load() {
 		return false
 	}
 
+	room.Mutex.Lock()
 	room.GameStarted.Store(true)
 
 	for _, player := range room.Players {
