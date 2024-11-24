@@ -4,6 +4,11 @@ import (
 	"github.com/solarlune/resolv"
 )
 
+const (
+	initialCharacterSpeedX float64 = float64(100) / ticksPerSecond
+	initialCharacterSpeedY float64 = float64(90) / ticksPerSecond
+)
+
 type Character struct {
 	Object *resolv.Object
 	Speed  resolv.Vector
@@ -20,15 +25,15 @@ func NewCharacter(object *resolv.Object) *Character {
 	}
 }
 
-func (character *Character) SetSpeed(x, y float64) {
-	character.Speed.X = x
-	character.Speed.Y = y
+func (character *Character) SetInitialSpeed() {
+	character.Speed.X = initialCharacterSpeedX
+	character.Speed.Y = initialCharacterSpeedY
 }
 
 func (character *Character) InvertGravity() {
 	if character.IsWalking {
 		character.HasGravityInverted = !character.HasGravityInverted
 
-		character.SetSpeed(character.Speed.X, -character.Speed.Y)
+		character.Speed.Y = -character.Speed.Y
 	}
 }

@@ -7,11 +7,9 @@ import (
 )
 
 const (
-	ticksPerSecond                  = 30
-	cameraWidth                     = int(1500 / 2)
-	initialTimeWithoutSpeed         = time.Second * 3
-	characterSpeedX         float64 = float64(100) / ticksPerSecond
-	characterSpeedY         float64 = float64(90) / ticksPerSecond
+	ticksPerSecond          = 30
+	cameraWidth             = int(1500 / 2)
+	initialTimeWithoutSpeed = time.Second * 3
 )
 
 type PlayerStatus string
@@ -80,7 +78,7 @@ func gameLoop(world *World, room *Room) {
 		case <-initialTimer.C:
 			// add speed to characters
 			for _, player := range room.Players {
-				player.Character.SetSpeed(characterSpeedX, -characterSpeedY)
+				player.Character.SetInitialSpeed()
 			}
 
 			raceStarted = true
