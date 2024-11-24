@@ -27,7 +27,17 @@ func NewCharacter(object *resolv.Object) *Character {
 
 func (character *Character) SetInitialSpeed() {
 	character.Speed.X = initialCharacterSpeedX
-	character.Speed.Y = initialCharacterSpeedY
+	character.Speed.Y = -initialCharacterSpeedY
+}
+
+func (character *Character) ScaleSpeed(speedScale float64) {
+	character.Speed.X = initialCharacterSpeedX * speedScale
+
+	if character.HasGravityInverted {
+		character.Speed.Y = initialCharacterSpeedY * speedScale
+	} else {
+		character.Speed.Y = -initialCharacterSpeedY * speedScale
+	}
 }
 
 func (character *Character) InvertGravity() {

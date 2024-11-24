@@ -26,6 +26,7 @@ type World struct {
 	space *resolv.Space
 
 	cameraLimit *resolv.Object
+	RaceFinish  *resolv.Object
 }
 
 func NewWorld(gameMap Map, players []*Player) *World {
@@ -73,13 +74,12 @@ func (world *World) Init(gameMap Map, players []*Player) {
 	world.space.Add(world.cameraLimit)
 
 	// Add race finish
-	world.space.Add(
-		resolv.NewObject(
-			float64(gameMap.RaceFinish.X+raceFinishWidth+characterWidth), // add raceFinishWidth+characterWidth to the x position so the collision in when the character cross the race finish completely
-			float64(gameMap.RaceFinish.Y), cellSize, float64(gameMap.RaceFinish.Height),
-			raceFinishTag,
-		),
+	world.RaceFinish = resolv.NewObject(
+		float64(gameMap.RaceFinish.X+raceFinishWidth+characterWidth), // add raceFinishWidth+characterWidth to the x position so the collision in when the character cross the race finish completely
+		float64(gameMap.RaceFinish.Y), cellSize, float64(gameMap.RaceFinish.Height),
+		raceFinishTag,
 	)
+	world.space.Add(world.RaceFinish)
 
 	// Add solids
 	for _, solid := range gameMap.Solids {
