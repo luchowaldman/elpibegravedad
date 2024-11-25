@@ -9,6 +9,7 @@ import (
 const (
 	cellSize                         = 10
 	solidTag                         = "solid"
+	fatalTag                         = "fatal"
 	worldLimitTag                    = "worldLimit"
 	raceFinishTag                    = "raceFinish"
 	characterTag                     = "character"
@@ -19,7 +20,10 @@ const (
 	characterInitialPositionDistance = 20
 )
 
-var collisionTags = []string{solidTag, characterTag}
+var (
+	collisionTags = []string{solidTag, characterTag}
+	deadTags      = []string{worldLimitTag, fatalTag}
+)
 
 type World struct {
 	space *resolv.Space
@@ -81,18 +85,8 @@ func (world *World) Init(gameMap Map, players []*Player) {
 	world.space.Add(world.RaceFinish)
 
 	// Add solids
-	for _, solid := range gameMap.Solids {
-		x, y, w, h := solid.coordinates.ToDimensions()
-
-		log.Println("Adding solid: ", x, y, w, h)
-
-		world.space.Add(
-			resolv.NewObject(
-				x, y, w, h,
-				solidTag,
-			),
-		)
-	}
+	world.addSolids(gameMap.Solids, solidTag)
+	world.addSolids(gameMap.Fatal, fatalTag)
 
 	// Create Characters' objects and add it to the world's Space.
 	characterInitialX := float64(gameMap.PlayersStart.X)
@@ -117,6 +111,21 @@ func (world *World) Init(gameMap Map, players []*Player) {
 	}
 }
 
+func (world *World) addSolids(solids []Solid, tag string) {
+	for _, solid := range solids {
+		x, y, w, h := solid.coordinates.ToDimensions()
+
+		log.Println("Adding solid: ", x, y, w, h)
+
+		world.space.Add(
+			resolv.NewObject(
+				x, y, w, h,
+				tag,
+			),
+		)
+	}
+}
+
 // Update updates the world with the new position of the character
 //
 // Returns:
@@ -138,7 +147,7 @@ func (world *World) Update(character *Character) (bool, bool) {
 
 // checkIfCharacterHasDied updates character's IsDead if the character touched a world limit
 func (world *World) checkIfCharacterHasDied(character *Character) bool {
-	if collision := character.Object.Check(0, 0, worldLimitTag); collision != nil {
+	if collision := character.Object.Check(0, 0, deadTags...); collision != nil {
 		log.Println("Character is dead")
 
 		character.IsDead = true
