@@ -2,7 +2,7 @@
   "nombre": "Mapa de ejemplo",
   "largo": 26200,
   "fondo": "sky",
-  "cancion": "cancion",
+  "cancion": "musica_charly",
   "plataformas": [
     {
       "tipo": "piso",

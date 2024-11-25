@@ -45,6 +45,16 @@ export class Mapa {
     }
 
     dibujarMapa(graficos: graficoJuego) {
+
+        this.imagenes.forEach((imagen) => {
+          imagen.dibujar(graficos);
+        });
+
+        this.textos.forEach((t) => {
+          t.dibujar(graficos);
+        });
+
+
         this.plataformas.forEach((plataforma, index) => {
           console.log("Dibujando plataforma");
             plataforma.dibujar(graficos, index);
@@ -56,17 +66,7 @@ export class Mapa {
         });
         this.obstaculos_mortales.forEach((obstaculo) => {
           obstaculo.dibujar(graficos);
-          
         });
-
-        this.imagenes.forEach((imagen) => {
-          imagen.dibujar(graficos);
-        });
-
-        this.textos.forEach((t) => {
-          t.dibujar(graficos);
-        });
-
 
         graficos.AdddEntidad(new EntidadGrafica("meta", "meta", this.meta.x, this.meta.y, 50, 600));
       }
