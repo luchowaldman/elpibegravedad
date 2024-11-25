@@ -17,11 +17,14 @@ type Character struct {
 	IsWalking          bool
 	IsDead             bool
 	HasFinished        bool
+
+	speedMultiplier float64
 }
 
 func NewCharacter(object *resolv.Object) *Character {
 	return &Character{
-		Object: object,
+		Object:          object,
+		speedMultiplier: 1,
 	}
 }
 
@@ -31,7 +34,7 @@ func (character *Character) SetInitialSpeed() {
 }
 
 func (character *Character) ScaleSpeed(speedScale float64) {
-	character.Speed.X = initialCharacterSpeedX * speedScale
+	character.Speed.X = initialCharacterSpeedX * speedScale * character.speedMultiplier
 
 	if character.HasGravityInverted {
 		character.Speed.Y = initialCharacterSpeedY * speedScale
