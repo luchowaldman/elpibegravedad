@@ -1,0 +1,752 @@
+{
+  "nombre": "Historia Argentina",
+  "largo": 14200,
+  "fondo": "sky",
+  "cancion": "cancion",
+  "plataformas": [
+    {
+      "tipo": "pisodoble",
+      "desdeX": 0,
+      "desdeY": 320,
+      "hastaX": 1000,
+      "hastaY": 320,
+      "alto": 10,
+      "multiplicador_velocidad": 1
+    },
+    {
+      "tipo": "pisodoble",
+      "desdeX": 500,
+      "desdeY": 170,
+      "hastaX": 1000,
+      "hastaY": 170,
+      "alto": 10,
+      "multiplicador_velocidad": 1
+    },
+    {
+      "tipo": "pisoreductor",
+      "desdeX": 1000,
+      "desdeY": 60,
+      "hastaX": 1400,
+      "hastaY": 60,
+      "alto": 10,
+      "multiplicador_velocidad": 0.5
+    },
+    {
+      "tipo": "pisomultiplicador",
+      "desdeX": 1000,
+      "desdeY": 400,
+      "hastaX": 1400,
+      "hastaY": 400,
+      "alto": 10,
+      "multiplicador_velocidad": 2
+    },
+    {
+      "tipo": "pisodoble",
+      "desdeX": 1400,
+      "desdeY": 260,
+      "hastaX": 2000,
+      "hastaY": 260,
+      "alto": 10,
+      "multiplicador_velocidad": 1
+    },
+    {
+      "tipo": "pisoreductor",
+      "desdeX": 1400,
+      "desdeY": 500,
+      "hastaX": 2000,
+      "hastaY": 500,
+      "alto": 10,
+      "multiplicador_velocidad": 0.5
+    },
+    {
+      "tipo": "pisomultiplicador",
+      "desdeX": 1400,
+      "desdeY": 10,
+      "hastaX": 2000,
+      "hastaY": 10,
+      "alto": 10,
+      "multiplicador_velocidad": 2
+    },
+    {
+      "tipo": "pisodoble",
+      "desdeX": 2000,
+      "desdeY": 320,
+      "hastaX": 2500,
+      "hastaY": 320,
+      "alto": 10,
+      "multiplicador_velocidad": 1
+    },
+    {
+      "tipo": "pisodoble",
+      "desdeX": 2000,
+      "desdeY": 170,
+      "hastaX": 2500,
+      "hastaY": 170,
+      "alto": 10,
+      "multiplicador_velocidad": 1
+    },
+    {
+      "tipo": "pisoreductor",
+      "desdeX": 2500,
+      "desdeY": 400,
+      "hastaX": 2900,
+      "hastaY": 400,
+      "alto": 10,
+      "multiplicador_velocidad": 0.5
+    },
+    {
+      "tipo": "pisomultiplicador",
+      "desdeX": 2500,
+      "desdeY": 60,
+      "hastaX": 2900,
+      "hastaY": 60,
+      "alto": 10,
+      "multiplicador_velocidad": 2
+    },
+    {
+      "tipo": "pisodoble",
+      "desdeX": 2900,
+      "desdeY": 260,
+      "hastaX": 3500,
+      "hastaY": 260,
+      "alto": 10,
+      "multiplicador_velocidad": 1
+    },
+    {
+      "tipo": "pisoreductor",
+      "desdeX": 2900,
+      "desdeY": 500,
+      "hastaX": 3500,
+      "hastaY": 500,
+      "alto": 10,
+      "multiplicador_velocidad": 0.5
+    },
+    {
+      "tipo": "pisomultiplicador",
+      "desdeX": 2900,
+      "desdeY": 10,
+      "hastaX": 3500,
+      "hastaY": 10,
+      "alto": 10,
+      "multiplicador_velocidad": 2
+    },
+    {
+      "tipo": "pisodoble",
+      "desdeX": 3500,
+      "desdeY": 320,
+      "hastaX": 4000,
+      "hastaY": 320,
+      "alto": 10,
+      "multiplicador_velocidad": 1
+    },
+    {
+      "tipo": "pisodoble",
+      "desdeX": 3500,
+      "desdeY": 170,
+      "hastaX": 4000,
+      "hastaY": 170,
+      "alto": 10,
+      "multiplicador_velocidad": 1
+    },
+    {
+      "tipo": "pisoreductor",
+      "desdeX": 4000,
+      "desdeY": 400,
+      "hastaX": 4400,
+      "hastaY": 400,
+      "alto": 10,
+      "multiplicador_velocidad": 0.5
+    },
+    {
+      "tipo": "pisomultiplicador",
+      "desdeX": 4000,
+      "desdeY": 60,
+      "hastaX": 4400,
+      "hastaY": 60,
+      "alto": 10,
+      "multiplicador_velocidad": 2
+    },
+    {
+      "tipo": "pisodoble",
+      "desdeX": 4400,
+      "desdeY": 260,
+      "hastaX": 5000,
+      "hastaY": 260,
+      "alto": 10,
+      "multiplicador_velocidad": 1
+    },
+    {
+      "tipo": "pisoreductor",
+      "desdeX": 4400,
+      "desdeY": 500,
+      "hastaX": 5000,
+      "hastaY": 500,
+      "alto": 10,
+      "multiplicador_velocidad": 0.5
+    },
+    {
+      "tipo": "pisomultiplicador",
+      "desdeX": 4400,
+      "desdeY": 10,
+      "hastaX": 5000,
+      "hastaY": 10,
+      "alto": 10,
+      "multiplicador_velocidad": 2
+    },
+    {
+      "tipo": "pisodoble",
+      "desdeX": 5000,
+      "desdeY": 320,
+      "hastaX": 5500,
+      "hastaY": 320,
+      "alto": 10,
+      "multiplicador_velocidad": 1
+    },
+    {
+      "tipo": "pisodoble",
+      "desdeX": 5000,
+      "desdeY": 170,
+      "hastaX": 5500,
+      "hastaY": 170,
+      "alto": 10,
+      "multiplicador_velocidad": 1
+    },
+    {
+      "tipo": "pisoreductor",
+      "desdeX": 5500,
+      "desdeY": 400,
+      "hastaX": 5900,
+      "hastaY": 400,
+      "alto": 10,
+      "multiplicador_velocidad": 0.5
+    },
+    {
+      "tipo": "pisomultiplicador",
+      "desdeX": 5500,
+      "desdeY": 60,
+      "hastaX": 5900,
+      "hastaY": 60,
+      "alto": 10,
+      "multiplicador_velocidad": 2
+    },
+    {
+      "tipo": "pisodoble",
+      "desdeX": 5900,
+      "desdeY": 260,
+      "hastaX": 6500,
+      "hastaY": 260,
+      "alto": 10,
+      "multiplicador_velocidad": 1
+    },
+    {
+      "tipo": "pisoreductor",
+      "desdeX": 5900,
+      "desdeY": 500,
+      "hastaX": 6500,
+      "hastaY": 500,
+      "alto": 10,
+      "multiplicador_velocidad": 0.5
+    },
+    {
+      "tipo": "pisodoble",
+      "desdeX": 6500,
+      "desdeY": 320,
+      "hastaX": 7000,
+      "hastaY": 320,
+      "alto": 10,
+      "multiplicador_velocidad": 1
+    },
+    {
+      "tipo": "pisodoble",
+      "desdeX": 6500,
+      "desdeY": 170,
+      "hastaX": 7000,
+      "hastaY": 170,
+      "alto": 10,
+      "multiplicador_velocidad": 1
+    },
+    {
+      "tipo": "pisoreductor",
+      "desdeX": 7000,
+      "desdeY": 400,
+      "hastaX": 7400,
+      "hastaY": 400,
+      "alto": 10,
+      "multiplicador_velocidad": 0.5
+    },
+    {
+      "tipo": "pisomultiplicador",
+      "desdeX": 7000,
+      "desdeY": 60,
+      "hastaX": 7400,
+      "hastaY": 60,
+      "alto": 10,
+      "multiplicador_velocidad": 2
+    },
+    {
+      "tipo": "pisodoble",
+      "desdeX": 7400,
+      "desdeY": 260,
+      "hastaX": 8000,
+      "hastaY": 260,
+      "alto": 10,
+      "multiplicador_velocidad": 1
+    },
+    {
+      "tipo": "pisoreductor",
+      "desdeX": 7400,
+      "desdeY": 500,
+      "hastaX": 8000,
+      "hastaY": 500,
+      "alto": 10,
+      "multiplicador_velocidad": 0.5
+    },
+    {
+      "tipo": "pisomultiplicador",
+      "desdeX": 7400,
+      "desdeY": 10,
+      "hastaX": 8000,
+      "hastaY": 10,
+      "alto": 10,
+      "multiplicador_velocidad": 2
+    },
+    {
+      "tipo": "pisodoble",
+      "desdeX": 8000,
+      "desdeY": 320,
+      "hastaX": 8500,
+      "hastaY": 320,
+      "alto": 10,
+      "multiplicador_velocidad": 1
+    },
+    {
+      "tipo": "pisodoble",
+      "desdeX": 8000,
+      "desdeY": 170,
+      "hastaX": 8500,
+      "hastaY": 170,
+      "alto": 10,
+      "multiplicador_velocidad": 1
+    },
+    {
+      "tipo": "pisomultiplicador",
+      "desdeX": 8500,
+      "desdeY": 400,
+      "hastaX": 8900,
+      "hastaY": 400,
+      "alto": 10,
+      "multiplicador_velocidad": 0.5
+    },
+    {
+      "tipo": "pisoreductor",
+      "desdeX": 8500,
+      "desdeY": 60,
+      "hastaX": 8900,
+      "hastaY": 60,
+      "alto": 10,
+      "multiplicador_velocidad": 2
+    },
+    {
+      "tipo": "pisodoble",
+      "desdeX": 8900,
+      "desdeY": 260,
+      "hastaX": 9500,
+      "hastaY": 260,
+      "alto": 10,
+      "multiplicador_velocidad": 1
+    },
+    {
+      "tipo": "pisomultiplicador",
+      "desdeX": 8900,
+      "desdeY": 10,
+      "hastaX": 9500,
+      "hastaY": 10,
+      "alto": 10,
+      "multiplicador_velocidad": 2
+    },
+    {
+      "tipo": "pisodoble",
+      "desdeX": 9500,
+      "desdeY": 320,
+      "hastaX": 10000,
+      "hastaY": 320,
+      "alto": 10,
+      "multiplicador_velocidad": 1
+    },
+    {
+      "tipo": "pisomultiplicador",
+      "desdeX": 10000,
+      "desdeY": 400,
+      "hastaX": 10400,
+      "hastaY": 400,
+      "alto": 10,
+      "multiplicador_velocidad": 0.5
+    },
+    {
+      "tipo": "pisoreductor",
+      "desdeX": 10000,
+      "desdeY": 60,
+      "hastaX": 10400,
+      "hastaY": 60,
+      "alto": 10,
+      "multiplicador_velocidad": 2
+    },
+    {
+      "tipo": "pisoreductor",
+      "desdeX": 10400,
+      "desdeY": 500,
+      "hastaX": 11000,
+      "hastaY": 500,
+      "alto": 10,
+      "multiplicador_velocidad": 0.5
+    },
+    {
+      "tipo": "pisomultiplicador",
+      "desdeX": 10400,
+      "desdeY": 10,
+      "hastaX": 11000,
+      "hastaY": 10,
+      "alto": 10,
+      "multiplicador_velocidad": 2
+    },
+    {
+      "tipo": "pisodoble",
+      "desdeX": 11000,
+      "desdeY": 320,
+      "hastaX": 11500,
+      "hastaY": 320,
+      "alto": 10,
+      "multiplicador_velocidad": 1
+    },
+    {
+      "tipo": "pisodoble",
+      "desdeX": 11000,
+      "desdeY": 170,
+      "hastaX": 11500,
+      "hastaY": 170,
+      "alto": 10,
+      "multiplicador_velocidad": 1
+    },
+    {
+      "tipo": "pisomultiplicador",
+      "desdeX": 11500,
+      "desdeY": 60,
+      "hastaX": 11900,
+      "hastaY": 60,
+      "alto": 10,
+      "multiplicador_velocidad": 0.5
+    },
+    {
+      "tipo": "pisoreductor",
+      "desdeX": 11500,
+      "desdeY": 400,
+      "hastaX": 11900,
+      "hastaY": 400,
+      "alto": 10,
+      "multiplicador_velocidad": 2
+    },
+    {
+      "tipo": "pisoreductor",
+      "desdeX": 11900,
+      "desdeY": 500,
+      "hastaX": 12500,
+      "hastaY": 500,
+      "alto": 10,
+      "multiplicador_velocidad": 0.5
+    },
+    {
+      "tipo": "pisomultiplicador",
+      "desdeX": 11900,
+      "desdeY": 10,
+      "hastaX": 12500,
+      "hastaY": 10,
+      "alto": 10,
+      "multiplicador_velocidad": 2
+    },
+    {
+      "tipo": "pisodoble",
+      "desdeX": 12500,
+      "desdeY": 320,
+      "hastaX": 13000,
+      "hastaY": 320,
+      "alto": 10,
+      "multiplicador_velocidad": 1
+    },
+    {
+      "tipo": "pisodoble",
+      "desdeX": 12500,
+      "desdeY": 170,
+      "hastaX": 13000,
+      "hastaY": 170,
+      "alto": 10,
+      "multiplicador_velocidad": 1
+    },
+    {
+      "tipo": "pisomultiplicador",
+      "desdeX": 13000,
+      "desdeY": 400,
+      "hastaX": 13400,
+      "hastaY": 400,
+      "alto": 10,
+      "multiplicador_velocidad": 0.5
+    },
+    {
+      "tipo": "pisoreductor",
+      "desdeX": 13000,
+      "desdeY": 60,
+      "hastaX": 13400,
+      "hastaY": 60,
+      "alto": 10,
+      "multiplicador_velocidad": 2
+    },
+    {
+      "tipo": "pisoreductor",
+      "desdeX": 13400,
+      "desdeY": 500,
+      "hastaX": 14000,
+      "hastaY": 500,
+      "alto": 10,
+      "multiplicador_velocidad": 0.5
+    },
+    {
+      "tipo": "pisomultiplicador",
+      "desdeX": 13400,
+      "desdeY": 10,
+      "hastaX": 14000,
+      "hastaY": 10,
+      "alto": 10,
+      "multiplicador_velocidad": 2
+    }
+  ],
+  "obstaculos": [],
+  "imagenes": [],
+  "textos": [
+    {
+      "texto": "Mapa Nro 3, Vuelta 1/9",
+      "desdeX": 100,
+      "desdeY": 500,
+      "pixeles": "30px",
+      "color": "blue",
+      "fuente": "FriedNuget"
+    },
+    {
+      "texto": "Mapa Nro 3, Vuelta 2/9",
+      "desdeX": 2100,
+      "desdeY": 500,
+      "pixeles": "30px",
+      "color": "blue",
+      "fuente": "FriedNuget"
+    },
+    {
+      "texto": "Mapa Nro 3, Vuelta 3/9",
+      "desdeX": 3600,
+      "desdeY": 500,
+      "pixeles": "30px",
+      "color": "blue",
+      "fuente": "FriedNuget"
+    },
+    {
+      "texto": "Mapa Nro 3, Vuelta 4/9",
+      "desdeX": 5100,
+      "desdeY": 500,
+      "pixeles": "30px",
+      "color": "blue",
+      "fuente": "FriedNuget"
+    },
+    {
+      "texto": "Mapa Nro 3, Vuelta 5/9",
+      "desdeX": 6600,
+      "desdeY": 500,
+      "pixeles": "30px",
+      "color": "blue",
+      "fuente": "FriedNuget"
+    },
+    {
+      "texto": "Mapa Nro 3, Vuelta 6/9",
+      "desdeX": 8100,
+      "desdeY": 500,
+      "pixeles": "30px",
+      "color": "blue",
+      "fuente": "FriedNuget"
+    },
+    {
+      "texto": "Mapa Nro 3, Vuelta 7/9",
+      "desdeX": 9600,
+      "desdeY": 500,
+      "pixeles": "30px",
+      "color": "blue",
+      "fuente": "FriedNuget"
+    },
+    {
+      "texto": "Mapa Nro 3, Vuelta 8/9",
+      "desdeX": 11100,
+      "desdeY": 500,
+      "pixeles": "30px",
+      "color": "blue",
+      "fuente": "FriedNuget"
+    },
+    {
+      "texto": "Mapa Nro 3, Vuelta 9/9",
+      "desdeX": 12600,
+      "desdeY": 500,
+      "pixeles": "30px",
+      "color": "blue",
+      "fuente": "FriedNuget"
+    }
+  ],
+  "obstaculos_mortales": [
+    {
+      "tipo": "PisoPinches",
+      "id": "pinche1",
+      "desdeX": 700,
+      "desdeY": 310,
+      "largo": 100,
+      "alto": 10
+    },
+    {
+      "tipo": "PisoPinchesInv",
+      "id": "pinche1",
+      "desdeX": 1600,
+      "desdeY": 270,
+      "largo": 100,
+      "alto": 10
+    },
+    {
+      "tipo": "PisoPinchesInv",
+      "id": "pinche1",
+      "desdeX": 2200,
+      "desdeY": 330,
+      "largo": 100,
+      "alto": 10
+    },
+    {
+      "tipo": "PisoPinchesInv",
+      "id": "pinche1",
+      "desdeX": 3100,
+      "desdeY": 270,
+      "largo": 100,
+      "alto": 10
+    },
+    {
+      "tipo": "PisoPinchesInv",
+      "id": "pinche1",
+      "desdeX": 3700,
+      "desdeY": 330,
+      "largo": 100,
+      "alto": 10
+    },
+    {
+      "tipo": "PisoPinchesInv",
+      "id": "pinche1",
+      "desdeX": 4600,
+      "desdeY": 270,
+      "largo": 100,
+      "alto": 10
+    },
+    {
+      "tipo": "PisoPinchesInv",
+      "id": "pinche1",
+      "desdeX": 5200,
+      "desdeY": 330,
+      "largo": 100,
+      "alto": 10
+    },
+    {
+      "tipo": "PisoPinches",
+      "id": "pinche1",
+      "desdeX": 5200,
+      "desdeY": 310,
+      "largo": 100,
+      "alto": 10
+    },
+    {
+      "tipo": "PisoPinchesInv",
+      "id": "pinche1",
+      "desdeX": 6700,
+      "desdeY": 330,
+      "largo": 100,
+      "alto": 10
+    },
+    {
+      "tipo": "PisoPinchesInv",
+      "id": "pinche1",
+      "desdeX": 7600,
+      "desdeY": 270,
+      "largo": 100,
+      "alto": 10
+    },
+    {
+      "tipo": "PisoPinchesInv",
+      "id": "pinche1",
+      "desdeX": 8200,
+      "desdeY": 330,
+      "largo": 100,
+      "alto": 10
+    },
+    {
+      "tipo": "PisoPinchesInv",
+      "id": "pinche1",
+      "desdeX": 9100,
+      "desdeY": 270,
+      "largo": 100,
+      "alto": 10
+    },
+    {
+      "tipo": "PisoPinchesInv",
+      "id": "pinche1",
+      "desdeX": 9700,
+      "desdeY": 330,
+      "largo": 100,
+      "alto": 10
+    },
+    {
+      "tipo": "PisoPinchesInv",
+      "id": "pinche1",
+      "desdeX": 10600,
+      "desdeY": 270,
+      "largo": 100,
+      "alto": 10
+    },
+    {
+      "tipo": "PisoPinchesInv",
+      "id": "pinche1",
+      "desdeX": 11200,
+      "desdeY": 180,
+      "largo": 100,
+      "alto": 10
+    },
+    {
+      "tipo": "PisoPinchesInv",
+      "id": "pinche1",
+      "desdeX": 12100,
+      "desdeY": 270,
+      "largo": 100,
+      "alto": 10
+    },
+    {
+      "tipo": "PisoPinchesInv",
+      "id": "pinche1",
+      "desdeX": 12700,
+      "desdeY": 330,
+      "largo": 100,
+      "alto": 10
+    },
+    {
+      "tipo": "PisoPinchesInv",
+      "id": "pinche1",
+      "desdeX": 13600,
+      "desdeY": 270,
+      "largo": 100,
+      "alto": 10
+    }
+  ],
+  "inicio_jugadores": {
+    "x": 150,
+    "y": 350
+  },
+  "meta": {
+    "x": 13900,
+    "y": 0,
+    "alto": 600
+  }
+}
