@@ -48,10 +48,10 @@ function HacerMapaModoHistoria(archivo_mapa) {
     let solopiso = SoloPiso(420, 0, 2700, "pisodoble");
     let solopiso2 = SoloPiso(210, 1000, 2700, "pisoreductor", 0.5);
     let solopisom2 = SoloPiso(80, 400, 2700, "pisomultiplicador", 2);
-/*
-    mapa.imagenes.push(new Imagen("invaciones1", ultimoX + 1000, 40, 200, 200));
-    mapa.imagenes.push(new Imagen("invaciones2", ultimoX + 1800, 240, 200, 200));
-*/
+
+    mapa.imagenes.push(new Imagen("invaciones1", ultimoX + 700, 240, 200, 200));
+    mapa.imagenes.push(new Imagen("invaciones2", ultimoX + 1300, 140, 200, 200));
+
     mapa.textos.push(new Texto("Buenos Ayres, Virreynato del Plata. 1800", ultimoX + 100, 500, "30px", "blue", "FriedNuget"));
     plataformas.push(...SumarX(solopiso2, ultimoX));
     plataformas.push(...SumarX(solopisom2, ultimoX));

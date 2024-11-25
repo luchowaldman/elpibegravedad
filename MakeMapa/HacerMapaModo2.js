@@ -23,7 +23,7 @@ function HacerMapaModo2(archivo_mapa) {
         nombre: "Mapa de ejemplo",
         largo: 40000,
         fondo: "sky",
-        cancion: "cancion",
+        cancion: "musica_charly",
         plataformas: [],
         obstaculos: [],
         textos: [],
