@@ -26,14 +26,17 @@ type Map struct {
 
 type Solid struct {
 	coordinates Coordinates
+
+	SpeedMultiplier float64
 }
 
 type Platform struct {
-	Type   string `json:"tipo"`
-	FromX  int    `json:"desdeX"`
-	FromY  int    `json:"desdeY"`
-	ToX    int    `json:"hastaX"`
-	Height int    `json:"alto"`
+	Type            string  `json:"tipo"`
+	FromX           int     `json:"desdeX"`
+	FromY           int     `json:"desdeY"`
+	ToX             int     `json:"hastaX"`
+	Height          int     `json:"alto"`
+	SpeedMultiplier float64 `json:"multiplicador_velocidad"`
 }
 
 type Obstacle struct {
@@ -86,6 +89,7 @@ func loadMap(name string) Map {
 					Y: platform.FromY + platform.Height,
 				},
 			}.FromClientToServer(mapHeight),
+			SpeedMultiplier: platform.SpeedMultiplier,
 		})
 	}
 
