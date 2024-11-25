@@ -96,7 +96,22 @@
     }
   ],
   "obstaculos": [],
-  "imagenes": [],
+  "imagenes": [
+    {
+      "imagen": "invaciones1",
+      "desdeX": 700,
+      "desdeY": 240,
+      "largo": 200,
+      "alto": 200
+    },
+    {
+      "imagen": "invaciones2",
+      "desdeX": 1300,
+      "desdeY": 140,
+      "largo": 200,
+      "alto": 200
+    }
+  ],
   "textos": [
     {
       "texto": "Buenos Ayres, Virreynato del Plata. 1800",
