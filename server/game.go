@@ -10,7 +10,7 @@ const (
 	ticksPerSecond          = 30
 	cameraWidth             = int(1500 / 2)
 	initialTimeWithoutSpeed = time.Second * 3
-	maxSpeedMultiplier      = 3 // max speed will be maxSpeedMultiplier times the initial speed
+	maxSpeedMultiplier      = 5 // max speed will be maxSpeedMultiplier times the initial speed
 )
 
 type PlayerStatus string

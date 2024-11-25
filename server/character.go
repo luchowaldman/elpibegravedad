@@ -5,8 +5,8 @@ import (
 )
 
 const (
-	initialCharacterSpeedX float64 = float64(100) / ticksPerSecond
-	initialCharacterSpeedY float64 = float64(90) / ticksPerSecond
+	initialCharacterSpeedX float64 = float64(150) / ticksPerSecond
+	initialCharacterSpeedY float64 = float64(100) / ticksPerSecond
 )
 
 type Character struct {
