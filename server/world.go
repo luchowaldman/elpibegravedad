@@ -2,13 +2,12 @@ package main
 
 import (
 	"log"
-	"math"
 
 	"github.com/solarlune/resolv"
 )
 
 const (
-	cellSize                         = 5
+	cellSize                         = 10
 	solidTag                         = "solid"
 	worldLimitTag                    = "worldLimit"
 	raceFinishTag                    = "raceFinish"
@@ -26,6 +25,7 @@ type World struct {
 	space *resolv.Space
 
 	cameraLimit *resolv.Object
+	RaceFinish  *resolv.Object
 }
 
 func NewWorld(gameMap Map, players []*Player) *World {
@@ -73,13 +73,12 @@ func (world *World) Init(gameMap Map, players []*Player) {
 	world.space.Add(world.cameraLimit)
 
 	// Add race finish
-	world.space.Add(
-		resolv.NewObject(
-			float64(gameMap.RaceFinish.X+raceFinishWidth+characterWidth), // add raceFinishWidth+characterWidth to the x position so the collision in when the character cross the race finish completely
-			float64(gameMap.RaceFinish.Y), cellSize, float64(gameMap.RaceFinish.Height),
-			raceFinishTag,
-		),
+	world.RaceFinish = resolv.NewObject(
+		float64(gameMap.RaceFinish.X+raceFinishWidth+characterWidth), // add raceFinishWidth+characterWidth to the x position so the collision in when the character cross the race finish completely
+		float64(gameMap.RaceFinish.Y), cellSize, float64(gameMap.RaceFinish.Height),
+		raceFinishTag,
 	)
+	world.space.Add(world.RaceFinish)
 
 	// Add solids
 	for _, solid := range gameMap.Solids {
@@ -175,10 +174,6 @@ func (world *World) updateCharacterPosition(character *Character) {
 	// be that movement instead.
 	dx := character.Speed.X
 
-	if character.IsWalking {
-		dx *= 2
-	}
-
 	// Moving horizontally is done fairly simply;
 	// we just check to see if something solid is in front of us. If so, we move into contact with it
 	// and stop horizontal movement speed. If not, then we can just move forward.
@@ -198,11 +193,6 @@ func (world *World) updateCharacterPosition(character *Character) {
 	// something, this will be changed to move to contact instead.
 
 	dy := character.Speed.Y
-
-	// We want to be sure to lock vertical movement to a maximum of the size of the Cells within the Space
-	// so we don't miss any collisions by tunneling through.
-
-	dy = math.Max(math.Min(dy, cellSize), -cellSize)
 
 	character.IsWalking = false
 
