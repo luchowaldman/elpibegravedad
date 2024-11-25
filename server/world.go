@@ -32,6 +32,10 @@ type World struct {
 	RaceFinish  *resolv.Object
 }
 
+type objectData struct {
+	speedMultiplier float64
+}
+
 func NewWorld(gameMap Map, players []*Player) *World {
 	w := &World{}
 
@@ -115,14 +119,16 @@ func (world *World) addSolids(solids []Solid, tag string) {
 	for _, solid := range solids {
 		x, y, w, h := solid.coordinates.ToDimensions()
 
-		log.Println("Adding solid: ", x, y, w, h)
-
-		world.space.Add(
-			resolv.NewObject(
-				x, y, w, h,
-				tag,
-			),
+		solidObject := resolv.NewObject(
+			x, y, w, h,
+			tag,
 		)
+
+		solidObject.Data = objectData{
+			speedMultiplier: solid.SpeedMultiplier,
+		}
+
+		world.space.Add(solidObject)
 	}
 }
 
@@ -211,6 +217,10 @@ func (world *World) updateCharacterPosition(character *Character) {
 		dy = collision.ContactWithCell(collision.Cells[0]).Y
 
 		character.IsWalking = true
+
+		setSpeedMultiplier(character, collision)
+	} else {
+		character.speedMultiplier = 1
 	}
 
 	// Move the object on dy.
@@ -231,4 +241,12 @@ func (world *World) UpdateCameraLimitPosition(x int) {
 // in order to allow the camera limit to have cameraLimitWidth and to the character not collide with it until is fully outside the camera
 func toCameraLimitX(cameraX int) float64 {
 	return float64(cameraX - cameraLimitWidth - characterWidth)
+}
+
+func setSpeedMultiplier(character *Character, collision *resolv.Collision) {
+	collisionObject := collision.Objects[0]
+
+	if collisionObject.Data != nil {
+		character.speedMultiplier = collisionObject.Data.(objectData).speedMultiplier
+	}
 }
