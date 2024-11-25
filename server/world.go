@@ -20,7 +20,10 @@ const (
 	characterInitialPositionDistance = 20
 )
 
-var collisionTags = []string{solidTag, characterTag}
+var (
+	collisionTags = []string{solidTag, characterTag}
+	deadTags      = []string{worldLimitTag, fatalTag}
+)
 
 type World struct {
 	space *resolv.Space
@@ -144,7 +147,7 @@ func (world *World) Update(character *Character) (bool, bool) {
 
 // checkIfCharacterHasDied updates character's IsDead if the character touched a world limit
 func (world *World) checkIfCharacterHasDied(character *Character) bool {
-	if collision := character.Object.Check(0, 0, worldLimitTag); collision != nil {
+	if collision := character.Object.Check(0, 0, deadTags...); collision != nil {
 		log.Println("Character is dead")
 
 		character.IsDead = true
