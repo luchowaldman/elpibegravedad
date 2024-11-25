@@ -66,10 +66,8 @@ export class Mapa {
         });
         this.obstaculos_mortales.forEach((obstaculo) => {
           obstaculo.dibujar(graficos);
-          
         });
 
-        
         graficos.AdddEntidad(new EntidadGrafica("meta", "meta", this.meta.x, this.meta.y, 50, 600));
       }
 
