@@ -9,6 +9,7 @@ import (
 const (
 	cellSize                         = 10
 	solidTag                         = "solid"
+	fatalTag                         = "fatal"
 	worldLimitTag                    = "worldLimit"
 	raceFinishTag                    = "raceFinish"
 	characterTag                     = "character"
@@ -81,18 +82,8 @@ func (world *World) Init(gameMap Map, players []*Player) {
 	world.space.Add(world.RaceFinish)
 
 	// Add solids
-	for _, solid := range gameMap.Solids {
-		x, y, w, h := solid.coordinates.ToDimensions()
-
-		log.Println("Adding solid: ", x, y, w, h)
-
-		world.space.Add(
-			resolv.NewObject(
-				x, y, w, h,
-				solidTag,
-			),
-		)
-	}
+	world.addSolids(gameMap.Solids, solidTag)
+	world.addSolids(gameMap.Fatal, fatalTag)
 
 	// Create Characters' objects and add it to the world's Space.
 	characterInitialX := float64(gameMap.PlayersStart.X)
@@ -114,6 +105,21 @@ func (world *World) Init(gameMap Map, players []*Player) {
 			characterInitialX = characterInitialX - characterWidth - characterInitialPositionDistance
 			characterInitialY = characterInitialY - characterHeight - characterInitialPositionDistance
 		}
+	}
+}
+
+func (world *World) addSolids(solids []Solid, tag string) {
+	for _, solid := range solids {
+		x, y, w, h := solid.coordinates.ToDimensions()
+
+		log.Println("Adding solid: ", x, y, w, h)
+
+		world.space.Add(
+			resolv.NewObject(
+				x, y, w, h,
+				tag,
+			),
+		)
 	}
 }
 
