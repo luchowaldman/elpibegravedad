@@ -51,7 +51,6 @@ function HacerMapaModoHistoria(archivo_mapa) {
 
     mapa.imagenes.push(new Imagen("invaciones1", ultimoX + 700, 240, 200, 200));
     mapa.imagenes.push(new Imagen("invaciones2", ultimoX + 1300, 140, 200, 200));
-
     mapa.textos.push(new Texto("Buenos Ayres, Virreynato del Plata. 1800", ultimoX + 100, 500, "30px", "blue", "FriedNuget"));
     plataformas.push(...SumarX(solopiso2, ultimoX));
     plataformas.push(...SumarX(solopisom2, ultimoX));

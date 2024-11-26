@@ -58,6 +58,7 @@ function HacerMapaDemo(archivo_mapa) {
     plataformas.push(...SumarX(solopisom2, ultimoX));
     plataformas.push(...SumarX(solopiso, ultimoX));
 
+
     mapa.obstaculos_mortales.push(new Obstaculo("PisoPinches", "pinche1", ultimoX + 1000, 410, 100, 10));
 
     ultimoX = UltimoX(plataformas);
