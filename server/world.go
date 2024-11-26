@@ -2,14 +2,14 @@ package main
 
 import (
 	"log"
-	"math"
 
 	"github.com/solarlune/resolv"
 )
 
 const (
-	cellSize                         = 5
+	cellSize                         = 10
 	solidTag                         = "solid"
+	fatalTag                         = "fatal"
 	worldLimitTag                    = "worldLimit"
 	raceFinishTag                    = "raceFinish"
 	characterTag                     = "character"
@@ -20,12 +20,20 @@ const (
 	characterInitialPositionDistance = 20
 )
 
-var collisionTags = []string{solidTag, characterTag}
+var (
+	collisionTags = []string{solidTag, characterTag}
+	deadTags      = []string{worldLimitTag, fatalTag}
+)
 
 type World struct {
 	space *resolv.Space
 
 	cameraLimit *resolv.Object
+	RaceFinish  *resolv.Object
+}
+
+type objectData struct {
+	speedMultiplier float64
 }
 
 func NewWorld(gameMap Map, players []*Player) *World {
@@ -73,27 +81,16 @@ func (world *World) Init(gameMap Map, players []*Player) {
 	world.space.Add(world.cameraLimit)
 
 	// Add race finish
-	world.space.Add(
-		resolv.NewObject(
-			float64(gameMap.RaceFinish.X+raceFinishWidth+characterWidth), // add raceFinishWidth+characterWidth to the x position so the collision in when the character cross the race finish completely
-			float64(gameMap.RaceFinish.Y), cellSize, float64(gameMap.RaceFinish.Height),
-			raceFinishTag,
-		),
+	world.RaceFinish = resolv.NewObject(
+		float64(gameMap.RaceFinish.X+raceFinishWidth+characterWidth), // add raceFinishWidth+characterWidth to the x position so the collision in when the character cross the race finish completely
+		float64(gameMap.RaceFinish.Y), cellSize, float64(gameMap.RaceFinish.Height),
+		raceFinishTag,
 	)
+	world.space.Add(world.RaceFinish)
 
 	// Add solids
-	for _, solid := range gameMap.Solids {
-		x, y, w, h := solid.coordinates.ToDimensions()
-
-		log.Println("Adding solid: ", x, y, w, h)
-
-		world.space.Add(
-			resolv.NewObject(
-				x, y, w, h,
-				solidTag,
-			),
-		)
-	}
+	world.addSolids(gameMap.Solids, solidTag)
+	world.addSolids(gameMap.Fatal, fatalTag)
 
 	// Create Characters' objects and add it to the world's Space.
 	characterInitialX := float64(gameMap.PlayersStart.X)
@@ -118,6 +115,23 @@ func (world *World) Init(gameMap Map, players []*Player) {
 	}
 }
 
+func (world *World) addSolids(solids []Solid, tag string) {
+	for _, solid := range solids {
+		x, y, w, h := solid.coordinates.ToDimensions()
+
+		solidObject := resolv.NewObject(
+			x, y, w, h,
+			tag,
+		)
+
+		solidObject.Data = objectData{
+			speedMultiplier: solid.SpeedMultiplier,
+		}
+
+		world.space.Add(solidObject)
+	}
+}
+
 // Update updates the world with the new position of the character
 //
 // Returns:
@@ -139,7 +153,7 @@ func (world *World) Update(character *Character) (bool, bool) {
 
 // checkIfCharacterHasDied updates character's IsDead if the character touched a world limit
 func (world *World) checkIfCharacterHasDied(character *Character) bool {
-	if collision := character.Object.Check(0, 0, worldLimitTag); collision != nil {
+	if collision := character.Object.Check(0, 0, deadTags...); collision != nil {
 		log.Println("Character is dead")
 
 		character.IsDead = true
@@ -175,10 +189,6 @@ func (world *World) updateCharacterPosition(character *Character) {
 	// be that movement instead.
 	dx := character.Speed.X
 
-	if character.IsWalking {
-		dx *= 2
-	}
-
 	// Moving horizontally is done fairly simply;
 	// we just check to see if something solid is in front of us. If so, we move into contact with it
 	// and stop horizontal movement speed. If not, then we can just move forward.
@@ -199,11 +209,6 @@ func (world *World) updateCharacterPosition(character *Character) {
 
 	dy := character.Speed.Y
 
-	// We want to be sure to lock vertical movement to a maximum of the size of the Cells within the Space
-	// so we don't miss any collisions by tunneling through.
-
-	dy = math.Max(math.Min(dy, cellSize), -cellSize)
-
 	character.IsWalking = false
 
 	// We check for any solid / stand-able objects. In actuality, there aren't any other Objects
@@ -212,6 +217,10 @@ func (world *World) updateCharacterPosition(character *Character) {
 		dy = collision.ContactWithCell(collision.Cells[0]).Y
 
 		character.IsWalking = true
+
+		setSpeedMultiplier(character, collision)
+	} else {
+		character.speedMultiplier = 1
 	}
 
 	// Move the object on dy.
@@ -232,4 +241,12 @@ func (world *World) UpdateCameraLimitPosition(x int) {
 // in order to allow the camera limit to have cameraLimitWidth and to the character not collide with it until is fully outside the camera
 func toCameraLimitX(cameraX int) float64 {
 	return float64(cameraX - cameraLimitWidth - characterWidth)
+}
+
+func setSpeedMultiplier(character *Character, collision *resolv.Collision) {
+	collisionObject := collision.Objects[0]
+
+	if collisionObject.Data != nil {
+		character.speedMultiplier = collisionObject.Data.(objectData).speedMultiplier
+	}
 }

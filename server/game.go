@@ -7,11 +7,10 @@ import (
 )
 
 const (
-	ticksPerSecond                  = 30
-	cameraWidth                     = int(1500 / 2)
-	initialTimeWithoutSpeed         = time.Second * 3
-	characterSpeedX         float64 = float64(100) / ticksPerSecond
-	characterSpeedY         float64 = float64(90) / ticksPerSecond
+	ticksPerSecond          = 30
+	cameraWidth             = int(1500 / 2)
+	initialTimeWithoutSpeed = time.Second * 3
+	maxSpeedMultiplier      = 5 // max speed will be maxSpeedMultiplier times the initial speed
 )
 
 type PlayerStatus string
@@ -73,6 +72,7 @@ func gameLoop(world *World, room *Room) {
 
 	raceStarted := false // raceStarted represents whether the race has started, since there is an initial period where the game has started but the characters do not yet have speed
 
+	raceFinishPosX := int(world.RaceFinish.Position.X)
 	log.Println("Stating game loop")
 
 	for {
@@ -80,7 +80,7 @@ func gameLoop(world *World, room *Room) {
 		case <-initialTimer.C:
 			// add speed to characters
 			for _, player := range room.Players {
-				player.Character.SetSpeed(characterSpeedX, -characterSpeedY)
+				player.Character.SetInitialSpeed()
 			}
 
 			raceStarted = true
@@ -146,7 +146,11 @@ func gameLoop(world *World, room *Room) {
 					})
 				}
 
-				cameraX := calculateCameraPosition(playersPositions)
+				maxPlayerPosX := getMaxPlayerPosX(playersPositions)
+
+				setNewSpeeds(raceFinishPosX, room, maxPlayerPosX)
+
+				cameraX := calculateCameraPosition(maxPlayerPosX)
 
 				world.UpdateCameraLimitPosition(cameraX)
 
@@ -170,7 +174,17 @@ func gameLoop(world *World, room *Room) {
 	}
 }
 
-func calculateCameraPosition(playersPositions []PlayerInfo) int {
+func setNewSpeeds(raceFinishPosX int, room *Room, maxPlayerPosX int) {
+	speedMultiplier := float64(maxPlayerPosX) / float64(raceFinishPosX)
+
+	speedScale := 1 + (speedMultiplier * (maxSpeedMultiplier - 1))
+
+	for _, player := range room.Players {
+		player.Character.ScaleSpeed(speedScale)
+	}
+}
+
+func getMaxPlayerPosX(playersPositions []PlayerInfo) int {
 	maxPosX := 0
 
 	for _, playersPosition := range playersPositions {
@@ -179,7 +193,11 @@ func calculateCameraPosition(playersPositions []PlayerInfo) int {
 		}
 	}
 
-	cameraX := maxPosX - cameraWidth
+	return maxPosX
+}
+
+func calculateCameraPosition(maxPlayerPosX int) int {
+	cameraX := maxPlayerPosX - cameraWidth
 	if cameraX < 0 {
 		cameraX = 0
 	}

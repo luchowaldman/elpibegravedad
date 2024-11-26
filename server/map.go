@@ -12,26 +12,31 @@ const (
 )
 
 type Map struct {
-	Height       int
-	Width        int          `json:"largo"`
-	Platforms    []Platform   `json:"plataformas"`
-	Obstacles    []Obstacle   `json:"obstaculos"`
-	PlayersStart PlayersStart `json:"inicio_jugadores"`
-	RaceFinish   RaceFinish   `json:"meta"`
+	Height         int
+	Width          int          `json:"largo"`
+	Platforms      []Platform   `json:"plataformas"`
+	Obstacles      []Obstacle   `json:"obstaculos"`
+	FatalObstacles []Obstacle   `json:"obstaculos_mortales"`
+	PlayersStart   PlayersStart `json:"inicio_jugadores"`
+	RaceFinish     RaceFinish   `json:"meta"`
 
 	Solids []Solid
+	Fatal  []Solid
 }
 
 type Solid struct {
 	coordinates Coordinates
+
+	SpeedMultiplier float64
 }
 
 type Platform struct {
-	Type   string `json:"tipo"`
-	FromX  int    `json:"desdeX"`
-	FromY  int    `json:"desdeY"`
-	ToX    int    `json:"hastaX"`
-	Height int    `json:"alto"`
+	Type            string  `json:"tipo"`
+	FromX           int     `json:"desdeX"`
+	FromY           int     `json:"desdeY"`
+	ToX             int     `json:"hastaX"`
+	Height          int     `json:"alto"`
+	SpeedMultiplier float64 `json:"multiplicador_velocidad"`
 }
 
 type Obstacle struct {
@@ -84,10 +89,25 @@ func loadMap(name string) Map {
 					Y: platform.FromY + platform.Height,
 				},
 			}.FromClientToServer(mapHeight),
+			SpeedMultiplier: platform.SpeedMultiplier,
 		})
 	}
 
-	for _, obstacle := range gameMap.Obstacles {
+	solids = append(solids, obstaclesToSolids(gameMap.Obstacles)...)
+
+	gameMap.Solids = solids
+	gameMap.Fatal = obstaclesToSolids(gameMap.FatalObstacles)
+
+	log.Println("Map solids generated", gameMap.Solids)
+	log.Println("Map fatal generated", gameMap.Fatal)
+
+	return gameMap
+}
+
+func obstaclesToSolids(obstacles []Obstacle) []Solid {
+	solids := make([]Solid, 0, len(obstacles))
+
+	for _, obstacle := range obstacles {
 		solids = append(solids, Solid{
 			coordinates: Coordinates{
 				From: Point{
@@ -102,9 +122,5 @@ func loadMap(name string) Map {
 		})
 	}
 
-	gameMap.Solids = solids
-
-	log.Println("Map solids generated", gameMap.Solids)
-
-	return gameMap
+	return solids
 }
