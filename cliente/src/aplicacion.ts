@@ -134,10 +134,9 @@ export class Aplicacion {
 
         const urlParams = new URLSearchParams(window.location.search);
         const partidaId = urlParams.get('partida');
+        this.controladorDOM.mostrar_pagina('pagina1');
         if (partidaId) {
             this.unirse_partida(partidaId);
-        } else {
-            this.controladorDOM.mostrar_pagina('pagina1');
         }
     }
     private handleDisconnect() {
