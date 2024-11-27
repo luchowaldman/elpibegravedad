@@ -1,5 +1,5 @@
 import { ControladorDOM } from './ControladorDOM';
-import { AccionGraficaEjecutarSonido, AccionGraficaModificarTexto, AccionGraficaMostrarTexto, AccionGraficaSetPosicion, AccionGraficaSetPosicionTexto } from './modelo/AccionGrafica';
+import { AccionGraficaEjecutarSonido, AccionGraficaModificarTexto, AccionGraficaMostrarTexto, AccionGraficaSetPosicionTexto } from './modelo/AccionGrafica';
 import { Client, InformacionJugador, PosicionJugador } from './modelo/client_socketio';
 import { divMapa } from './modelo/divMapa';
 import { graficoJuego } from './modelo/graficoJuego';
@@ -11,10 +11,10 @@ const posYLabelJugadores = 300;
 
 export class Aplicacion {
     private controladorDOM = new ControladorDOM();
-    private mapas: divMapa[] = [new divMapa('mapa1', '/img/mapa1_icono.png', 'Mapa inicial', './mapas/mapa1.json'),
-    new divMapa('charly', '/img/charly_icono.png', 'Charly Garcia', './mapas/charly.json'),
-    new divMapa('mapa3', '/img/mapa2_icono.png', 'Mapa 3', './mapas/mapa3.json'),
-    new divMapa('demo', '/img/mapa1_icono.png', 'Demo', './mapas/demo.json')];
+    private mapas: divMapa[] = [new divMapa('mapa1', 'img/mapa1_icono.png', 'Mapa inicial', 'mapas/mapa1.json'),
+    new divMapa('charly', 'img/charly_icono.png', 'Charly Garcia', 'mapas/charly.json'),
+    new divMapa('mapa3', 'img/mapa1_icono.png', 'Mapa 3', 'mapas/mapa3.json'),
+    new divMapa('demo', 'img/mapa1_icono.png', 'Demo', 'mapas/demo.json')];
 
 
     private jugadores: Jugador[] = [
@@ -31,9 +31,8 @@ export class Aplicacion {
     private mapa: Mapa;
     private graficos: graficoJuego;
     private nombreususario: string;
-    private urlserver: string;
+    
     constructor(urlserver: string, nombreususario: string) {
-        this.urlserver = urlserver;
         this.nombreususario = nombreususario;
         this.controladorDOM = new ControladorDOM();
         this.client = new Client(urlserver);
@@ -163,7 +162,7 @@ export class Aplicacion {
 
     }
 
-    private handleCamara(camaraX: number) {
+    private handleCamara() {
 
         this.client.setCamaraHandler((camaraX) => {
             this.graficos.setPosicionCamara(camaraX);
@@ -198,7 +197,13 @@ export class Aplicacion {
 
             const url = `${window.location.protocol}//${window.location.host}`;
             this.controladorDOM.mostrar_compartirpagina(url ,id);
-            await this.mapa.cargarMapa(this.getMapaJSON(mapa));
+            const mapaJSON = this.getMapaJSON(mapa);
+            if (mapaJSON == undefined)    
+            {
+                console.log("Error al cargar el mapa");
+                return;
+            }
+            await this.mapa.cargarMapa(mapaJSON);
             this.mapa.cargarImagenes(this.graficos);
             await this.graficos.init();
             this.graficos.agenda.iniciar();

@@ -10,7 +10,7 @@ if (usernameInput && serverInput) {
     usernameInput.value = localStorage.getItem('username') || '';
     serverInput.value = localStorage.getItem('server') || '';
     if (serverInput.value == '') {
-        serverInput.value = 'http://localhost:8080';
+        serverInput.value = 'https://elpibegravedad-425557060156.southamerica-east1.run.app';
     }
 }
 

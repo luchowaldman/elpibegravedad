@@ -1,4 +1,3 @@
-import { EntidadGrafica } from "./entidadgrafica";
 import { graficoJuego } from "./graficoJuego";
 
 export class Plataforma {
@@ -22,6 +21,6 @@ export class Plataforma {
     }
 
     cargarImagenes(graficos: graficoJuego) {
-      throw new Error("Method not implemented.");
+      graficos.AddImagen(this.tipo);
     }
   }

@@ -1,7 +1,7 @@
 export class Sonido {
     nombre: string;
     url: string;
-    sonido: Phaser.Sound.NoAudioSound | Phaser.Sound.HTML5AudioSound | Phaser.Sound.WebAudioSound;
+    sonido: Phaser.Sound.NoAudioSound | Phaser.Sound.HTML5AudioSound | Phaser.Sound.WebAudioSound | undefined;
   
     constructor(nombre: string, url: string) {
       this.nombre = nombre;
@@ -15,7 +15,7 @@ export class Sonido {
     }
 
     tocar() {
-        this.sonido.play();
+        this.sonido?.play();
     }
 
   }
