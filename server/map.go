@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"log"
-	"os"
+	"net/http"
 )
 
 const (
@@ -59,10 +59,13 @@ type RaceFinish struct {
 }
 
 func loadMap(name string) Map {
-	configFile, err := os.Open(fmt.Sprintf("mapas/%s.json", name))
+	log.Println("Loading map", name)
+	resp, err := http.Get(fmt.Sprintf("https://storage.googleapis.com/pibegravedadcliente/mapas/%s.json", name))
 	if err != nil {
-		log.Fatalln("Error opening map file", "err", err)
+		log.Fatalln("Error fetching map file", "err", err)
 	}
+	defer resp.Body.Close()
+	configFile := resp.Body
 
 	gameMap := Map{
 		Height: mapHeight,

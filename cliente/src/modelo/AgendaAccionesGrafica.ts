@@ -42,7 +42,7 @@ export class AgendaAccionesGrafica {
     
     getFrame(): number  {
         if (this.inicio === null) {
-            return null;
+            return 0;
         }
 
         const tiempoTranscurrido = Date.now() - this.inicio;

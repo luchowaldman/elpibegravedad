@@ -1,4 +1,4 @@
-import { AccionGraficaAnimar, AccionGraficaCambiarVelovidad, AccionGraficaInvertir, AccionGraficaRotar, AccionGraficaSetPosicion } from "./AccionGrafica";
+import { AccionGraficaAnimar, AccionGraficaInvertir, AccionGraficaRotar, AccionGraficaSetPosicion } from "./AccionGrafica";
 import { EntidadGrafica } from "./entidadgrafica";
 import { graficoJuego } from "./graficoJuego";
 
@@ -13,9 +13,9 @@ export class Jugador {
     entidad: EntidadGrafica | undefined;
     animacion: string;
     rotacion: number;
-    esta_caminando: boolean;
-    tieneGravedadInvertida: boolean;
-    estado: string = false;
+    esta_caminando: boolean = false;
+    tieneGravedadInvertida: boolean = false;
+    estado: string = "";
 
     constructor(id: string,color: number, x: number, y: number) {
         this.id = id;

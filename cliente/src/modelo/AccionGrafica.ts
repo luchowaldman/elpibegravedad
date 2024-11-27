@@ -164,9 +164,14 @@ export class AccionGraficaAgregarEntidad extends AccionGrafica {
     public y: number;
     private grafico: graficoJuego;
 
-    constructor(grafico: graficoJuego, id: string, nombreImagen: string, x: number, y: number)
+    public largo: number;
+    public alto: number;
+
+    constructor(grafico: graficoJuego, id: string, nombreImagen: string, x: number, y: number, largo: number, alto: number)
     {
         super();
+        this.largo = largo;
+        this.alto = alto;
         this.grafico = grafico;
         this.id = id;
         this.nombreImagen = nombreImagen;
@@ -177,7 +182,7 @@ export class AccionGraficaAgregarEntidad extends AccionGrafica {
     
 
     ejecutar(): void {
-        this.grafico.AdddEntidad(new EntidadGrafica(this.id, this.nombreImagen, this.x, this.y));
+        this.grafico.AdddEntidad(new EntidadGrafica(this.id, this.nombreImagen, this.x, this.y, this.largo, this.alto));
     }
 }
 

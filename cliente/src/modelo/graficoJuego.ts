@@ -11,11 +11,11 @@ import { Texto } from './Texto';
 import { Controles } from './controles';
 
 export class graficoJuego {
-    largo: number;
+    largo: number = 0;
 
 
-    private game: Phaser.Game;
-    private scene: Phaser.Scene;
+    private game: Phaser.Game | undefined;
+    private scene: Phaser.Scene | undefined;
     public agenda: AgendaAccionesGrafica;
     public controles: Controles = new Controles();
 
@@ -26,21 +26,24 @@ export class graficoJuego {
     animacionesendadgrafica: AnimacionEntidadGrafica[] = [];
 
     private entidades: EntidadGrafica[] = [];
-    cursors: Phaser.Types.Input.Keyboard.CursorKeys;
-    spaceBar: Phaser.Input.Keyboard.Key;
-    keyG: Phaser.Input.Keyboard.Key;
     fondo: string = "sky";
 
     GetEntidad(id: string): EntidadGrafica {
-        return this.entidades.find(entidad => entidad.id === id);
+        const entidad = this.entidades.find(entidad => entidad.id === id);
+        if (!entidad) {
+            throw new Error(`EntidadGrafica with id ${id} not found`);
+        }
+        return entidad;
     }
 
 
     AdddEntidad(entidad: EntidadGrafica): EntidadGrafica {
-        entidad.agregar(this.scene);
+        if (this.scene)
+            entidad.agregar(this.scene);
         this.entidades.push(entidad)
         return entidad;
     }
+
     AddImagen(nombre: string): void {
         if (!this.imagenes.some(imagen => imagen.nombre === nombre)) {
             const url = Direcciones.obtenerConstante(nombre);
@@ -81,17 +84,29 @@ export class graficoJuego {
     }
 
     GetSonido(nombre: string): Sonido {
-        return this.sonidos.find(sonido => sonido.nombre === nombre);
+        const sonido = this.sonidos.find(sonido => sonido.nombre === nombre);
+        if (!sonido) {
+            throw new Error(`Sonido with name ${nombre} not found`);
+        }
+        return sonido;
     }
 
     GetTexto(id: string): Texto {
-        return this.textos.find(texto => texto.id === id);
+        const texto = this.textos.find(texto => texto.id === id);
+        if (!texto) {
+            throw new Error(`Texto with id ${id} not found`);
+        }
+        return texto;
     }
 
 
     mostrarTexto(texto: Texto) {
-        texto.agregar(this.scene);
-        this.textos.push(texto);
+        if (this.scene) {
+            texto.agregar(this.scene);
+            this.textos.push(texto);
+        } else {
+            throw new Error('Scene is not initialized');
+        }
     }
 
 
@@ -134,7 +149,7 @@ export class graficoJuego {
 
         // Wait for the game to be fully initialized
         await new Promise<void>((resolve) => {
-            this.game.events.once('ready', resolve);
+            this.game?.events.once('ready', resolve);
         });
 
         this.scene = this.game.scene.scenes[0];
@@ -144,21 +159,21 @@ export class graficoJuego {
     preload() {
         // Cargar imágenes
 
-        this.scene = this.game.scene.scenes[0];
+        this.scene = this.game?.scene.scenes[0];
         this.imagenes.forEach(imagen => {
 
-            this.scene.load.image(imagen.nombre, imagen.url);
+            this.scene?.load.image(imagen.nombre, imagen.url);
         });
 
         // Cargar animaciones (spritesheets)
         this.animaciones.forEach(animacion => {
-            this.scene.load.spritesheet(animacion.nombre, animacion.url, { frameWidth: animacion.largoCuadro, frameHeight: animacion.anchoCuadro });
+            this.scene?.load.spritesheet(animacion.nombre, animacion.url, { frameWidth: animacion.largoCuadro, frameHeight: animacion.anchoCuadro });
         });
 
 
 
         this.sonidos.forEach(sonido => {
-            this.scene.load.audio(sonido.nombre, sonido.url);
+            this.scene?.load.audio(sonido.nombre, sonido.url);
         });
 
     }
@@ -168,7 +183,7 @@ export class graficoJuego {
 
 
         this.animacionesendadgrafica.forEach(animacion => {
-            this.scene.anims.create({
+            this.scene?.anims.create({
                 key: animacion.key,
                 frames: this.scene.anims.generateFrameNumbers(animacion.nombreImagen, { start: animacion.startFrame, end: animacion.endFrame }),
                 frameRate: animacion.frameRate,
@@ -176,13 +191,15 @@ export class graficoJuego {
             });
         });
         // Añadir fondo
-        this.scene.add.image(700, 600, this.fondo).setScale(1.5).setScrollFactor(0);
-        this.scene.cameras.main.setBounds(0, 0, this.largo, 600);
+        this.scene?.add.image(700, 600, this.fondo).setScale(1.5).setScrollFactor(0);
+        this.scene?.cameras.main.setBounds(0, 0, this.largo, 600);
 
         this.sonidos.forEach(sonido => {
-            sonido.agregar(this.scene)
+            if (this.scene)
+                sonido.agregar(this.scene)
         });
-        this.controles.agregar(this.scene);
+        if (this.scene)
+            this.controles.agregar(this.scene);
     }
 
 
@@ -196,11 +213,13 @@ export class graficoJuego {
 
     
     getPosicionCamara(): number {
-        return this.scene.cameras.main.scrollX;
+        return this.scene?.cameras.main.scrollX ?? 0;
     }
 
     setPosicionCamara(posicion: number) {
-        this.scene.cameras.main.scrollX = posicion;
+        if (this.scene && this.scene.cameras) {
+            this.scene.cameras.main.scrollX = posicion;
+        }
     }
 }
 
