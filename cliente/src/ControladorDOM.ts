@@ -89,12 +89,12 @@ export class ControladorDOM {
             paginaMostrar.style.display = 'block';
             const labelPartida = this.document?.getElementById('labelpartida') as HTMLLabelElement;
             if (labelPartida) {
-                labelPartida.textContent = `${urlserver}/?partida=${pagina}`;
+                labelPartida.textContent = `${urlserver}?partida=${pagina}`;
             }
             const btnCopiarPartida = this.document?.getElementById('btnCopiarPartida_Partida') as HTMLButtonElement;
             if (btnCopiarPartida) {
                 btnCopiarPartida.addEventListener('click', () => {
-                    navigator.clipboard.writeText(`${urlserver}/?partida=${pagina}`).then(() => {
+                    navigator.clipboard.writeText(`${urlserver}?partida=${pagina}`).then(() => {
                         console.log('Texto copiado al portapapeles');
                     }).catch(err => {
                         console.error('Error al copiar el texto al portapapeles', err);
