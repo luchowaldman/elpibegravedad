@@ -1,4 +1,3 @@
-import { AccionGraficaMostrarTexto } from "./AccionGrafica";
 import { graficoJuego } from "./graficoJuego";
 import { Texto } from "./Texto";
 export class TextoMapa {
@@ -28,7 +27,4 @@ export class TextoMapa {
     graficos.mostrarTexto(new Texto("", this.desdeX, this.desdeY, this.texto, this.pixeles, this.color, this.fuente));
   }
 
-  cargarImagenes(graficos: graficoJuego): void {
-
-  }
 }

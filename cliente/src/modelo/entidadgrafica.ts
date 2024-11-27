@@ -1,7 +1,7 @@
 export class EntidadGrafica {
     
 
-    imagenenescena: Phaser.Physics.Arcade.Sprite ;
+    private imagenenescena: Phaser.Physics.Arcade.Sprite | undefined ;
 
 
     public id: string;
@@ -27,43 +27,44 @@ export class EntidadGrafica {
     }
 
     setEscala(escala: number) {
-        this.imagenenescena.setScale(escala);
+        this.imagenenescena?.setScale(escala);
     }
 
     
     setFrame(frame: number) {
-        this.imagenenescena.setFrame(frame);
+        this.imagenenescena?.setFrame(frame);
     }
     rotar(rotacion: number) {
-        this.imagenenescena.angle = rotacion;
+        if (this.imagenenescena)
+            this.imagenenescena.angle = rotacion;
     }
 
     invertir(value: boolean) {
-        this.imagenenescena.setFlipX(value);
+        this.imagenenescena?.setFlipX(value);
     }
 
     
     setVelocity(x: number, y: number) {
-        this.imagenenescena.setVelocityX(x);
-        this.imagenenescena.setVelocityY(y);
+        this.imagenenescena?.setVelocityX(x);
+        this.imagenenescena?.setVelocityY(y);
     }
 
     // ejemplos de color. Rojo: 0xff0000, Verde: 0x00ff00, Azul: 0x0000ff
     setColor(color: number) {
-        this.imagenenescena.setTint(color);
+        this.imagenenescena?.setTint(color);
     }
     
     
     setPosicion(x: number, y: number) {
         this.x = x;
         this.y = y;
-        this.imagenenescena.setX(x + (this.largo / 2));
-        this.imagenenescena.setY(y + (this.alto / 2));
+        this.imagenenescena?.setX(x + (this.largo / 2));
+        this.imagenenescena?.setY(y + (this.alto / 2));
     }
 
 
     setAnimacion(animacion: string) {
-        this.imagenenescena.play(animacion);
+        this.imagenenescena?.play(animacion);
     }
 
     agregar(scene: Phaser.Scene) {
