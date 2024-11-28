@@ -179,7 +179,9 @@ export class Aplicacion {
                     this.SetLabelGrafico("Iniciado", "A correr");
                     setTimeout(() => {
                         this.SetLabelGrafico("", "");
-                        this.graficos.agenda.agregarAccionGrafica(1, new AccionGraficaEjecutarSonido(this.graficos, this.mapa.cancion));
+                        if (localStorage.getItem('music') == 'si') {
+                            this.graficos.agenda.agregarAccionGrafica(1, new AccionGraficaEjecutarSonido(this.graficos, this.mapa.cancion));
+                        }
                     }, 1000);
                 }, 1000);
             }, 1000);
@@ -195,7 +197,7 @@ export class Aplicacion {
 
             this.cargado = true;
 
-            const url = `${window.location.protocol}//${window.location.host}`;
+            const url = `https://storage.googleapis.com/pibegravedadcliente/index.html`;
             this.controladorDOM.mostrar_compartirpagina(url ,id);
             const mapaJSON = this.getMapaJSON(mapa);
             if (mapaJSON == undefined)    
