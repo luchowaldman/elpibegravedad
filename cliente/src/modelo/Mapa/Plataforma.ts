@@ -1,4 +1,4 @@
-import { graficoJuego } from "./graficoJuego";
+import { graficoJuego } from "../Graficos/graficoJuego";
 
 export class Plataforma {
     

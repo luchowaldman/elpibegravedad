@@ -1,13 +1,11 @@
+import { EntidadGrafica } from "../Graficos/entidadgrafica";
+import { graficoJuego } from "../Graficos/graficoJuego";
+import TipoPlataformaFactory from "../tiposplataforma/tipoplataformafactory";
+import { ImagenMapa } from "./ImagenMapa";
 import { InicioJugadores } from "./InicioJugadores";
+import { Meta } from "./meta";
 import { Obstaculo } from "./Obstaculo";
 import { Plataforma } from "./Plataforma";
-import { Meta } from "./meta";
-
-
-import { graficoJuego } from "./graficoJuego";
-import TipoPlataformaFactory from "./tiposplataforma/tipoplataformafactory";
-import { EntidadGrafica } from "./entidadgrafica";
-import { ImagenMapa } from "./ImagenMapa";
 import { TextoMapa } from "./textoMapa";
 
 export class Mapa {

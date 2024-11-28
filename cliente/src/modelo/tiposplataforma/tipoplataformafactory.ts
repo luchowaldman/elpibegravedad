@@ -1,4 +1,4 @@
-import { Plataforma } from "../Plataforma";
+import { Plataforma } from "../Mapa/Plataforma";
 import Piso from "./piso";
 import PisoDoble from "./pisodoble";
 import PisoMultiplicador from "./pisomultiplicador";

@@ -1,4 +1,4 @@
-import { Aplicacion } from './aplicacion';
+import { Aplicacion } from './modelo/Aplicacion/aplicacion';
 
 const username = localStorage.getItem('username') || '';
 const serverInput = localStorage.getItem('server') || '';

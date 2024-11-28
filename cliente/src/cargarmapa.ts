@@ -1,5 +1,5 @@
-import { graficoJuego } from './modelo/graficoJuego';
-import { Mapa } from './modelo/mapa';
+import { graficoJuego } from './modelo/Graficos/graficoJuego';
+import { Mapa } from './modelo/Mapa/mapa';
 const mapa: Mapa = new Mapa();
 const graficos: graficoJuego = (new graficoJuego());
 
