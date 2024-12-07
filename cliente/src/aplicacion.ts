@@ -31,7 +31,7 @@ export class Aplicacion {
     private mapa: Mapa;
     private graficos: graficoJuego;
     private nombreususario: string;
-    
+
     constructor(urlserver: string, nombreususario: string) {
         this.nombreususario = nombreususario;
         this.controladorDOM = new ControladorDOM();
@@ -80,7 +80,7 @@ export class Aplicacion {
         this.graficos.AddAnimacionEntidadGrafica('animacionmuriendo', 'player_muriendo', 0, 1, 7, -1);
         this.graficos.AddAnimacion('player_festejando', 35, 50);
         this.graficos.AddAnimacionEntidadGrafica('animacionfestejando', 'player_festejando', 0, 1, 7, -1);
-        
+
 
 
         this.graficos.agenda.agregarAccionGrafica(0, new AccionGraficaMostrarTexto(this.graficos, "status_label", "DOM INICIADO", 600, posYLabelStatus));
@@ -156,10 +156,9 @@ export class Aplicacion {
     }
 
 
-    private handleTerminoCarrera(resultado: number[]) {
+    private handleTerminoCarrera(resultado: InformacionJugador[]) {
         this.CentrarLabels();
-        this.SetLabelGrafico("Carrera Terminada", "Ganador: " + resultado[0]);
-
+        this.SetLabelGrafico("Carrera Terminada", "Ganador: " + resultado[0].nombre);
     }
 
     private handleCamara() {
@@ -198,10 +197,9 @@ export class Aplicacion {
             this.cargado = true;
 
             const url = `https://storage.googleapis.com/pibegravedadcliente/index.html`;
-            this.controladorDOM.mostrar_compartirpagina(url ,id);
+            this.controladorDOM.mostrar_compartirpagina(url, id);
             const mapaJSON = this.getMapaJSON(mapa);
-            if (mapaJSON == undefined)    
-            {
+            if (mapaJSON == undefined) {
                 console.log("Error al cargar el mapa");
                 return;
             }
@@ -211,12 +209,11 @@ export class Aplicacion {
             this.graficos.agenda.iniciar();
             this.controladorDOM.mostrar_pagina('pagina2');
         }
-        
+
         let nombrejugadores = ""
         let cont = 0;
         listaJugadores.forEach(jugador => {
-            if (cont != 0)
-            {
+            if (cont != 0) {
                 if (cont % 2 == 0)
                     nombrejugadores = nombrejugadores.concat("\n");
                 else
@@ -225,7 +222,7 @@ export class Aplicacion {
             cont++;
             nombrejugadores = nombrejugadores.concat(jugador.nombre);
         });
-        
+
         listaJugadores.map(jugador => jugador.nombre).join('\n');
 
         this.SetLabelGrafico(`En la sala, ${this.nombreususario}`, `${listaJugadores.length} Jugadores: \n ${nombrejugadores}`);
