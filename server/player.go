@@ -38,7 +38,7 @@ func (player *Player) ToInformacionSalaInfo() map[string]any {
 	}
 }
 
-func (player *Player) SendCarreraTerminada(raceResult []int) error {
+func (player *Player) SendCarreraTerminada(raceResult []map[string]any) error {
 	return player.emit("carreraTerminada", raceResult)
 }
 
