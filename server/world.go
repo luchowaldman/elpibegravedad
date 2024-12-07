@@ -157,6 +157,7 @@ func (world *World) checkIfCharacterHasDied(character *Character) bool {
 		log.Println("Character is dead")
 
 		character.IsDead = true
+		character.Object.RemoveTags(characterTag) // remove character tag to avoid collisions
 
 		return true
 	}
@@ -170,6 +171,7 @@ func (world *World) checkIfCharacterFinishedRace(character *Character) bool {
 		log.Println("Character finished race")
 
 		character.HasFinished = true
+		character.Object.RemoveTags(characterTag) // remove character tag to avoid collisions
 
 		return true
 	}
