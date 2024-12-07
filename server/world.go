@@ -240,9 +240,9 @@ func (world *World) UpdateCameraLimitPosition(x int) {
 }
 
 // toCameraLimitX transforms the position x where the camera finished to the position the camera limit object must have
-// in order to allow the camera limit to have cameraLimitWidth and to the character not collide with it until is fully outside the camera
+// in order to allow the camera limit to have cameraLimitWidth
 func toCameraLimitX(cameraX int) float64 {
-	return float64(cameraX - cameraLimitWidth - characterWidth)
+	return float64(cameraX - cameraLimitWidth)
 }
 
 func setSpeedMultiplier(character *Character, collision *resolv.Collision) {
