@@ -57,30 +57,49 @@ La ejecucion local del proyecto es necesario tener instalado `npn` `node.js` y `
 
 Para detalles sobre el cliente visita [esta pagina](cliente/README.md).
 
-
 ## Server
 
 Servidor escrito en Golang para el juego "El pibe gravedad".
 
-### Ejecucion local
+### Ejecucion local con docker (recomendado)
 
-La ejecucion local del proyecto es utilizando `docker` y `make`:
+La ejecucion local del proyecto es utilizando `docker`:
 
-1. Instala docker y el plugin compose
-2. Instala make
+1. Instala docker y el plugin compose:
+
+    1. En Mac:
+
+        1. Ingresa a la pagina <https://docs.docker.com/desktop/setup/install/mac-install/> para descargar Docker Desktop.
+        2. Ejecuta el instalador Docker.dmg y sigue las instrucciones
+        3. Ejecuta Docker Desktop
+2. Ingresa al directorio del servidor
+
+    ```bash
+    cd server/
+    ```
+
 3. Ejecuta
 
     ```bash
-    make dev
+    docker compose up
     ```
 
-O directamente usando `go`:
+### Ejecucion local directa con go
+
+Tambien es posible ejecutar el servidor de forma local directamente usando `go`:
 
 1. Instala go>1.23.1
-2. Ejecuta
+   1. En mac:
+      1. Descarga el instalador desde <https://go.dev/dl/>.
+      2. Ejecuta el instalador y sigue las instrucciones.
+2. Ingresa al directorio del servidor
+
+    ```bash
+    cd server/
+    ```
+
+3. Ejecuta
 
     ```bash
     go run .
     ```
-
-Para detalles sobre el servidor visita [esta pagina](server/README.md).
