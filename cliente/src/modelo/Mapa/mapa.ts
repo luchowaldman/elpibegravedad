@@ -1,12 +1,12 @@
 import { EntidadGrafica } from "../Graficos/entidadgrafica";
 import { graficoJuego } from "../Graficos/graficoJuego";
-import TipoPlataformaFactory from "../tiposplataforma/tipoplataformafactory";
 import { ImagenMapa } from "./ImagenMapa";
 import { InicioJugadores } from "./InicioJugadores";
 import { Meta } from "./meta";
 import { Obstaculo } from "./Obstaculo";
 import { Plataforma } from "./Plataforma";
 import { TextoMapa } from "./textoMapa";
+import TipoPlataformaFactory from "./tiposplataforma/tipoplataformafactory";
 
 export class Mapa {
     nombre: string = '';
