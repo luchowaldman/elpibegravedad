@@ -8,6 +8,7 @@ import { Mapa } from "../Mapa/mapa";
 
 const posYLabelStatus = 100;
 const posYLabelJugadores = 300;
+const max_jugadores = 8;
 
 export class Aplicacion {
     private controladorDOM = new ControladorDOM();
@@ -21,10 +22,11 @@ export class Aplicacion {
         new Jugador("Play1", 0x0000ff, -100, -100),
         new Jugador("Play2", 0xff0000, -100, -100),
         new Jugador("Play3", 0x00ff00, -100, -100),
-        new Jugador("Play5", 0xffff00, -100, -100),
-        new Jugador("Play6", 0xff00ff, -100, -100),
-        new Jugador("Play7", 0x00ffff, -100, -100),
-        new Jugador("Play8", 0xffa500, -100, -100)
+        new Jugador("Play4", 0xffff00, -100, -100),
+        new Jugador("Play5", 0xff00ff, -100, -100),
+        new Jugador("Play6", 0x00ffff, -100, -100),
+        new Jugador("Play7", 0xffa500, -100, -100),
+        new Jugador("Play8", 0x032422, -100, -100)
     ];
 
     private client: Client;
@@ -80,11 +82,10 @@ export class Aplicacion {
         this.graficos.AddAnimacionEntidadGrafica('animacionmuriendo', 'player_muriendo', 0, 1, 7, -1);
         this.graficos.AddAnimacion('player_festejando', 35, 50);
         this.graficos.AddAnimacionEntidadGrafica('animacionfestejando', 'player_festejando', 0, 1, 7, -1);
+        this.CrearLabels();
 
 
 
-        this.graficos.agenda.agregarAccionGrafica(0, new AccionGraficaMostrarTexto(this.graficos, "status_label", "DOM INICIADO", 600, posYLabelStatus));
-        this.graficos.agenda.agregarAccionGrafica(0, new AccionGraficaMostrarTexto(this.graficos, "jugadores_label", "", 500, posYLabelJugadores));
     }
 
 
@@ -100,6 +101,24 @@ export class Aplicacion {
         this.client.sendUnirseSala(partida_id, this.nombreususario);
     }
 
+    private CrearLabels() {
+        
+        this.graficos.agenda.agregarAccionGrafica(0, new AccionGraficaMostrarTexto(this.graficos, "status_label", "DOM INICIADO", 600, posYLabelStatus, "56px", '#0000FF', 'Comic Sans MS'));
+        this.graficos.agenda.agregarAccionGrafica(0, new AccionGraficaMostrarTexto(this.graficos, "jugadores_label", "", 200, posYLabelJugadores, "56px", '#0000FF', 'Comic Sans MS'));
+
+        
+        this.graficos.agenda.agregarAccionGrafica(0, new AccionGraficaMostrarTexto(this.graficos, "jugador1_label", "Jugador 1", 200, posYLabelJugadores + 70, "46px", '#0000FF', 'Comic Sans MS'));
+        this.graficos.agenda.agregarAccionGrafica(0, new AccionGraficaMostrarTexto(this.graficos, "jugador2_label", "Jugador 2", 500, posYLabelJugadores + 70, "46px", '#FF0000', 'Comic Sans MS'));
+        this.graficos.agenda.agregarAccionGrafica(0, new AccionGraficaMostrarTexto(this.graficos, "jugador3_label", "Jugador 3", 800, posYLabelJugadores + 70, "46px", '#00FF00', 'Comic Sans MS'));
+        this.graficos.agenda.agregarAccionGrafica(0, new AccionGraficaMostrarTexto(this.graficos, "jugador4_label", "Jugador 4", 200, posYLabelJugadores + 130, "46px", '#FFFF00', 'Comic Sans MS'));
+        this.graficos.agenda.agregarAccionGrafica(0, new AccionGraficaMostrarTexto(this.graficos, "jugador5_label", "Jugador 5", 500, posYLabelJugadores + 130, "46px", '#FF00FF', 'Comic Sans MS'));
+        this.graficos.agenda.agregarAccionGrafica(0, new AccionGraficaMostrarTexto(this.graficos, "jugador6_label", "Jugador 6", 800, posYLabelJugadores + 130, "46px", '#00FFFF', 'Comic Sans MS'));
+        this.graficos.agenda.agregarAccionGrafica(0, new AccionGraficaMostrarTexto(this.graficos, "jugador7_label", "Jugador 7", 200, posYLabelJugadores + 190, "46px", '#FFA500', 'Comic Sans MS'));
+        this.graficos.agenda.agregarAccionGrafica(0, new AccionGraficaMostrarTexto(this.graficos, "jugador8_label", "Jugador 8", 500, posYLabelJugadores + 190, "46px", '#FFA500', 'Comic Sans MS'));
+
+
+
+    }
 
     private CentrarLabels() {
 
@@ -108,20 +127,29 @@ export class Aplicacion {
         this.graficos.agenda.agregarAccionGrafica(0, new AccionGraficaSetPosicionTexto(this.graficos, "jugadores_label", pos + 500, posYLabelJugadores));
     }
 
-    private SetLabelGrafico(status_label: string, jugadores_label: string) {
+    private SetLabelGrafico(status_label: string,  jugadores_label: string, jugadores: InformacionJugador[] = []) 
+    {
 
         this.graficos.agenda.agregarAccionGrafica(0, new AccionGraficaModificarTexto(this.graficos, "status_label", status_label));
         this.graficos.agenda.agregarAccionGrafica(0, new AccionGraficaModificarTexto(this.graficos, "jugadores_label", jugadores_label));
-
+        for (let i = 1; i < jugadores.length + 1; i++) {
+            this.graficos.agenda.agregarAccionGrafica(0, new AccionGraficaModificarTexto(this.graficos, "jugador" + i + "_label", jugadores[i - 1].nombre));
+        }
+        for (let i = jugadores.length + 1; i <= max_jugadores ; i++) {
+            this.graficos.agenda.agregarAccionGrafica(0, new AccionGraficaModificarTexto(this.graficos, "jugador" + i + "_label", ""));
+        }
+        
+        
     }
 
+   
 
     async click_mapa(mapa: divMapa) {
         await this.mapa.cargarMapa(mapa.JSON);
         this.mapa.cargarImagenes(this.graficos);
         this.graficos.agenda.iniciar();
         this.controladorDOM.mostrar_pagina('pagina2');
-        this.SetLabelGrafico("Cargando Mapa", "Total de Jugadores: 1");
+        this.SetLabelGrafico("Cargando Mapa", "", []);
         this.client.sendInitSala(mapa.id, this.nombreususario);
 
     }
@@ -158,7 +186,7 @@ export class Aplicacion {
 
     private handleTerminoCarrera(resultado: InformacionJugador[]) {
         this.CentrarLabels();
-        this.SetLabelGrafico("Carrera Terminada", "Ganador: " + resultado[0].nombre);
+        this.SetLabelGrafico("Carrera Terminada", `Ganador: ${resultado[0].nombre}` ,[]);
     }
 
     private handleCamara() {
@@ -210,22 +238,7 @@ export class Aplicacion {
             this.controladorDOM.mostrar_pagina('pagina2');
         }
 
-        let nombrejugadores = ""
-        let cont = 0;
-        listaJugadores.forEach(jugador => {
-            if (cont != 0) {
-                if (cont % 2 == 0)
-                    nombrejugadores = nombrejugadores.concat("\n");
-                else
-                    nombrejugadores = nombrejugadores.concat(",");
-            }
-            cont++;
-            nombrejugadores = nombrejugadores.concat(jugador.nombre);
-        });
-
-        listaJugadores.map(jugador => jugador.nombre).join('\n');
-
-        this.SetLabelGrafico(`En la sala, ${this.nombreususario}`, `${listaJugadores.length} Jugadores: \n ${nombrejugadores}`);
+        this.SetLabelGrafico(`Hola ${this.nombreususario}`, "Jugadores: ",listaJugadores);
     }
 
 

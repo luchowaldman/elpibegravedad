@@ -252,3 +252,11 @@ func setSpeedMultiplier(character *Character, collision *resolv.Collision) {
 		character.speedMultiplier = collisionObject.Data.(objectData).speedMultiplier
 	}
 }
+
+func setSpeedMultiplier(character *Character, collision *resolv.Collision) {
+	collisionObject := collision.Objects[0]
+
+	if collisionObject.Data != nil {
+		character.speedMultiplier = collisionObject.Data.(objectData).speedMultiplier
+	}
+}
