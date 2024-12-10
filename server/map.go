@@ -122,6 +122,7 @@ func obstaclesToSolids(obstacles []Obstacle) []Solid {
 					Y: obstacle.FromY + obstacle.Height,
 				},
 			}.FromClientToServer(mapHeight),
+			SpeedMultiplier: 1,
 		})
 	}
 
