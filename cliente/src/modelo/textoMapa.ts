@@ -1,5 +1,7 @@
-import { graficoJuego } from "./graficoJuego";
-import { Texto } from "./Texto";
+import { graficoJuego } from "./Graficos/graficoJuego";
+import { Texto } from "./Graficos/Texto";
+
+
 export class TextoMapa {
   texto: string;
   desdeX: number;

@@ -1,10 +1,10 @@
-import { ControladorDOM } from './ControladorDOM';
-import { AccionGraficaEjecutarSonido, AccionGraficaModificarTexto, AccionGraficaMostrarTexto, AccionGraficaSetPosicionTexto } from './modelo/AccionGrafica';
-import { Client, InformacionJugador, PosicionJugador } from './modelo/client_socketio';
-import { divMapa } from './modelo/divMapa';
-import { graficoJuego } from './modelo/graficoJuego';
-import { Jugador } from './modelo/jugador';
-import { Mapa } from './modelo/mapa';
+import { Client, InformacionJugador, PosicionJugador } from "../client_socketio";
+import { ControladorDOM } from "../DOM/ControladorDOM";
+import { divMapa } from "../DOM/divMapa";
+import { AccionGraficaMostrarTexto, AccionGraficaSetPosicionTexto, AccionGraficaModificarTexto, AccionGraficaEjecutarSonido } from "../Graficos/AccionGrafica";
+import { graficoJuego } from "../Graficos/graficoJuego";
+import { Jugador } from "../Graficos/jugador";
+import { Mapa } from "../Mapa/mapa";
 
 const posYLabelStatus = 100;
 const posYLabelJugadores = 300;
