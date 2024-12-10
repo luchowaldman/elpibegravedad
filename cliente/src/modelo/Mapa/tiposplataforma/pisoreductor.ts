@@ -1,6 +1,7 @@
-import { EntidadGrafica } from "../entidadgrafica";
-import { graficoJuego } from "../graficoJuego";
+import { EntidadGrafica } from "../../Graficos/entidadgrafica";
+import { graficoJuego } from "../../Graficos/graficoJuego";
 import { Plataforma } from "../Plataforma";
+
 const tamanio_figura = 100;
 
 export default class PisoReductor extends Plataforma {

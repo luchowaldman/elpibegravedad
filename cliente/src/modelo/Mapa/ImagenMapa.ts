@@ -1,5 +1,5 @@
-import { EntidadGrafica } from "./entidadgrafica";
-import { graficoJuego } from "./graficoJuego";
+import { EntidadGrafica } from "../Graficos/entidadgrafica";
+import { graficoJuego } from  "../Graficos/graficoJuego";
 
   export class ImagenMapa {
     imagen: string;

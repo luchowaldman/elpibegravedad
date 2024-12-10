@@ -1,4 +1,4 @@
-import { graficoJuego } from "./graficoJuego";
+import { graficoJuego } from "../Graficos/graficoJuego";
 
 export class Plataforma {
     
@@ -21,6 +21,7 @@ export class Plataforma {
     }
 
     cargarImagenes(graficos: graficoJuego) {
+      graficos.AddImagen(this.tipo);
       graficos.AddImagen(this.tipo);
     }
   }

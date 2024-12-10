@@ -1,7 +1,7 @@
-import { EntidadGrafica } from "./entidadgrafica";
-import { graficoJuego } from "./graficoJuego";
+import { EntidadGrafica } from "../Graficos/entidadgrafica";
+import { graficoJuego } from "../Graficos/graficoJuego";
 
-  export class Obstaculo {
+export class Obstaculo {
     tipo: string;
     id: string;
     desdeX: number;

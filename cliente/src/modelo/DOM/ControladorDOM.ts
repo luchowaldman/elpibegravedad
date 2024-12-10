@@ -1,4 +1,4 @@
-import { divMapa } from "./modelo/divMapa";
+import { divMapa } from "./divMapa";
 
 export class ControladorDOM {
 
