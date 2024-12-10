@@ -192,9 +192,12 @@ export class AccionGraficaMostrarTexto extends AccionGrafica {
     public texto: string;
     public x: number;
     public y: number;
+    public tamanoFuente: string;
     private grafico: graficoJuego;
+    color: string;
+    fuente: string;
 
-    constructor(grafico: graficoJuego, id: string, texto: string, x: number, y: number)
+    constructor(grafico: graficoJuego, id: string, texto: string, x: number, y: number, tamanoFuente: string  ,color: string = '#0000FF', fuente: string = 'Comic Sans MS', )
     {
         super();
         this.grafico = grafico;
@@ -202,10 +205,14 @@ export class AccionGraficaMostrarTexto extends AccionGrafica {
         this.texto = texto;
         this.x = x;
         this.y = y;
+        this.color = color;
+        this.fuente = fuente;
+        this.tamanoFuente = tamanoFuente;
+        
     }
 
     ejecutar(): void {
-        this.grafico.mostrarTexto(new Texto(this.id, this.x, this.y, this.texto));
+        this.grafico.mostrarTexto(new Texto(this.id, this.x, this.y, this.texto, this.tamanoFuente ,this.color, this.fuente));
     }
 }
 
