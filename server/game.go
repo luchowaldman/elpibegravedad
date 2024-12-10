@@ -112,12 +112,7 @@ func gameLoop(world *World, room *Room) {
 
 				raceResult := append(playersThatFinished, playersThatDied...)
 
-				for _, player := range room.Players {
-					err := player.SendCarreraTerminada(raceResult)
-					if err != nil {
-						log.Println("failed to send carreraTerminada", "err", err)
-					}
-				}
+				sendCarreraTerminada(room, raceResult)
 
 				ticker.Stop()
 				return
@@ -203,4 +198,26 @@ func calculateCameraPosition(maxPlayerPosX int) int {
 	}
 
 	return cameraX
+}
+
+func sendCarreraTerminada(room *Room, raceResult []int) {
+	playersResults := make([]map[string]any, 0, len(raceResult))
+
+	for _, playerID := range raceResult {
+		playerIndex := slices.IndexFunc(room.Players, func(player *Player) bool {
+			return player.ID == playerID
+		})
+
+		playersResults = append(
+			playersResults,
+			room.Players[playerIndex].ToInformacionSalaInfo(),
+		)
+	}
+
+	for _, player := range room.Players {
+		err := player.SendCarreraTerminada(playersResults)
+		if err != nil {
+			log.Println("failed to send carreraTerminada", "err", err)
+		}
+	}
 }

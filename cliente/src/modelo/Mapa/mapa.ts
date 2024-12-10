@@ -7,6 +7,8 @@ import { Obstaculo } from "./Obstaculo";
 import { Plataforma } from "./Plataforma";
 import { TextoMapa } from "./textoMapa";
 import TipoPlataformaFactory from "./tiposplataforma/tipoplataformafactory";
+import { EntidadGrafica } from "./entidadgrafica";
+import { ImagenMapa } from "./ImagenMapa";
 
 export class Mapa {
     nombre: string = '';

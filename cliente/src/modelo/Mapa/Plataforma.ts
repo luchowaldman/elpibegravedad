@@ -22,5 +22,6 @@ export class Plataforma {
 
     cargarImagenes(graficos: graficoJuego) {
       graficos.AddImagen(this.tipo);
+      graficos.AddImagen(this.tipo);
     }
   }

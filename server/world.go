@@ -157,6 +157,7 @@ func (world *World) checkIfCharacterHasDied(character *Character) bool {
 		log.Println("Character is dead")
 
 		character.IsDead = true
+		character.Object.RemoveTags(characterTag) // remove character tag to avoid collisions
 
 		return true
 	}
@@ -170,6 +171,7 @@ func (world *World) checkIfCharacterFinishedRace(character *Character) bool {
 		log.Println("Character finished race")
 
 		character.HasFinished = true
+		character.Object.RemoveTags(characterTag) // remove character tag to avoid collisions
 
 		return true
 	}
@@ -238,9 +240,17 @@ func (world *World) UpdateCameraLimitPosition(x int) {
 }
 
 // toCameraLimitX transforms the position x where the camera finished to the position the camera limit object must have
-// in order to allow the camera limit to have cameraLimitWidth and to the character not collide with it until is fully outside the camera
+// in order to allow the camera limit to have cameraLimitWidth
 func toCameraLimitX(cameraX int) float64 {
-	return float64(cameraX - cameraLimitWidth - characterWidth)
+	return float64(cameraX - cameraLimitWidth)
+}
+
+func setSpeedMultiplier(character *Character, collision *resolv.Collision) {
+	collisionObject := collision.Objects[0]
+
+	if collisionObject.Data != nil {
+		character.speedMultiplier = collisionObject.Data.(objectData).speedMultiplier
+	}
 }
 
 func setSpeedMultiplier(character *Character, collision *resolv.Collision) {

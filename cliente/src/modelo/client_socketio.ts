@@ -3,7 +3,7 @@ import { io, Socket } from "socket.io-client";
 interface ServerToClientEvents {
     inicioJuego: () => void;
     tick: (posiciones: PosicionJugador[], camaraX: number) => void;
-    carreraTerminada: (resultado: number[]) => void;
+    carreraTerminada: (resultado: InformacionJugador[]) => void;
     informacionSala: (salaID: string, mapa: string, listaJugadores: InformacionJugador[]) => void;
 }
 
@@ -51,9 +51,9 @@ export class Client {
         this.InformacionSalaHandler = handler;
     }
 
-    private carreraTerminadaHandler?: (resultado: number[]) => void;
+    private carreraTerminadaHandler?: (resultado: InformacionJugador[]) => void;
 
-    public setCarreraTerminadaHandler(handler: (resultado: number[]) => void) {
+    public setCarreraTerminadaHandler(handler: (resultado: InformacionJugador[]) => void) {
         this.carreraTerminadaHandler = handler;
     }
 
@@ -116,7 +116,7 @@ export class Client {
             });
 
             socket.on("carreraTerminada", (resultado) => {
-                console.log("carreraTerminada received %s", resultado)
+                console.log("carreraTerminada received", resultado)
                 this.carreraTerminadaHandler?.(resultado);
             });
 
