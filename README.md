@@ -13,6 +13,30 @@ Trailer del juego original: [Gravity Guy Trailer](https://www.youtube.com/watch?
 
 Aunque el juego original ofrece un modo multijugador ("Multiplayer Mode" en el video), el mismo solo funcionaba de forma local, asignando a los distintos jugadores distintas teclas para realizar los movimientos. Por lo tanto, nuestro objetivo principal será crear este modo de forma online en tiempo real Además de darle al juego un estilo visual propio.
 
+## Instrucciones de Juego
+
+Para iniciar el lo podras encontrar en: https://storage.googleapis.com/pibegravedadcliente/index.html
+
+Si es la primera vez que accedes, el sitio te redirigira a la pantalla de configuracion en la que deberás completar tu nombre y modificar la configuración.
+
+![configuracion](diagramas/configuracion.png)
+
+
+De vuelta en la pantalla de inicio, el usuario podra elegir el mapa que desa jugar:
+
+![pant_inicio](diagramas/pant_inicio.png)
+
+Cuando seleccione uno quedará en un lobby de espera, con la posibilidad de compartir el link con el número de partida para que otros jugadores ingresen. Los otros jugadores pueden ingresar por el link o poniendo el número de sala en el formulario de la parte superior derecha de la pantalla.
+
+![lobby](diagramas/lobby.png)
+
+
+Cuando todos los jugadores esten conectados, alguno debe presionar “I” para iniciar el juego.
+
+
+
+Los jugadores pueden cambiar la gravedad presionando “G”, los que quedan fuera de la pantalla o se caen (por abajo o por arriba) pierden. El primero en llegar, gana.
+
 ## Documentación técnica
 
 El proyecto está dividido en dos componentes principales:
@@ -38,7 +62,7 @@ partidas, asegurando que todo funcione de manera fluida y sin interrupciones.
 
 ## Cliente
 
-Servidor escrito en Golang para el juego "El pibe gravedad".
+El cliente fue desarrollado con Node.js y Vite.js
 
 ### Ejecución local
 
@@ -190,3 +214,12 @@ El flujo de mensajes entre el cliente y el servidor es el siguiente:
 10. En cualquier momento, el cliente 2 (o el cliente 1) envía el mensaje `changeGravity`.
 11. El servidor procesa el mensaje recibido y hace que el personaje del jugador que envió el mensaje invierta su gravedad, lo que se verá reflejado en posición del personaje en los siguientes mensajes `tick`.
 12. Cuando el servidor detecta que la carrera terminó (todos los jugadores han muerto o han pasado la meta), envía a todos los jugadores el mensaje `carreraTerminada`, que contiene la posición final en la que terminó cada jugador (primero jugadores según el orden en que llegaron a la meta y luego jugadores en orden inverso al que murieron, es decir, que avanzaron más en la carrera).
+
+
+## Clases en el cliente
+
+Estos son los modulos y clases del cliente:
+
+![diagrama de flujo protocolo](diagramas/ClasesGravedadCliente.png)
+
+La clase aplicacion interfacea todas las logicas del juego: utiliza Client como socket y declara un objeto del tipo ControladorDOM para manejar la interfaz web: clicks en el mapa o en la pantalla de configuracion. Con la clase Mapa levanta el JSON que corresponde y lo dibuja utilizando Graficos, que es la clase con la que encapsulamos a Phaser.js
