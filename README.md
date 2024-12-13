@@ -133,7 +133,7 @@ Además, el servidor cuenta con otros dos archivos clave para su funcionamiento:
   - Mensaje `iniciarJuego`: verificar que el juego no esté ya iniciado y, de lo contrario, iniciar el juego en la sala (`StartGame`).
   - Mensaje `changeGravity`: verificar que el jugador esté en una sala que tiene un juego comenzado y, de ser así, invertir la gravedad de su personaje (`InvertGravity`).
 
-### Comunicación cliente-servidor
+## Comunicación cliente-servidor
 
 La comunicación entre el cliente web y el servidor es vía `http` utilizando web-sockets para poder enviar mensajes en tiempo real. Más específicamente, se utiliza [socket.io](https://socket.io/), que permite el establecimiento de web-sockets de forma sencilla. En el cliente, se utiliza la librería [`socket.io-client`](https://socket.io/docs/v4/client-api/), provista por el propio proveedor y en el servidor la librería [`socket.io/v2`](github.com/zishang520/socket.io/v2/socket), desarrollada por la comunidad.
 
