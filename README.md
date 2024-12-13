@@ -125,7 +125,7 @@ El codigo del servidor esta compuesto por las siguientes entidades y relaciones:
 
 Además, el servidor cuenta con otros dos archivos clave para su funcionamiento:
 
-- [main.go](server/main.go): Punto de entrada de la ejecución del servidor, donde se inicializa el servidor `http` que estable las conexiones con los clientes y crea los web-sockets.
+- [main.go](server/main.go): Punto de entrada de la ejecución del servidor, donde se inicializa el servidor `http` que estable las conexiones con los clientes y crea los web-sockets. El mismo se realiza utilizando la librería standard `net/http` y [`socket.io/v2`](github.com/zishang520/socket.io/v2/socket) (para más detalles consultar la sección [Comunicación cliente-servidor](#comunicación-cliente-servidor))
 - [client.go](server/client.go): Archivo donde se encuentran los pasos a seguir para cada uno de los mensajes que son posibles recibir de parte de un cliente:
   - Conexión: crear entidad `Player` que permitirá enviar mensajes a este cliente.
   - Desconexión: remover jugador de la sala (si está en alguna) (`RemovePlayer`) y eliminar la entidad `Player`.
@@ -133,3 +133,61 @@ Además, el servidor cuenta con otros dos archivos clave para su funcionamiento:
   - Mensaje `unirSala`: buscar la sala en la lista de salas disponibles, sacar al jugador de su sala anterior (si estuviera en alguna) (`RemovePlayer`), agregar al jugador a esta sala (`AddPlayer`) y enviar a todos los jugadores de la sala la información de la sala actualizada (`sendInformacionSala`).
   - Mensaje `iniciarJuego`: verificar que el juego no esté ya iniciado y, de lo contrario, iniciar el juego en la sala (`StartGame`).
   - Mensaje `changeGravity`: verificar que el jugador esté en una sala que tiene un juego comenzado y, de ser así, invertir la gravedad de su personaje (`InvertGravity`).
+
+### Comunicación cliente-servidor
+
+La comunicación entre el cliente web y el servidor es vía `http` utilizando web-sockets para poder enviar mensajes en tiempo real. Más especificamente, se utiliza [socket.io](https://socket.io/), que permite el establecimiento de web-sockets de forma sensilla. En el cliente, se utiliza la librería [`socket.io-client`](https://socket.io/docs/v4/client-api/), provista por el propio proveedor y en el servidor la librería [`socket.io/v2`](github.com/zishang520/socket.io/v2/socket), desarrollada por la comunidad.
+
+El protocolo de comunicación se encuentra definido del lado de cliente en el archivo [client_socketio.ts](cliente/src/modelo/client_socketio.ts) de la siguiente forma:
+
+```typescript
+interface ServerToClientEvents {
+    inicioJuego: () => void;
+    tick: (posiciones: PosicionJugador[], camaraX: number) => void;
+    carreraTerminada: (resultado: InformacionJugador[]) => void;
+    informacionSala: (salaID: string, mapa: string, listaJugadores: InformacionJugador[]) => void;
+}
+
+export interface InformacionJugador {
+    numeroJugador: number,
+    nombre: string,
+}
+
+export interface PosicionJugador {
+    numeroJugador: number,
+    x: number,
+    y: number,
+    tieneGravedadInvertida: boolean,
+    estaCaminando: boolean,
+    estado: string,
+}
+
+export interface ClientToServerEvents {
+    changeGravity: () => void;
+    crearSala: (mapa: string, nombre: string) => void;
+    unirSala: (salaID: string, nombre: string) => void;
+    iniciarJuego: () => void;
+}
+```
+
+En el servidor, la definición se encuentra distribuida entre los archivos:
+
+- [client.go](server/client.go) en donde mendiante el metodo `On` se establece el comportamiento a ejecutar al recibir un mensaje (`disconnect`, `crearSala`, `unirSala`, `iniciarJuego` y `changeGravity`).
+- [player.go](server/player.go) en donde se encuentra la definición de los mensajes que es posible enviar a los jugadores mendiante el metodo `Emit` (`informacionSala`, `inicioJuego`, `tick` y `carreraTerminada`).
+
+El flujo de mensajes entre el cliente y el servidor es el siguiente:
+
+![diagrama de flujo protocolo](diagramas/protocolo.jpeg)
+
+1. Se establece la comunicación entre el cliente 1 y el servidor.
+2. La sala es creada mendiante el mensaje `crearSala`, incluyendo el nombre del mapa a jugar (`mapa`) y el nombre del jugador (`nombre`).
+3. El servidor responde el mensaje `informacionSala` que contiene el identificador de la sala (`salaID`), el nombre del mapa (`mapa`) y la lista de jugadores con su respectivo numero de jugador y nombre (`listaJugadores`) que, obviamente, en este paso solo contiene al jugador que creó la sala.
+4. Se establece la comunicación entre el cliente 2 y el servidor.
+5. El cliente 2 envia en el mensaje `unirSala`, utilizando el `salaID` que fue enviado al cliente 1 en paso 3 y el nombre de este nuevo jugador (`nombre`).
+6. El servidor envia ahora tanto al cliente 1 como al cliente 2 el mensaje `informacionSala`, pero ahora con ambos jugadores en la `listaJugadores`, lo que permitirá a los clientes ver en tiempo real que jugadores ingresan a la sala.
+7. El cliente 1 (o el cliente 2) envia el mensaje `iniciarJuego`.
+8. El servidor envía a todos los clientes conectados a la sala el mensaje `inicioJuego` para alertar a todos los clientes de que el juego está por comenzar y que deben mostrar el mapa con los personajes.
+9. El servidor comienza a enviar el mensaje `tick` de forma periodica, que contiene la información de la posicion de todos los jugadores en el mapa (`posiciones`) y la posición de la camara (`camaraX`), lo que permite que todos los clientes vean exactamente lo mismo en tiempo real.
+10. En cualquier momento, el cliente 2 (o el cliente 1) envia el mensaje `changeGravity`.
+11. El servidor procesa el mensaje recibido y hace que el personaje del jugador que envió el mensaje invierta su gravedad, lo que se verá reflajado en posición del personaje en los siguientes mensajes `tick`.
+12. Cuando el servidor detecta que la carrera terminó (todos los jugadores han muerto o han pasado la meta), envía a todos los jugadores el mensaje `carreraTerminada`, que contiene la posición final en la que terminó cada jugador (primero jugadores según el orden en que llegaron a la meta y luego jugadores en orden inverso al que murieron, es decir, que avanzaron más en la carrera).
